@@ -1,3 +1,5 @@
+package fr.univ_orleans.iut45.mud;
+
 public class Pays {
     private String nom;
 
