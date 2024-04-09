@@ -1,3 +1,4 @@
+package fr.univ_orleans.iut45.mud;
 import java.util.List;
 
 public interface Competition {
