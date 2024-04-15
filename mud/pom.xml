@@ -42,6 +42,7 @@
                   <mainClass>fr.univ_orleans.iut45.mud.JeuxOlympique</mainClass>
                 </transformer>
               </transformers>
+<<<<<<< HEAD
             </configuration>
           </execution>
         </executions>
@@ -54,6 +55,20 @@
           <mainClass>fr.univ_orleans.iut45.mud.App</mainClass>
         </configuration>
       </plugin>
+=======
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <configuration>
+            <mainClass>fr.univ_orleans.iut45.mud.App</mainClass>
+          </configuration>
+        </plugin>
+>>>>>>> main
     </plugins>
   </build>
 </project>
