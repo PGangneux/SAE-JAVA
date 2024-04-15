@@ -25,8 +25,8 @@ public class Equipe {
         return sexe;
     }
 
-    public String verifSexe() {
-        return "a";
+    public boolean verifSexe(Athlete athlete) {
+        return athlete.getSexe()==this.sexe;
     }
 
     public List<Athlete> getLiAthlete() {
@@ -34,7 +34,9 @@ public class Equipe {
     }
 
     public void ajouteAthlete(Athlete athlete){
-        this.liAthlete.add(athlete);
+        if verifSexe(athlete){
+            this.liAthlete.add(athlete);
+        }
     }
 
     public void supAthlete(Athlete athlete){
