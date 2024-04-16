@@ -25,6 +25,25 @@ public class CompetCoop implements Competition{
     }
 
     @Override
+    public List<Epreuve> getEpreuve(){
+        return this.liEpreuve;
+    }
+
+    @Override
+    public String getSexe(){
+        if (this.liEquipe.size()>0){
+            for (Equipe e : this.liEquipe){
+                if (e.getLiAthlete().size()>0){
+                    return e.getLiAthlete().get(0).getSexe();
+                }
+            }
+        }
+        
+        return "NA";
+    }
+        
+
+    @Override
     public String classement(){
         return "t";
     }

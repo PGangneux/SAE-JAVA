@@ -25,6 +25,21 @@ public class CompetInd implements Competition{
     }
 
     @Override
+    public List<Epreuve> getEpreuve(){
+        return this.liEpreuve;
+    }
+
+    @Override
+    public String getSexe(){
+        if (this.liAthletes.size()>0){
+            return this.liAthletes.get(0).getSexe();
+        }
+        else{
+            return "NA";
+        }
+    }
+
+    @Override
     public String classement(){
         return "t";
     }
@@ -53,6 +68,8 @@ public class CompetInd implements Competition{
     public double getScore(){
         return 22;
     }
+
+    
 
 
 }
