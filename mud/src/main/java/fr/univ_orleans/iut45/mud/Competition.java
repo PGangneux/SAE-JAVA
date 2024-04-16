@@ -12,6 +12,6 @@ public interface Competition {
     public boolean participantPresent(Object object);
     public double getScore();
     public List<Epreuve> getEpreuves();
-    public List<String> getSexe();
+    public String getSexe();
     
 }
