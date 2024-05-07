@@ -52,7 +52,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
         <configuration>
-          <mainClass>fr.univ_orleans.iut45.mud.App</mainClass>
+          <mainClass>fr.univ_orleans.iut45.mud.JeuxOlympique</mainClass>
         </configuration>
       </plugin>
     </plugins>
