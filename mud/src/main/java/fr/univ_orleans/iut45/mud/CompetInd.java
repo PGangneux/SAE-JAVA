@@ -51,8 +51,13 @@ public class CompetInd implements Competition{
 
     @Override
     public double getScore(Athlete athlete){
-        this.liEpreuve
+        double score = 0;
+        for (Epreuve epreuve: this.liEpreuve){
+            score += epreuve.getScore(athlete);
+        }
+        return score
     }
-
-
 }
+
+
+

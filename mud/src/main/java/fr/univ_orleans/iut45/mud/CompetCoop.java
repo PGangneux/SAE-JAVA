@@ -50,8 +50,12 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public double getScore(){
-        return 22;
+    public double getScore(Equipe equipe){
+        double score = 0;
+        for (Epreuve epreuve: this.liEpreuve){
+            score += epreuve.getScore(equipe);
+        }
+        return score;
     }
 
 
