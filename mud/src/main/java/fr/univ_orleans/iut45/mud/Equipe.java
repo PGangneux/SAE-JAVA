@@ -34,7 +34,7 @@ public class Equipe implements Participant{
     }
 
     public void ajouteAthlete(Athlete athlete){
-        if verifSexe(athlete){
+        if (this.verifSexe(athlete)){
             this.liAthlete.add(athlete);
         }
     }
