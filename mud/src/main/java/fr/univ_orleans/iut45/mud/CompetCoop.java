@@ -20,7 +20,7 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public List<Equipe> getParticipant(){
+    public List<Participant> getParticipant(){
         return this.liEquipe;
     }
 
@@ -30,12 +30,12 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public void participer(Equipe equipe){
+    public void participer(Participant participant){
         this.liEquipe.add(equipe);
     }
 
     @Override
-    public void suppParticipant(Equipe equipe){
+    public void suppParticipant(Participant participant){
         this.liEquipe.remove(equipe);
     }
 
@@ -45,7 +45,7 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public boolean participantPresent(Equipe equipe){
+    public boolean participantPresent(Participant participant){
         this.liEquipe.contains(equipe);
     }
 
