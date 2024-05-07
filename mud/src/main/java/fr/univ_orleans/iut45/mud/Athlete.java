@@ -1,6 +1,6 @@
 package fr.univ_orleans.iut45.mud;
 
-public class Athlete {
+public class Athlete implements Participant{
     private String nom;
     private String prenom;
     private String sexe;
