@@ -8,9 +8,9 @@ public class Athlete implements Participant{
     private Sport sport;
     private Integer force;
     private Integer agilite;
-    private Interger endurance;
+    private Integer endurance;
     
-    public Athlete(String nom, String prenom, String sexe, Pays pays, Sport sport, Integer force, Integer agilite, Integer endurence){
+    public Athlete(String nom, String prenom, String sexe, Pays pays, Sport sport, Integer force, Integer agilite, Integer endurance){
         this.nom = nom;
         this.prenom = prenom;
         this.sexe =sexe;
@@ -18,7 +18,7 @@ public class Athlete implements Participant{
         this.sport = sport;
         this.force = force;
         this.agilite = agilite;
-        this.endurance = endurence;
+        this.endurance = endurance;
     }
 
     public String getNom() {
@@ -50,7 +50,7 @@ public class Athlete implements Participant{
         return agilite;
     }
 
-    public Interger getEndurance() {
+    public Integer getEndurance() {
         return endurance;
     }
 
@@ -82,7 +82,7 @@ public class Athlete implements Participant{
         this.agilite = agilite;
     }
 
-    public void setEndurance(Interger endurance) {
+    public void setEndurance(Integer endurance) {
         this.endurance = endurance;
     }
 
