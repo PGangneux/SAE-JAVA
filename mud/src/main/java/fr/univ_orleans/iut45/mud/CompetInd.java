@@ -8,7 +8,7 @@ public class CompetInd implements Competition{
     private List<Epreuve> liEpreuve;
     private List<Athlete> liAthletes;
 
-    public CompetCoop(String nom){
+    public CompetInd(String nom){
         this.nom=nom;
         this.liAthletes = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
