@@ -4,7 +4,7 @@ public interface Epreuve {
 
     public String classementEpreuve();
     public int getScore(Object o);
-    public void setScore(Object o, int valeur);
+    public void setScore(Object o, Integer valeur);
     public String getNom();
-    
+
 }
