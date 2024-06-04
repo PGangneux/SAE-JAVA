@@ -8,7 +8,7 @@ public class CompetInd implements Competition{
     private List<Epreuve> liEpreuve;
     private List<Athlete> liAthletes;
 
-    public CompetCoop(String nom){
+    public CompetInd(String nom){
         this.nom=nom;
         this.liAthletes = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
@@ -31,12 +31,12 @@ public class CompetInd implements Competition{
 
     @Override
     public void participer(Participant participant){
-        this.liAthletes.add(athlete);
+        this.liAthletes.add(participant);
     }
 
     @Override
     public void suppParticipant(Participant participant){
-        this.liAthletes.remove(athlete);
+        this.liAthletes.remove(participant);
     }
 
     @Override
@@ -46,12 +46,12 @@ public class CompetInd implements Competition{
 
     @Override
     public boolean participantPresent(Participant participant){
-        return this.liAthletes.contains(athlete);
+        return this.liAthletes.contains(participant);
     }
 
     @Override
-    public double getScore(){
-        return 22;
+    public double getScore(Athlete athlete){
+        this.liEpreuve
     }
 
 

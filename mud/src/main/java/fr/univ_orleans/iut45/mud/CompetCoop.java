@@ -31,12 +31,12 @@ public class CompetCoop implements Competition{
 
     @Override
     public void participer(Participant participant){
-        this.liEquipe.add(equipe);
+        this.liEquipe.add(participant);
     }
 
     @Override
     public void suppParticipant(Participant participant){
-        this.liEquipe.remove(equipe);
+        this.liEquipe.remove(participant);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CompetCoop implements Competition{
 
     @Override
     public boolean participantPresent(Participant participant){
-        this.liEquipe.contains(equipe);
+        this.liEquipe.contains(participant);
     }
 
     @Override
