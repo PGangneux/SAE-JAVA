@@ -13,9 +13,13 @@ public class Executable {
         List<Athlete> liAthletes = donnees.getListAthletes();  
         List<Equipe> liEquipes = donnees.getListEquipes();
 
+        int i = 0;
         for (Equipe equipe : liEquipes){
-            System.out.println(equipe.getNom());
+            i++;
         }
+        System.out.println(i);
+        System.out.println(ensPays.size()*8);
+        
 
         
         

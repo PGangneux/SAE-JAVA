@@ -13,6 +13,7 @@ public class importData{
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
     private List<Athlete> liAthletes;
+    private List<Competition> liCompetitions;
     private List<Equipe> liEquipes;
 
     private static List<String> lineAMot(String line) {
@@ -71,6 +72,58 @@ public class importData{
         return ensSport;
     }
 
+    private List<Competition> creationCompetition(){
+        List<Competition> liCompetitions = new ArrayList<>();
+        for (Sport sport: ensSport){
+            if(sport.getNom().equals("Natation")){
+                liCompetitions.add(new CompetCoop("Natation relais libre Homme", "M",sport));
+                liCompetitions.add(new CompetCoop("Natation relais libre Femme", "F",sport));
+                liCompetitions.add(new CompetInd("Natation 100 brasse Homme", "M",sport));
+                liCompetitions.add(new CompetInd("Natation 100 brasse Femme", "F",sport));
+            }
+            else if(sport.getNom().equals("Volley-Ball")){
+                liCompetitions.add(new CompetCoop("Volley-Ball Homme", "M", sport));
+                liCompetitions.add(new CompetCoop("Volley-Ball Femme", "F", sport));
+            }
+            else if(sport.getNom().equals("Escrime")){
+                liCompetitions.add(new CompetInd("Escrime fleuret Homme", "M",sport));
+                liCompetitions.add(new CompetInd("Escrime fleuret Femme","F",sport));
+                liCompetitions.add(new CompetInd("Escrime épée Homme", "M",sport));
+                liCompetitions.add(new CompetInd("Escrime épée Femme","F",sport));
+            }
+            else if(sport.getNom().equals("Athlétisme")){
+                liCompetitions.add(new CompetCoop("Athlétisme relais 400m Homme", "M", sport));
+                liCompetitions.add(new CompetCoop("Athlétisme relais 400m Femme", "F", sport));
+                liCompetitions.add(new CompetInd("Athlétisme 110 haies Homme", "M", sport));
+                liCompetitions.add(new CompetInd("Athlétisme relais 400m Femme", "F", sport));
+            }
+            else if(sport.getNom().equals("Handball")){
+                liCompetitions.add(new CompetCoop("Handball Homme", "M", sport));
+            liCompetitions.add(new CompetCoop("Handball Femme", "F", sport));
+            }
+        }
+
+        return liCompetitions;
+    }
+
+    private List<Equipe> creationEquipes(Set<Pays> ensPays, List<Competition> liCompetitions){
+        List<Equipe> liEquipes = new ArrayList<>();
+        for (Pays pays: ensPays){
+            for(Competition competition: liCompetitions){
+                if (competition instanceof CompetCoop){
+                    String sexe = competition.getSexe();
+                    if (sexe.equals("M")){sexe = "masculine";}
+                    else{sexe="feminine";}
+                    String nom = "Equipe de " + pays.getNom() + " de " +competition.getSport().getNom() +" "+ sexe;
+                    Equipe equipe = new Equipe(nom, competition.getSexe(), pays, competition.getSport());
+                    liEquipes.add(equipe);
+                }
+            }
+        }
+        return liEquipes;
+
+    }
+
     private List<Athlete> creationAthletes(List<List<String>> liCSV, Set<Pays> setPays, Set<Sport> setSport){
         List<Athlete> liAthletes = new ArrayList<>();
         for (List<String> line: liCSV){
@@ -95,29 +148,9 @@ public class importData{
         return liAthletes;
     }
 
-    private List<Equipe> creationEquipes(Set<Pays> ensPays, Set<Sport> enSports, List<Athlete> liAthletes){
-        List<Equipe> liEquipes = new ArrayList<>();
-        for(Athlete athlete : liAthletes){
-            Pays pays = athlete.getPays();
-            Sport sport = athlete.getSport();
-            String sexe = athlete.getSexe();
-            Boolean creerEquipe = true;
-            for (Equipe equipe : liEquipes){
-                if(sport.equals(equipe.getSport()) && pays.equals(equipe.getPays()) && sexe.equals(equipe.getSexe())){
-                    equipe.ajouteAthlete(athlete);
-                    creerEquipe = false;
-                }
-            }
-            if(creerEquipe){
-                String nom = "Equipe "+pays.getNom()+ " " +sexe+" de "+sport.getNom();
-                Equipe e = new Equipe(nom,sexe,pays,sport);
-                e.ajouteAthlete(athlete);
-                liEquipes.add(e);
-            }
-        }
-        return liEquipes;
+    
 
-    }
+    
 
     public importData(String chemin){
         this.chemin = chemin;
@@ -126,7 +159,8 @@ public class importData{
             this.ensPays = this.creationPays(liDonnees);
             this.ensSport = this.creationSport();
             this.liAthletes = this.creationAthletes(liDonnees, this.ensPays, this.ensSport);
-            this.liEquipes = this.creationEquipes(this.ensPays, this.ensSport, this.liAthletes);
+            this.liCompetitions = this.creationCompetition();
+            this.liEquipes = this.creationEquipes(this.ensPays, this.liCompetitions);
         }
         catch(IOException e){
             System.out.println("erreur");
@@ -144,6 +178,10 @@ public class importData{
 
     public List<Athlete> getListAthletes(){
         return this.liAthletes;
+    }
+
+    public List<Competition> getLiCompetitions() {
+        return liCompetitions;
     }
 
     public List<Equipe> getListEquipes(){
