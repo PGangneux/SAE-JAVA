@@ -6,6 +6,7 @@ public class Equipe implements Participant{
     private String nom;
     private String sexe;
     private List<Athlete> liAthlete;
+    
 
     public Equipe(String nom, String sexe){
         this.nom = nom;

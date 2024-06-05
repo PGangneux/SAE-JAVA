@@ -7,10 +7,13 @@ public class Sport {
     private String nom;
     private List<CompetInd> liCompetInd;
     private List<CompetCoop> liCompetCoop;
+    private boolean collectif;
 
-    public Sport(String nom) {
+    public Sport(String nom, boolean collectif) {
         this.nom = nom;
-        this.liCompetCoop  = new ArrayList<>();
+        this.collectif = collectif;
+        if (this.collectif){this.liCompetCoop  = new ArrayList<>();}
+        
         this.liCompetInd = new ArrayList<>();
     }
 
@@ -31,7 +34,7 @@ public class Sport {
     }
 
     public void ajouteCompetCoop(CompetCoop compet){
-        this.liCompetCoop.add(compet);
+        if (this.collectif){this.liCompetCoop.add(compet);}  
     }
 
     
