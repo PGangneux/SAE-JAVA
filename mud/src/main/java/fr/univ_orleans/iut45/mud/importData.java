@@ -62,9 +62,11 @@ public class importData{
     private Set<Sport> creationSport(){
         Set<Sport> ensSport = new HashSet<>();
         ensSport.add(new Sport("Natation",true));
-        ensSport.add(new Sport("Volley-ball",true));
+        ensSport.add(new Sport("Volley-Ball",true));
         ensSport.add(new Sport("Escrime",false));
         ensSport.add(new Sport("Athlétisme",true));
+        ensSport.add(new Sport("Handball",true));
+        
         
         return ensSport;
     }
@@ -84,15 +86,12 @@ public class importData{
                     if (epreuve.charAt(i) == ' '){i = epreuve.length();}
                     else{nomSport += epreuve.charAt(i);}
                 }
-                System.out.println(nomSport);
                 if (nomSport.equals(sport.getNom())){sportAthlete = sport;}
             }
-            
             Athlete athlete = new Athlete(line.get(0), line.get(1), line.get(2), paysAthlete, sportAthlete, Integer.valueOf(line.get(5)), Integer.valueOf(line.get(6)), Integer.valueOf(line.get(7)));
             liAthletes.add(athlete);
             
         }
-        System.out.println("fin");
         return liAthletes;
     }
 
