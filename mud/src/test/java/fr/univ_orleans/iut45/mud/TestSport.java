@@ -1,7 +1,7 @@
 package fr.univ_orleans.iut45.mud;
 
-import org.junit.*;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class TestSport {
     Sport natation = new Sport("Volley");
@@ -10,8 +10,8 @@ public class TestSport {
     public void TestName() {
         Sport volley = new Sport("Volley");
         Sport natation = new Sport("Natation");
-        assertEquals("Volley", volley.getNom());
-        assertEquals("Natation", natation.getNom());
+        Assertions.assertEquals("Volley", volley.getNom());
+        Assertions.assertEquals("Natation", natation.getNom());
     } 
     
 }
