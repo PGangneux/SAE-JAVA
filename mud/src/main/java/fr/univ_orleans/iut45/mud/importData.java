@@ -13,6 +13,7 @@ public class importData{
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
     private List<Athlete> liAthletes;
+    private List<Equipe> liEquipes;
 
     private static List<String> lineAMot(String line) {
         List<String> liMots = new ArrayList<>();
@@ -85,6 +86,30 @@ public class importData{
         return liAthletes;
     }
 
+    private List<Equipe> creationEquipes(Set<Pays> ensPays, Set<Sport> enSports, List<Athlete> liAthletes){
+        List<Equipe> liEquipes = new ArrayList<>();
+        for(Athlete athlete : liAthletes){
+            Pays pays = athlete.getPays();
+            Sport sport = athlete.getSport();
+            String sexe = athlete.getSexe();
+            Boolean creerEquipe = true;
+            for (Equipe equipe : liEquipes){
+                if(sport.equals(equipe.getSport()) && pays.equals(equipe.getPays()) && sexe.equals(equipe.getSexe())){
+                    equipe.ajouteAthlete(athlete);
+                    creerEquipe = false;
+                }
+            }
+            if(creerEquipe){
+                String nom = "Equipe "+pays.getNom()+ " " +sexe+" de "+sport.getNom();
+                Equipe e = new Equipe(nom,sexe,pays,sport);
+                e.ajouteAthlete(athlete);
+                liEquipes.add(e);
+            }
+        }
+        return liEquipes;
+
+    }
+
     public importData(String chemin){
         this.chemin = chemin;
         try{
@@ -92,6 +117,7 @@ public class importData{
             this.ensPays = this.creationPays(liDonnees);
             this.ensSport = this.creationSport();
             this.liAthletes = this.creationAthletes(liDonnees, this.ensPays, this.ensSport);
+            this.liEquipes = this.creationEquipes(this.ensPays, this.ensSport, this.liAthletes);
         }
         catch(IOException e){
             System.out.println("erreur");
@@ -109,5 +135,9 @@ public class importData{
 
     public List<Athlete> getListAthletes(){
         return this.liAthletes;
+    }
+
+    public List<Equipe> getListEquipes(){
+        return this.liEquipes;
     }
 }

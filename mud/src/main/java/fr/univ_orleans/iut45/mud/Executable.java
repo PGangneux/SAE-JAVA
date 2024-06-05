@@ -12,7 +12,7 @@ public class Executable {
         Set<Sport> ensSports = donnees.getEnsSports();
         List<Athlete> liAthletes = donnees.getListAthletes();  
 
-        for (Pays sp : ensPays){System.out.println(sp.getNom());}
+        
         
     }
 }
