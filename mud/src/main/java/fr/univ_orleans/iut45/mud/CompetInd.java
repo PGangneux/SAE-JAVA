@@ -3,14 +3,14 @@ package fr.univ_orleans.iut45.mud;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetCoop implements Competition{
+public class CompetInd implements Competition{
     private String nom;
     private List<Epreuve> liEpreuve;
-    private List<Equipe> liEquipe;
+    private List<Athlete> liAthletes;
 
-    public CompetCoop(String nom){
+    public CompetInd(String nom){
         this.nom=nom;
-        this.liEquipe = new ArrayList<>();
+        this.liAthletes = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
     }
 
@@ -21,7 +21,7 @@ public class CompetCoop implements Competition{
 
     @Override
     public List<Participant> getParticipant(){
-        return this.liEquipe;
+        return this.liAthletes;
     }
 
     @Override
@@ -31,12 +31,12 @@ public class CompetCoop implements Competition{
 
     @Override
     public void participer(Participant participant){
-        this.liEquipe.add(participant);
+        this.liAthletes.add(participant);
     }
 
     @Override
     public void suppParticipant(Participant participant){
-        this.liEquipe.remove(participant);
+        this.liAthletes.remove(participant);
     }
 
     @Override
@@ -46,12 +46,12 @@ public class CompetCoop implements Competition{
 
     @Override
     public boolean participantPresent(Participant participant){
-        this.liEquipe.contains(participant);
+        return this.liAthletes.contains(participant);
     }
 
     @Override
-    public double getScore(){
-        return 22;
+    public double getScore(Athlete athlete){
+        this.liEpreuve
     }
 
 

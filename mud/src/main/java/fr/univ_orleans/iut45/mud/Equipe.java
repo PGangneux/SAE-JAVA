@@ -2,7 +2,7 @@ package fr.univ_orleans.iut45.mud;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equipe {
+public class Equipe implements Participant{
     private String nom;
     private String sexe;
     private List<Athlete> liAthlete;
@@ -34,7 +34,7 @@ public class Equipe {
     }
 
     public void ajouteAthlete(Athlete athlete){
-        if verifSexe(athlete){
+        if (this.verifSexe(athlete)){
             this.liAthlete.add(athlete);
         }
     }
