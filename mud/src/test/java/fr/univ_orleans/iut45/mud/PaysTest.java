@@ -1,6 +1,8 @@
 package fr.univ_orleans.iut45.mud;
-import org.junit.*;
-import static org.junit.Assert.assertEquals;
+// import org.junit.*;
+// import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PaysTest {
 
@@ -10,9 +12,9 @@ public class PaysTest {
         Pays belgique = new Pays("Belgique");
         Pays suisse = new Pays("Suisse");
         Pays finlande = new Pays("Finlande");
-        assertEquals(france.getNom(), "France");
-        assertEquals(belgique.getNom(), "Belgique");
-        assertEquals(suisse.getNom(), "Suisse");
-        assertEquals(finlande.getNom(), "Finlande");
+        Assertions.assertEquals(france.getNom(), "France");
+        Assertions.assertEquals(belgique.getNom(), "Belgique");
+        Assertions.assertEquals(suisse.getNom(), "Suisse");
+        Assertions.assertEquals(finlande.getNom(), "Finlande");
     }
 }
