@@ -4,6 +4,8 @@ import java.util.List;
 public interface Competition {
 
     public String getNom();
+    public String getSexe();
+    public Sport getSport();
     public List<Participant> getParticipant();
     public String classement();
     public void participer(Participant participant);
