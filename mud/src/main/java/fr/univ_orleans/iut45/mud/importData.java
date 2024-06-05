@@ -14,21 +14,38 @@ public class importData{
     private Set<Pays> ensPays;
     private List<Athlete> liAthletes;
 
+    private static List<String> lineAMot(String line) {
+        List<String> liMots = new ArrayList<>();
+        int i = 0;
+    
+        while (i < line.length()) {
+            String mot = "";
+            while (i < line.length() && line.charAt(i) != ',') {
+                mot += line.charAt(i);
+                i++;
+            }
+            if (!mot.isEmpty()) {
+                liMots.add(mot);
+            }
+            i++;
+        }
+        return liMots;
+    }
+    
+
 
     private List<List<String>> CSVtoJava(String chemin) throws IOException{
         FileReader fileReader = new FileReader(chemin);
         BufferedReader reader = new BufferedReader(fileReader);
         String line = reader.readLine();
         line = reader.readLine();
-		
         List<List<String>> liCSV = new ArrayList<>();
 		while (line != null) {
-            List<String> liLigne = new ArrayList<>();
-            liLigne.add(line);
-			liCSV.add(liLigne);
+			liCSV.add(importData.lineAMot(line));
 			line = reader.readLine();
 		}
 		reader.close();
+        
         return liCSV;
     }
 
@@ -61,7 +78,7 @@ public class importData{
             for (Sport sport : setSport){
                 if (line.get(3).equals(sport.getNom())){sportAthlete = sport;}
             }
-            Athlete athlete = new Athlete(line.get(0), line.get(1), line.get(2), paysAthlete, sportAthlete, Integer.valueOf(line.get(6)), Integer.valueOf(line.get(7)), Integer.valueOf(line.get(8)));
+            Athlete athlete = new Athlete(line.get(0), line.get(1), line.get(2), paysAthlete, sportAthlete, Integer.valueOf(line.get(5)), Integer.valueOf(line.get(6)), Integer.valueOf(line.get(7)));
             liAthletes.add(athlete);
         }
 
@@ -72,11 +89,13 @@ public class importData{
         this.chemin = chemin;
         try{
             List<List<String>> liDonnees = this.CSVtoJava(this.chemin);
-            this.ensSport = this.creationSport(liDonnees);
             this.ensPays = this.creationPays(liDonnees);
+            this.ensSport = this.creationSport(liDonnees);
             this.liAthletes = this.creationAthletes(liDonnees, this.ensPays, this.ensSport);
         }
-        catch(IOException e){}
+        catch(IOException e){
+            System.out.println("erreur");
+        }
 
     }
 
@@ -88,7 +107,7 @@ public class importData{
         return this.ensPays;
     }
 
-    public List<Athlete> getEnsAthletes(){
+    public List<Athlete> getListAthletes(){
         return this.liAthletes;
     }
 }
