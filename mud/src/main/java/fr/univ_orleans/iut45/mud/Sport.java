@@ -20,7 +20,7 @@ public class Sport {
     public String getNom() {
         return nom;
     }
-    
+
     public boolean isCollectif() {
         return collectif;
     }
@@ -47,5 +47,19 @@ public class Sport {
         if (this.collectif){this.liCompetCoop.add(compet);}  
     }
 
+    @Override
+    public boolean equals(Object object){
+        if (object == null){return false;}
+        if(object == this){return true;}
+        if(!(object instanceof Sport)){return false;}
+        Sport tmp = (Sport) object;
+        return tmp.getNom().equals(tmp.getNom());
+    }
+
+    
+    @Override
+    public int hashCode(){
+        return this.getNom().hashCode();
+    }
     
 }

@@ -58,7 +58,7 @@ public class Equipe implements Participant{
                 if(athlete.getSport().equals(this.getSport())){
                     this.liAthlete.add(athlete);
                 }
-                else{System.out.println("Le sport de l'athlète ne correspond pas avec le sport de l'équipe")}
+                else{System.out.println("Le sport de l'athlète ne correspond pas avec le sport de l'équipe");}
             }
             else{System.out.println("Le pays de l'athlète ne correspond pas avec le pays de l'équipe");}
         }
