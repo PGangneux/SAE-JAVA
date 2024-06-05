@@ -58,20 +58,20 @@ public class importData{
         return setPays;
     }
 
-    private Set<Sport> creationSport(List<List<String>> liCSV){
-        Set<Sport> setSport = new HashSet<>();
-        for (List<String> line : liCSV){
-            Sport sport = new Sport(line.get(4));
-            setSport.add(sport);
-        }
-        return setSport;
+    private Set<Sport> creationSport(){
+        Set<Sport> ensSport = new HashSet<>();
+        ensSport.add(new Sport("Natation",true));
+        ensSport.add(new Sport("Volley-ball",true));
+        ensSport.add(new Sport("Escrime",false));
+        ensSport.add(new Sport("Athlétisme",true));
+        return ensSport;
     }
 
     private List<Athlete> creationAthletes(List<List<String>> liCSV, Set<Pays> setPays, Set<Sport> setSport){
         List<Athlete> liAthletes = new ArrayList<>();
         for (List<String> line: liCSV){
             Pays paysAthlete = new Pays("erreur");
-            Sport sportAthlete = new Sport("erreur");
+            Sport sportAthlete = new Sport("erreur", false);
             for (Pays pays : setPays){
                 if (line.get(3).equals(pays.getNom())){paysAthlete = pays;}
             }
@@ -90,7 +90,7 @@ public class importData{
         try{
             List<List<String>> liDonnees = this.CSVtoJava(this.chemin);
             this.ensPays = this.creationPays(liDonnees);
-            this.ensSport = this.creationSport(liDonnees);
+            this.ensSport = this.creationSport();
             this.liAthletes = this.creationAthletes(liDonnees, this.ensPays, this.ensSport);
         }
         catch(IOException e){

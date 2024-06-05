@@ -51,7 +51,7 @@ public class CompetInd implements Competition{
 
     @Override
     public double getScore(Athlete athlete){
-        this.liEpreuve
+        return 1.2;
     }
 
 

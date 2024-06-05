@@ -20,6 +20,14 @@ public class Sport {
     public String getNom() {
         return nom;
     }
+    
+    public boolean isCollectif() {
+        return collectif;
+    }
+
+    public void setCollectif(boolean collectif) {
+        this.collectif = collectif;
+    }
 
     public List<CompetInd> getLiCompetInd() {
         return liCompetInd;
@@ -32,6 +40,8 @@ public class Sport {
     public void ajouteCompetInd(CompetInd compet){
         this.liCompetInd.add(compet);
     }
+
+
 
     public void ajouteCompetCoop(CompetCoop compet){
         if (this.collectif){this.liCompetCoop.add(compet);}  

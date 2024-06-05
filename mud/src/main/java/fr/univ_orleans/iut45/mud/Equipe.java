@@ -5,12 +5,14 @@ import java.util.List;
 public class Equipe implements Participant{
     private String nom;
     private String sexe;
+    private Pays pays;
     private List<Athlete> liAthlete;
     
 
-    public Equipe(String nom, String sexe){
+    public Equipe(String nom, String sexe, Pays pays){
         this.nom = nom;
         this.sexe = sexe;
+        this.pays = pays;
         this.liAthlete = new ArrayList<>();
     }
 
@@ -26,18 +28,28 @@ public class Equipe implements Participant{
         return sexe;
     }
 
-    public boolean verifSexe(Athlete athlete) {
-        return athlete.getSexe()==this.sexe;
+    public Pays getPays() {
+        return pays;
     }
+
+    public void setPays(Pays pays) {
+        this.pays = pays;
+    }
+
+    
 
     public List<Athlete> getLiAthlete() {
         return liAthlete;
     }
 
     public void ajouteAthlete(Athlete athlete){
-        if (this.verifSexe(athlete)){
-            this.liAthlete.add(athlete);
+        if (athlete.getSexe().equals(this.getSexe())){
+            if(athlete.getPays().equals(this.getPays())){
+                this.liAthlete.add(athlete);
+            }
+            else{System.out.println("Le pays de l'athlète ne correspond pas avec le pays de l'équipe");}
         }
+        else{System.out.println("Le sexe de l'athlète ne correspond pas avec le sexe de l'équipe");}
     }
 
     public void supAthlete(Athlete athlete){
