@@ -3,7 +3,7 @@ package fr.univ_orleans.iut45.mud;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class EpreuveInd implements Epreuve{
+public abstract class EpreuveInd implements Epreuve<Athlete>{
     
     protected String nom;
     protected Map<Athlete, Integer> scores;
@@ -17,7 +17,7 @@ public abstract class EpreuveInd implements Epreuve{
     public abstract boolean verifSexe(Athlete athlete);
 
     @Override
-    public int getScore(Athlete athlete){
+    public Integer getScore(Athlete athlete){
         return this.scores.get(athlete);
     }
 
@@ -31,6 +31,16 @@ public abstract class EpreuveInd implements Epreuve{
     @Override
     public String getNom(){
         return this.nom;
+    }
+
+    @Override
+    public Integer getScoreTheorique(Athlete athlete){
+        return athlete.getAgilite()+athlete.getEndurance()+athlete.getForce();
+    }
+
+    @Override
+    public String classementEpreuve(){
+        return "";
     }
 
 
