@@ -65,6 +65,7 @@ public class importData{
         ensSport.add(new Sport("Volley-ball",true));
         ensSport.add(new Sport("Escrime",false));
         ensSport.add(new Sport("Athlétisme",true));
+        
         return ensSport;
     }
 
@@ -77,12 +78,21 @@ public class importData{
                 if (line.get(3).equals(pays.getNom())){paysAthlete = pays;}
             }
             for (Sport sport : setSport){
-                if (line.get(3).equals(sport.getNom())){sportAthlete = sport;}
+                String epreuve = line.get(4);
+                String nomSport = "";
+                for (int i=0; i<epreuve.length(); ++i){
+                    if (epreuve.charAt(i) == ' '){i = epreuve.length();}
+                    else{nomSport += epreuve.charAt(i);}
+                }
+                System.out.println(nomSport);
+                if (nomSport.equals(sport.getNom())){sportAthlete = sport;}
             }
+            
             Athlete athlete = new Athlete(line.get(0), line.get(1), line.get(2), paysAthlete, sportAthlete, Integer.valueOf(line.get(5)), Integer.valueOf(line.get(6)), Integer.valueOf(line.get(7)));
             liAthletes.add(athlete);
+            
         }
-
+        System.out.println("fin");
         return liAthletes;
     }
 

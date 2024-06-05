@@ -11,6 +11,11 @@ public class Executable {
         Set<Pays> ensPays = donnees.getEnsPays();
         Set<Sport> ensSports = donnees.getEnsSports();
         List<Athlete> liAthletes = donnees.getListAthletes();  
+        List<Equipe> liEquipes = donnees.getListEquipes();
+
+        for (Athlete athlete : liAthletes){
+            System.out.println(athlete.getSport().getNom());
+        }
 
         
         
