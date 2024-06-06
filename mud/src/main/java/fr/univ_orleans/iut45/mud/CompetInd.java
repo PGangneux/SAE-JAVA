@@ -5,11 +5,15 @@ import java.util.List;
 
 public class CompetInd implements Competition{
     private String nom;
+    private String sexe;
+    private Sport sport;
     private List<Epreuve> liEpreuve;
-    private List<Athlete> liAthletes;
+    private List<Participant> liAthletes;
 
-    public CompetInd(String nom){
+    public CompetInd(String nom, String sexe, Sport sport){
         this.nom=nom;
+        this.sexe = sexe;
+        this.sport = sport;
         this.liAthletes = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
     }
@@ -20,8 +24,18 @@ public class CompetInd implements Competition{
     }
 
     @Override
+    public String getSexe(){
+        return this.sexe;
+    }
+    
+    @Override
+    public Sport getSport() {
+        return this.sport;
+    }
+
+    @Override
     public List<Participant> getParticipant(){
-        return this.liAthletes;
+        return  this.liAthletes;
     }
 
     @Override
@@ -31,7 +45,7 @@ public class CompetInd implements Competition{
 
     @Override
     public void participer(Participant participant){
-        this.liAthletes.add(participant);
+        if(participant instanceof Athlete){this.liAthletes.add(participant);}
     }
 
     @Override
@@ -50,8 +64,8 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public double getScore(Athlete athlete){
-        this.liEpreuve
+    public double getScore(Participant participant){
+        return 1.2;
     }
 
 
