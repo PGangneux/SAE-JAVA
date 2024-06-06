@@ -8,7 +8,7 @@ public class CompetCoop implements Competition{
     private String sexe;
     private Sport sport;
     private List<Epreuve> liEpreuve;
-    private List<Equipe> liEquipe;
+    private List<Participant> liEquipe;
 
     public CompetCoop(String nom, String sexe, Sport sport){
         this.nom=nom;
@@ -45,7 +45,8 @@ public class CompetCoop implements Competition{
 
     @Override
     public void participer(Participant participant){
-        this.liEquipe.add(participant);
+        if(participant instanceof Equipe){this.liEquipe.add((Equipe) participant);}
+        
     }
 
     @Override
@@ -60,11 +61,11 @@ public class CompetCoop implements Competition{
 
     @Override
     public boolean participantPresent(Participant participant){
-        this.liEquipe.contains(participant);
+        return this.liEquipe.contains(participant);
     }
 
     @Override
-    public double getScore(){
+    public double getScore(Participant participant){
         return 22;
     }
 

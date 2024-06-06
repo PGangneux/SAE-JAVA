@@ -10,18 +10,28 @@ public class Executable {
 
         Set<Pays> ensPays = donnees.getEnsPays();
         Set<Sport> ensSports = donnees.getEnsSports();
+        Set<Competition> ensCompetitions = donnees.getEnsCompetitions();
         List<Athlete> liAthletes = donnees.getListAthletes();  
         List<Equipe> liEquipes = donnees.getListEquipes();
 
-        int i = 0;
-        for (Equipe equipe : liEquipes){
-            i++;
-        }
-        System.out.println(i);
-        System.out.println(ensPays.size()*8);
-        
 
-        
+
+        for(Athlete athlete: liAthletes){
+            //if( athlete.getNom().equals("Ishii") && athlete.getPrenom().equals("Haruto") && athlete.getSexe().equals("F")){System.out.println(athlete.getSport().getNom());}
+        }
+
+        int i = 0;
+        for (Competition competition : ensCompetitions){
+            System.out.println(competition.getNom() +" " +competition.getSexe()+" "+ competition.getSport().getNom()+" "+ competition.getParticipant().size());
+            if (competition instanceof CompetInd){
+                for(Participant Participant : competition.getParticipant()){
+                    Athlete athlete = (Athlete) Participant;
+                    if( athlete.getNom().equals("Ishii") && athlete.getPrenom().equals("Haruto") && athlete.getSexe().equals("F")){
+                        //System.out.println(competition.getNom() +" " +competition.getSexe()+" "+ competition.getSport().getNom()+" "+ competition.getParticipant().size());
+                    }
+                }
+            }
+        }
         
     }
 }

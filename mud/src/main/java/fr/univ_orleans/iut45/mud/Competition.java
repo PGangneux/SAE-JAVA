@@ -12,6 +12,6 @@ public interface Competition {
     public void suppParticipant(Participant participant);
     public void setNom(String nom);
     public boolean participantPresent(Participant participant);
-    public double getScore();
+    public double getScore(Participant participant);
     
 }

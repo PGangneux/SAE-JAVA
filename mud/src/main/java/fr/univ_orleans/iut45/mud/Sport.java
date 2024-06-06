@@ -7,26 +7,15 @@ public class Sport {
     private String nom;
     private List<CompetInd> liCompetInd;
     private List<CompetCoop> liCompetCoop;
-    private boolean collectif;
 
-    public Sport(String nom, boolean collectif) {
+    public Sport(String nom) {
         this.nom = nom;
-        this.collectif = collectif;
-        if (this.collectif){this.liCompetCoop  = new ArrayList<>();}
-        
+        this.liCompetCoop  = new ArrayList<>();
         this.liCompetInd = new ArrayList<>();
     }
 
     public String getNom() {
         return nom;
-    }
-
-    public boolean isCollectif() {
-        return collectif;
-    }
-
-    public void setCollectif(boolean collectif) {
-        this.collectif = collectif;
     }
 
     public List<CompetInd> getLiCompetInd() {
@@ -44,7 +33,7 @@ public class Sport {
 
 
     public void ajouteCompetCoop(CompetCoop compet){
-        if (this.collectif){this.liCompetCoop.add(compet);}  
+        this.liCompetCoop.add(compet);
     }
 
     @Override
@@ -53,7 +42,7 @@ public class Sport {
         if(object == this){return true;}
         if(!(object instanceof Sport)){return false;}
         Sport tmp = (Sport) object;
-        return tmp.getNom().equals(tmp.getNom());
+        return tmp.getNom().equals(this.getNom());
     }
 
     

@@ -17,7 +17,7 @@ public class Pays {
         if (objet == this){return true;}
         if(! (objet instanceof Pays)){return false;}
         Pays tmp = (Pays) objet;
-        return tmp.getNom().equals(tmp.getNom());
+        return tmp.getNom().equals(this.getNom());
     }
 
     @Override

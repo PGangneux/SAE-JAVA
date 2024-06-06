@@ -8,7 +8,7 @@ public class CompetInd implements Competition{
     private String sexe;
     private Sport sport;
     private List<Epreuve> liEpreuve;
-    private List<Athlete> liAthletes;
+    private List<Participant> liAthletes;
 
     public CompetInd(String nom, String sexe, Sport sport){
         this.nom=nom;
@@ -35,7 +35,7 @@ public class CompetInd implements Competition{
 
     @Override
     public List<Participant> getParticipant(){
-        return this.liAthletes;
+        return  this.liAthletes;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CompetInd implements Competition{
 
     @Override
     public void participer(Participant participant){
-        this.liAthletes.add(participant);
+        if(participant instanceof Athlete){this.liAthletes.add(participant);}
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public double getScore(Athlete athlete){
+    public double getScore(Participant participant){
         return 1.2;
     }
 
