@@ -68,7 +68,34 @@ public class TestAthlete {
         Assertions.assertEquals(athlete5.getForce(), forceAthlete5);
         Assertions.assertEquals(athlete5.getAgilite(), agiliteAthlete5);
         Assertions.assertEquals(athlete5.getEndurance(), endurenceAthlete5);
+    }
+    @Test
+    public void testSetters() {
+        athlete2.setAgilite(40);
+        athlete2.setEndurance(25);
+        athlete2.setForce(20);
+        athlete2.setNom("Beauvalais");
+        athlete2.setPrenom("Emeline");
+        athlete2.setSexe("F");
+        Sport badminton = new Sport("Badminton");
+        athlete2.setSport(badminton);
 
+        Assertions.assertEquals(athlete2.getNom(), "Beauvalais");
+        Assertions.assertEquals(athlete2.getPrenom(), "Emeline");
+        Assertions.assertEquals(athlete2.getSexe(), "F");
+        Assertions.assertEquals(athlete2.getSport(), badminton);
+        Assertions.assertEquals(athlete2.getSport().getNom(), "Badminton");
         
+        
+        Pays japon = new Pays("Japon");
+        athlete2.setPays(japon);
+        Assertions.assertEquals(athlete2.getPays(), japon);
+        Assertions.assertEquals(athlete2.getPays().getNom(), "Japon");    
+
+
+        Integer forceAthlete2 = 20; Integer agiliteAthlete2 = 40; Integer endurenceAthlete2 = 25;
+        Assertions.assertEquals(athlete2.getForce(), forceAthlete2);
+        Assertions.assertEquals(athlete2.getAgilite(), agiliteAthlete2);
+        Assertions.assertEquals(athlete2.getEndurance(), endurenceAthlete2);
     }
 }
