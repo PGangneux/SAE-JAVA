@@ -1,5 +1,6 @@
 package fr.univ_orleans.iut45.mud;
 
+
 public interface Epreuve<Athlete> {
 
     public String classementEpreuve();
@@ -9,3 +10,4 @@ public interface Epreuve<Athlete> {
     public String getNom();
 
 }
+
