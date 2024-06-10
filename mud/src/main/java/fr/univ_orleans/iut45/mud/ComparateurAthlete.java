@@ -2,11 +2,11 @@ package fr.univ_orleans.iut45.mud;
 
 import java.util.Comparator;
 
-public class ComparateurAthleteScore implements Comparator<Athlete>{
+public class ComparateurAthlete implements Comparator<Athlete>{
 
     private EpreuveInd epreuve;
 
-    public ComparateurAthleteScore(EpreuveInd epreuve){
+    public ComparateurAthlete(EpreuveInd epreuve){
         this.epreuve = epreuve;
     }
 

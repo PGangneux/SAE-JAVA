@@ -48,14 +48,28 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
         for (Athlete a : this.scores.keySet()){
             listeAthlete.add(a);
         }
-        Comparator<Athlete> comparateur = new ComparateurAthleteScore(this);
+        Comparator<Athlete> comparateur = new ComparateurAthlete(this);
         Collections.sort(listeAthlete,comparateur);
         for (int i = 0; i<listeAthlete.size(); ++i){
-            res += i + listeAthlete.get(i).getNom() + this.scores.get(listeAthlete.get(i));
+            res += i + "|" + listeAthlete.get(i).getPrenom() + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i));
         }
         return res;
     }
 
+    @Override
+    public String classementTheorique(){
+        String res = "Place | Athlète | Score Théorique" + System.lineSeparator();
+        List<Athlete> listeAthlete = new ArrayList<>();
+        for (Athlete a : this.scores.keySet()){
+            listeAthlete.add(a);
+        }
+        Comparator<Athlete> comparateur = new ComparateurAthleteTheorique(this);
+        Collections.sort(listeAthlete,comparateur);
+        for (int i = 0; i<listeAthlete.size(); ++i){
+            res += i + "|" + listeAthlete.get(i).getPrenom() + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i));
+        }
+        return res;
+    }
 
 
 }
