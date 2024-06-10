@@ -3,7 +3,7 @@ package fr.univ_orleans.iut45.mud;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,7 +18,6 @@ public class TestcompetCoop {
     private static Athlete athlete2;
     private static Equipe equipeTest1;
     private static Equipe equipeTest2;
-
 
     
 
@@ -35,8 +34,6 @@ public class TestcompetCoop {
         equipeTest1.ajouteAthlete(athlete2);
         equipeTest2.ajouteAthlete(athlete1);
         equipeTest2.ajouteAthlete(athlete2);
-        
-        
         
     }
     @Test
