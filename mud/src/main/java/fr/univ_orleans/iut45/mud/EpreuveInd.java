@@ -1,6 +1,10 @@
 package fr.univ_orleans.iut45.mud;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class EpreuveInd implements Epreuve<Athlete>{
@@ -39,7 +43,17 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
 
     @Override
     public String classementEpreuve(){
-        return "";
+        String res = "Place | Athlète | Score" + System.lineSeparator();
+        List<Athlete> listeAthlete = new ArrayList<>();
+        for (Athlete a : this.scores.keySet()){
+            listeAthlete.add(a);
+        }
+        Comparator<Athlete> comparateur = new ComparateurAthleteScore(this);
+        Collections.sort(listeAthlete,comparateur);
+        for (int i = 0; i<listeAthlete.size(); ++i){
+            res += i + listeAthlete.get(i).getNom() + this.scores.get(listeAthlete.get(i));
+        }
+        return res;
     }
 
 
