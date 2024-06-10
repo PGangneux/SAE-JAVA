@@ -25,6 +25,24 @@ public class PaysTest {
         Assertions.assertEquals(finlande.getNom(), "Finlande");
     }
 
+
+    @Test
+    public void compteurMedaille(){
+        Pays france = new Pays("France");
+        Assertions.assertEquals(france.getCompteurMedaille(), 0);
+        france.setCompteurMedaille(5);
+        Assertions.assertEquals(france.getCompteurMedaille(), 5);
+    }
+
+    @Test
+    public void compteurMedailleOr(){
+        Pays france = new Pays("France");
+        Assertions.assertEquals(france.getCompteurMedailleOr(), 0);
+        france.setCompteurMedailleOr(5);
+        Assertions.assertEquals(france.getCompteurMedailleOr(), 5);
+    }
+
+
     @Test
     public void classement(){
         Set<Pays> ensPays = new HashSet<>();
@@ -53,7 +71,6 @@ public class PaysTest {
 
         Assertions.assertEquals(classementMedaille, classementMedailleTemoin);
         Assertions.assertEquals(classementMedailleOr, classementMedailleOrTemoin);
-        
         
     }
 }
