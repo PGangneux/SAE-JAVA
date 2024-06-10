@@ -15,8 +15,6 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         this.competition = competition;
     }
 
-    public abstract boolean verifSexe(Equipe equipe);
-
     @Override
     public Integer getScore(Equipe equipe){
         return this.scores.get(equipe);
