@@ -1,6 +1,9 @@
 package fr.univ_orleans.iut45.mud;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class EpreuveCoop implements Epreuve<Equipe> {
@@ -14,8 +17,6 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         this.scores = new HashMap<>();
         this.competition = competition;
     }
-
-    public abstract boolean verifSexe(Equipe equipe);
 
     @Override
     public Integer getScore(Equipe equipe){
@@ -36,16 +37,44 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
 
     @Override
     public Integer getScoreTheorique(Equipe equipe){
-        Integer scores = 0;
+        int score = 0;
         for(Athlete a : equipe.getLiAthlete()){
-            scores += a.getAgilite()+a.getEndurance()+a.getForce();
+            score += a.getAgilite()+a.getEndurance()+a.getForce();
         }
-        return scores;
+        return score;
     }
 
     @Override
     public String classementEpreuve(){
-        return "";
+        String texte="Place | Equipe | Score" +System.lineSeparator();
+        List<Equipe> liste = new ArrayList<>();
+        for(Equipe e : this.scores.keySet()){
+            liste.add(e);
+        }
+        ComparateurEquipe comparateur = new ComparateurEquipe(this);
+        Collections.sort(liste, comparateur);
+        for(Equipe e : liste){
+            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+" | "+this.getScore(e)+System.lineSeparator();
+        }
+
+        return texte;
+    }
+
+    @Override
+    public String classementTheorique(){
+        String texte="Place | Equipe | ScoreThéorique "+System.lineSeparator();
+        List<Equipe> liste = new ArrayList<>();
+        for(Equipe e : this.scores.keySet()){
+            liste.add(e);
+        }
+        ComparateurEquipeTheorique comparateur = new ComparateurEquipeTheorique(this);
+        Collections.sort(liste, comparateur);
+        for(Equipe e : liste){
+            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+" | "+this.getScoreTheorique(e)+System.lineSeparator();
+        }
+
+        return texte;
+
     }
 
 }
