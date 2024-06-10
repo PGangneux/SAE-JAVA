@@ -1,5 +1,7 @@
 package fr.univ_orleans.iut45.mud;
 
+import java.util.Objects;
+
 public class Athlete implements Participant{
     private String nom;
     private String prenom;
@@ -86,6 +88,24 @@ public class Athlete implements Participant{
         this.endurance = endurance;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o==null){return false;}
+        if(o==this){return true;}
+        if(!(o instanceof Athlete)){return false;}
+        Athlete tmp = (Athlete) o;
+        return tmp.getNom().equals(this.getNom()) && tmp.getPrenom().equals(this.getPrenom()) && tmp.getSexe().equals(this.getSexe()) && tmp.getPays().equals(this.getPays()) && tmp.getSport().equals(this.getSport());
+    }
+
+    @Override
+    public int hashCode(){
+        Object nom = (Object) this.nom;
+        Object prenom = (Object) this.prenom;
+        Object sexe = (Object) this.sexe;
+        Object pays = (Object) this.pays;
+        Object sport = (Object) this.sport;
+        return Objects.hash(nom,prenom,sexe,sport,pays);
+    }
     
 
 }
