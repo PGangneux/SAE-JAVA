@@ -4,12 +4,14 @@ import java.util.List;
 public interface Competition {
 
     public String getNom();
-    public List<Object> getParticipant();
+    public String getSexe();
+    public Sport getSport();
+    public List<Participant> getParticipant();
     public String classement();
-    public void participer(Object object);
-    public void suppParticipant(Object object);
+    public void participer(Participant participant);
+    public void suppParticipant(Participant participant);
     public void setNom(String nom);
-    public boolean participantPresent(Object object);
-    public double getScore();
+    public boolean participantPresent(Participant participant);
+    public double getScore(Participant participant);
     
 }
