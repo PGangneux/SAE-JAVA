@@ -6,7 +6,7 @@ public class EpreuveIndFem extends EpreuveInd {
         super(nom, competition);
         for(Participant a : competition.getParticipant()){
             if(a.getSexe()=="F"){
-                this.scores.put(a, this.getScoreTheorique(a));
+                this.scores.put(a, null);
             }
         }
     }
