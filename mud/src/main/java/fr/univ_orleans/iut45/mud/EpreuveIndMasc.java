@@ -6,8 +6,9 @@ public class EpreuveIndMasc extends EpreuveInd {
     public EpreuveIndMasc(String nom, CompetInd competition){
         super(nom, competition);
         for(Participant a : competition.getParticipant()){
-            if(a.getSexe()=="H"){
-                this.scores.put(a, null);
+            Athlete athlete = (Athlete)a;
+            if(a.getSexe().equals("H")){
+                this.scores.put(athlete, null);
             }
         }
     }
