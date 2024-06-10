@@ -1,37 +1,34 @@
 package fr.univ_orleans.iut45.mud;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Executable {
     public static void main(String[] args) {
-        String chemin = "./mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv";
-        importData donnees = new importData(chemin);
+        Set<Pays> ensPays = new HashSet<>();
+        Pays france = new Pays("France");
+        Pays belgique = new Pays("Belgique");
+        Pays suisse = new Pays("Suisse");
+        Pays finlande = new Pays("Finlande");
+        ensPays.add(finlande);
+        ensPays.add(france);
+        ensPays.add(belgique);
+        ensPays.add(suisse);
 
-        Set<Pays> ensPays = donnees.getEnsPays();
-        Set<Sport> ensSports = donnees.getEnsSports();
-        Set<Competition> ensCompetitions = donnees.getEnsCompetitions();
-        List<Athlete> liAthletes = donnees.getListAthletes();  
-        List<Equipe> liEquipes = donnees.getListEquipes();
+        france.setCompteurMedailleOr(5);
+        belgique.setCompteurMedailleOr(2);
+        suisse.setCompteurMedailleOr(1);
 
+        List<Pays> classementMedailleOr = Pays.classementPaysMedailleOr(ensPays);
 
-
-        for(Athlete athlete: liAthletes){
-            //if( athlete.getNom().equals("Ishii") && athlete.getPrenom().equals("Haruto") && athlete.getSexe().equals("F")){System.out.println(athlete.getSport().getNom());}
-        }
-
-        int i = 0;
-        for (Competition competition : ensCompetitions){
-            System.out.println(competition.getNom() +" " +competition.getSexe()+" "+ competition.getSport().getNom()+" "+ competition.getParticipant().size());
-            if (competition instanceof CompetInd){
-                for(Participant Participant : competition.getParticipant()){
-                    Athlete athlete = (Athlete) Participant;
-                    if( athlete.getNom().equals("Ishii") && athlete.getPrenom().equals("Haruto") && athlete.getSexe().equals("F")){
-                        //System.out.println(competition.getNom() +" " +competition.getSexe()+" "+ competition.getSport().getNom()+" "+ competition.getParticipant().size());
-                    }
-                }
-            }
-        }
         
+        List<Pays> classementMedailleOrTemoin = Arrays.asList(france,belgique,suisse,finlande);
+        
+        
+        for(Pays p : classementMedailleOr){
+            System.out.println(p.getCompteurMedailleOr());
+        }
     }
 }

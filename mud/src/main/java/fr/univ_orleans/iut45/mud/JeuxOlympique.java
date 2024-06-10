@@ -1,7 +1,6 @@
 package fr.univ_orleans.iut45.mud;
 
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
