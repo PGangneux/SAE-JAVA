@@ -44,7 +44,7 @@ public class PaysTest {
 
 
     @Test
-    public void classement(){
+    public void classementMedaille(){
         Set<Pays> ensPays = new HashSet<>();
         Pays france = new Pays("France");
         Pays belgique = new Pays("Belgique");
@@ -59,17 +59,37 @@ public class PaysTest {
         belgique.setCompteurMedaille(15);
         suisse.setCompteurMedaille(5);
 
-        france.setCompteurMedailleOr(5);
-        belgique.setCompteurMedaille(2);
-        suisse.setCompteurMedaille(1);
-
         List<Pays> classementMedaille = Pays.classementPaysMedaille(ensPays);
-        List<Pays> classementMedailleOr = Pays.classementPaysMedailleOr(ensPays);
+        
 
-        List<Pays> classementMedailleTemoin = Arrays.asList(belgique,france,suisse,finlande);
-        List<Pays> classementMedailleOrTemoin = Arrays.asList(france,belgique,suisse,finlande);
+        List<Pays> classementMedailleTemoin = Arrays.asList(belgique,suisse,france,finlande);
+       
 
         Assertions.assertEquals(classementMedaille, classementMedailleTemoin);
+    
+    }
+
+    @Test
+    public void classementMedailleOr(){
+        Set<Pays> ensPays = new HashSet<>();
+        Pays france = new Pays("France");
+        Pays belgique = new Pays("Belgique");
+        Pays suisse = new Pays("Suisse");
+        Pays finlande = new Pays("Finlande");
+        ensPays.add(finlande);
+        ensPays.add(france);
+        ensPays.add(belgique);
+        ensPays.add(suisse);
+
+        france.setCompteurMedailleOr(5);
+        belgique.setCompteurMedailleOr(2);
+        suisse.setCompteurMedailleOr(1);
+
+        List<Pays> classementMedailleOr = Pays.classementPaysMedailleOr(ensPays);
+
+        
+        List<Pays> classementMedailleOrTemoin = Arrays.asList(france,belgique,suisse,finlande);
+        
         Assertions.assertEquals(classementMedailleOr, classementMedailleOrTemoin);
         
     }
