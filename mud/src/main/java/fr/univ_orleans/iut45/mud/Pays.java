@@ -1,8 +1,13 @@
 package fr.univ_orleans.iut45.mud;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
-public class Pays {
+
+
+public class Pays implements Comparable<Pays>{
     private String nom;
     private int compteurMedaille;
     private int compteurMedailleOr;
@@ -16,8 +21,25 @@ public class Pays {
     public String getNom() {
         return this.nom;
     }
+    
 
     
+
+    public int getCompteurMedaille() {
+        return compteurMedaille;
+    }
+
+    public void setCompteurMedaille(int compteurMedaille) {
+        this.compteurMedaille = compteurMedaille;
+    }
+
+    public int getCompteurMedailleOr() {
+        return compteurMedailleOr;
+    }
+
+    public void setCompteurMedailleOr(int compteurMedailleOr) {
+        this.compteurMedailleOr = compteurMedailleOr;
+    }
 
     @Override
     public boolean equals(Object objet){
@@ -34,5 +56,21 @@ public class Pays {
         
     }
 
-    public static Set<Pays> ()
+    @Override
+    public int compareTo(Pays unPays){
+        return this.compteurMedaille - unPays.getCompteurMedaille();
+    }
+
+    public static List<Pays> classementPaysMedaille(Set<Pays> ensPays){
+        List<Pays> liPays = new ArrayList<>(ensPays);
+        Collections.sort(liPays);
+        return liPays;
+    }
+
+    public static List<Pays> classementPaysMedailleOr(Set<Pays> ensPays){
+        List<Pays> liPays = new ArrayList<>(ensPays);
+        CompareOr compareOr = new CompareOr();
+        Collections.sort(liPays, compareOr);
+        return liPays;
+    }
 }
