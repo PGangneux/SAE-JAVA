@@ -46,12 +46,23 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
 
     @Override
     public String classementEpreuve(){
-        return "";
+        String texte="Place | Equipe | Score" +System.lineSeparator();
+        List<Equipe> liste = new ArrayList<>();
+        for(Equipe e : this.scores.keySet()){
+            liste.add(e);
+        }
+        ComparateurEquipe comparateur = new ComparateurEquipe(this);
+        Collections.sort(liste, comparateur);
+        for(Equipe e : liste){
+            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+" | "+this.getScore(e)+System.lineSeparator();
+        }
+
+        return texte;
     }
 
     @Override
     public String classementTheorique(){
-        String texte="Place | Equipe | ScoreThéorique \n";
+        String texte="Place | Equipe | ScoreThéorique "+System.lineSeparator();
         List<Equipe> liste = new ArrayList<>();
         for(Equipe e : this.scores.keySet()){
             liste.add(e);
@@ -59,7 +70,7 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         ComparateurEquipeTheorique comparateur = new ComparateurEquipeTheorique(this);
         Collections.sort(liste, comparateur);
         for(Equipe e : liste){
-            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+" | "+this.getScoreTheorique(e);
+            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+" | "+this.getScoreTheorique(e)+System.lineSeparator();
         }
 
         return texte;
