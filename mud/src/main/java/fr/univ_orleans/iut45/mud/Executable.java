@@ -30,5 +30,22 @@ public class Executable {
         for(Pays p : classementMedailleOr){
             System.out.println(p.getCompteurMedailleOr());
         }
+
+        Sport volley = new Sport("Volley");
+        Pays pays = new Pays("France");
+
+        Athlete athlete1 = new Athlete("Personne", "Femme1", "F", pays, volley, 10, 20,65);
+        Athlete athlete2 = new Athlete("Personne", "Femme2", "F", pays, volley, 11, 21, 66);
+        Athlete athlete3 = new Athlete("Personne", "Femme3", "F", pays, volley, 12, 22, 67);
+
+        CompetInd competition = new CompetInd("Compet", "F", volley);
+        competition.participer(athlete1);
+        competition.participer(athlete2);
+        competition.participer(athlete3);
+        EpreuveIndFem epreuveIndFem = new EpreuveIndFem("EpreuveTest", competition);
+        epreuveIndFem.setScore(athlete1, 1);
+        epreuveIndFem.setScore(athlete2, 2);
+        epreuveIndFem.setScore(athlete3, 3);
+        System.out.println(epreuveIndFem.classementEpreuve());
     }
 }
