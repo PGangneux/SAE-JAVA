@@ -57,6 +57,17 @@ public class TestEpreuveIndFem {
 
     @Test
     public void testClassementEpreuve(){
+        Assertions.assertEquals(epreuveIndFem.classementEpreuve(), "Place | Athlète | Score" + System.lineSeparator() +
+                                                                    "0|Femme1 Personne|1" + System.lineSeparator() +
+                                                                    "1|Femme2 Personne|2" + System.lineSeparator() +
+                                                                    "2|Femme3 Personne|3" + System.lineSeparator());
+    }
 
+    @Test
+    public void testClassementTheorique(){
+        Assertions.assertEquals(epreuveIndFem.classementTheorique(), "Place | Athlète | Score Théorique" + System.lineSeparator() +
+                                                                    "0|Femme1 Personne|1" + System.lineSeparator() +
+                                                                    "1|Femme2 Personne|2" + System.lineSeparator() +
+                                                                    "2|Femme3 Personne|3" + System.lineSeparator());
     }
 }

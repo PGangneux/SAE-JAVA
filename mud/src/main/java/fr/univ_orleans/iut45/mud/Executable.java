@@ -46,6 +46,6 @@ public class Executable {
         epreuveIndFem.setScore(athlete1, 1);
         epreuveIndFem.setScore(athlete2, 2);
         epreuveIndFem.setScore(athlete3, 3);
-        System.out.println(epreuveIndFem.classementEpreuve());
+        System.out.println(epreuveIndFem.classementTheorique());
     }
 }

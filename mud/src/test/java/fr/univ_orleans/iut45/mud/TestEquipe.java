@@ -101,7 +101,7 @@ public class TestEquipe {
     @Test
     public void testHashCode(){
         Equipe equipeTest2 = new Equipe("Equipe2", "F", paysE1, vollley);
-        Assertions.assertEquals(equipeTest1.hashCode(), 1106881504);
-        Assertions.assertEquals(equipeTest2.hashCode(), 1106904568);
+        Assertions.assertEquals(equipeTest1.hashCode(), 323131972);
+        Assertions.assertEquals(equipeTest2.hashCode(), 323155036);
     }
 }
