@@ -3,16 +3,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Equipe implements Participant{
+/**
+ * Classe représentant une équipe participant.
+ */
+public class Equipe implements Participant {
+    /**
+     * Nom de l'équipe.
+     */
     private String nom;
-    private String sexe;
-    private Pays pays;
-    private Sport sport;
-    private List<Athlete> liAthlete;
     
+    /**
+     * Sexe de l'équipe ("M" pour masculin, "F" pour féminin).
+     */
+    private String sexe;
+    
+    /**
+     * Pays de l'équipe.
+     */
+    private Pays pays;
+    
+    /**
+     * Sport pratiqué par l'équipe.
+     */
+    private Sport sport;
+    
+    /**
+     * Liste des athlètes de l'équipe.
+     */
+    private List<Athlete> liAthlete;
 
-    public Equipe(String nom, String sexe, Pays pays, Sport sport){
-
+    /**
+     * Constructeur pour initialiser une équipe avec les détails donnés.
+     *
+     * @param nom   Nom de l'équipe.
+     * @param sexe  Sexe de l'équipe.
+     * @param pays  Pays de l'équipe.
+     * @param sport Sport pratiqué par l'équipe.
+     */
+    public Equipe(String nom, String sexe, Pays pays, Sport sport) {
         this.nom = nom;
         this.sexe = sexe;
         this.pays = pays;
@@ -21,97 +49,126 @@ public class Equipe implements Participant{
     }
 
     /**
-     * getter de nom
-     * @return le nom de l'équipe
+     * @return le nom de l'équipe.
      */
     public String getNom() {
-        return nom;
+        return this.nom;
     }
 
     /**
-     * setter de nom
-     * @param nom un nom d'équipe
+     * Définit le nom de l'équipe.
+     *
+     * @param nom un nom d'équipe.
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
     /**
-     * getter de sexe
-     * @return le sexe de l'équipe
+     * @return le sexe de l'équipe.
      */
     public String getSexe() {
-        return sexe;
+        return this.sexe;
     }
 
-
+    /**
+     * @return le pays de l'équipe.
+     */
     public Pays getPays() {
-        return pays;
+        return this.pays;
     }
 
+    /**
+     * Définit le pays de l'équipe.
+     *
+     * @param pays le nouveau pays de l'équipe.
+     */
     public void setPays(Pays pays) {
         this.pays = pays;
     }
 
-    
-
+    /**
+     * @return le sport pratiqué par l'équipe.
+     */
     public Sport getSport() {
-        return sport;
+        return this.sport;
     }
 
+    /**
+     * Définit le sport pratiqué par l'équipe.
+     *
+     * @param sport le nouveau sport de l'équipe.
+     */
     public void setSport(Sport sport) {
         this.sport = sport;
     }
 
     /**
-     * Permet d'avoir les athlètes de l'équipe
-     * @return la liste d'athlètes
+     * @return la liste des athlètes de l'équipe.
      */
     public List<Athlete> getLiAthlete() {
-        return liAthlete;
+        return this.liAthlete;
     }
 
     /**
-     * Permet d'ajouter un athlète à l'équipe. Ne l'ajoutera pas si les sexes sont différents
-     * @param athlete un athlète
+     * Ajoute un athlète à l'équipe. Ne l'ajoutera pas si les sexes, les pays ou les sports sont différents.
+     *
+     * @param athlete un athlète.
      */
-    public void ajouteAthlete(Athlete athlete){
-        if (athlete.getSexe().equals(this.getSexe())){
-            if(athlete.getPays().equals(this.getPays())){
-                if(athlete.getSport().equals(this.getSport())){
+    public void ajouteAthlete(Athlete athlete) {
+        if (athlete.getSexe().equals(this.getSexe())) {
+            if (athlete.getPays().equals(this.getPays())) {
+                if (athlete.getSport().equals(this.getSport())) {
                     this.liAthlete.add(athlete);
+                } else {
+                    System.out.println("Le sport de l'athlète ne correspond pas avec le sport de l'équipe");
                 }
-                else{System.out.println("Le sport de l'athlète ne correspond pas avec le sport de l'équipe");}
+            } else {
+                System.out.println("Le pays de l'athlète ne correspond pas avec le pays de l'équipe");
             }
-            else{System.out.println("Le pays de l'athlète ne correspond pas avec le pays de l'équipe");}
+        } else {
+            System.out.println("Le sexe de l'athlète ne correspond pas avec le sexe de l'équipe");
         }
-        else{System.out.println("Le sexe de l'athlète ne correspond pas avec le sexe de l'équipe");}
     }
 
     /**
-     * Permet de supprimer un athlète de l'équipe
-     * @param athlete un athlète
+     * Supprime un athlète de l'équipe.
+     *
+     * @param athlete un athlète.
      */
-    public void supAthlete(Athlete athlete){
+    public void supAthlete(Athlete athlete) {
         this.liAthlete.remove(athlete);
     }
 
+    /**
+     * Vérifie si deux équipes sont égales en se basant sur leurs attributs.
+     *
+     * @param o l'objet à comparer.
+     * @return true si les équipes sont égales, sinon false.
+     */
     @Override
-    public boolean equals(Object o){
-        if(o==null){return false;}
-        if(o==this){return true;}
-        if(!(o instanceof Equipe)){return false;}
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Equipe)) {
+            return false;
+        }
         Equipe tmp = (Equipe) o;
         return tmp.getNom().equals(this.getNom()) && tmp.getSexe().equals(this.getSexe()) && tmp.getPays().equals(this.getPays()) && tmp.getSport().equals(this.getSport());
     }
 
+    /**
+     * Calcule le code de hachage pour l'équipe en se basant sur ses attributs.
+     *
+     * @return le code de hachage de l'équipe.
+     */
     @Override
-    public int hashCode(){
-        Object nom = (Object) this.nom;
-        Object sexe = (Object) this.sexe;
-        Object pays = (Object) this.pays;
-        Object sport = (Object) this.sport;
-        return Objects.hash(nom,sexe,sport,pays);
+    public int hashCode() {
+        return Objects.hash(nom, sexe, pays, sport);
     }
 }
 
