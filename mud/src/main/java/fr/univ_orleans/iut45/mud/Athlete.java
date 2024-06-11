@@ -2,7 +2,7 @@ package fr.univ_orleans.iut45.mud;
 
 import java.util.Objects;
 
-public class Athlete implements Participant{
+public class Athlete implements Participant, Comparable<Athlete>{
     private String nom;
     private String prenom;
     private String sexe;
@@ -105,6 +105,11 @@ public class Athlete implements Participant{
         Object pays = (Object) this.pays;
         Object sport = (Object) this.sport;
         return Objects.hash(nom,prenom,sexe,sport,pays);
+    }
+
+    @Override
+    public int compareTo(Athlete athlete){
+        return (athlete.getAgilite()+athlete.getForce()+athlete.getEndurance()) - (this.getAgilite()+this.getForce()+this.getEndurance());
     }
     
 
