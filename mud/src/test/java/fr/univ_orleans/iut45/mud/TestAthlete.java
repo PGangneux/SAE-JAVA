@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 public class TestAthlete {
+    private static Sport sport;
     private static Pays france;
     private static Athlete athlete1;
     private static Athlete athlete2;
@@ -13,12 +14,13 @@ public class TestAthlete {
     
     @BeforeAll // s'execute avant tous les test
     static void setUp() { //initialisation des attribut
-        Pays france = new Pays("France");
-        athlete1 = new Athlete("Randriantsoa", "Nathan", "M", france, null, 10, 20,65);
-        athlete2 = new Athlete("Voivenel", "Romain", "M", france, null, 11, 21, 66);
-        athlete3 = new Athlete("Gangneux", "Pierre", "M", france, null, 12, 22, 67);
-        athlete4 = new Athlete("Saunier", "Léo", "M", france, null, 13, 23, 68);
-        athlete5 = new Athlete("Random", "Fille", "F", france, null, 14, 24, 69);
+        sport = new Sport("Sport");
+        france = new Pays("France");
+        athlete1 = new Athlete("Randriantsoa", "Nathan", "M", france, sport, 10, 20,65);
+        athlete2 = new Athlete("Voivenel", "Romain", "M", france, sport, 11, 21, 66);
+        athlete3 = new Athlete("Gangneux", "Pierre", "M", france, sport, 12, 22, 67);
+        athlete4 = new Athlete("Saunier", "Léo", "M", france, sport, 13, 23, 68);
+        athlete5 = new Athlete("Random", "Fille", "F", france, sport, 14, 24, 69);
     }
 
     @Test
@@ -103,7 +105,7 @@ public class TestAthlete {
 
     @Test
     public void testEquals(){
-        Athlete athleteTest = new Athlete("Randriantsoa", "Nathan", "M", france, null, 10, 20,65);
+        Athlete athleteTest = new Athlete("Randriantsoa", "Nathan", "M", france, sport, 10, 20,65);
         Assertions.assertEquals(athlete1.equals(athlete2), false);
         Assertions.assertEquals(athlete1.equals(athlete3), false);
         Assertions.assertEquals(athlete1.equals(athleteTest), true);
