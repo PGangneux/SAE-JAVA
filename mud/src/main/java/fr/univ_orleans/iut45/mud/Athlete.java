@@ -2,11 +2,10 @@ package fr.univ_orleans.iut45.mud;
 
 import java.util.Objects;
 
-
 /**
  * Classe représentant un athlète participant.
  */
-public class Athlete implements Participant{
+public class Athlete implements Participant, Comparable<Athlete>{
     /**
      * nom de l'athlète
      */
@@ -224,4 +223,9 @@ public class Athlete implements Participant{
     }
 
 
+    @Override
+    public int compareTo(Athlete athlete){
+        return (athlete.getAgilite()+athlete.getForce()+athlete.getEndurance()) - (this.getAgilite()+this.getForce()+this.getEndurance());
+    }
+    
 }
