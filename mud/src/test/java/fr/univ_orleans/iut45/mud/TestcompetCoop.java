@@ -1,10 +1,5 @@
 package fr.univ_orleans.iut45.mud;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
