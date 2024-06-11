@@ -8,6 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * Classe permettant d'importer des données à partir d'un fichier CSV et de créer des instances de divers objets tels que 
+ * des athlètes, des équipes, des sports, des pays et des compétitions.
+ */
 public class importData{
     private String chemin;
     private Set<Sport> ensSport;
@@ -16,6 +21,13 @@ public class importData{
     private Set<Competition> ensCompetitions;
     private List<Equipe> liEquipes;
 
+
+    /**
+     * Convertit une ligne de texte CSV en une liste de mots.
+     *
+     * @param line la ligne de texte à convertir.
+     * @return une liste de mots.
+     */
     private static List<String> lineAMot(String line) {
         List<String> liMots = new ArrayList<>();
         int i = 0;
@@ -35,7 +47,13 @@ public class importData{
     }
     
 
-
+     /**
+     * Lit le fichier CSV et le convertit en une liste de listes de chaînes de caractères.
+     *
+     * @param chemin le chemin du fichier CSV.
+     * @return une liste de listes de chaînes de caractères représentant le contenu du CSV.
+     * @throws IOException si une erreur d'entrée/sortie se produit.
+     */
     private List<List<String>> CSVtoJava(String chemin) throws IOException{
         FileReader fileReader = new FileReader(chemin);
         BufferedReader reader = new BufferedReader(fileReader);
@@ -51,6 +69,13 @@ public class importData{
         return liCSV;
     }
 
+
+    /**
+     * Crée un ensemble de pays à partir des données CSV.
+     *
+     * @param liCSV les données CSV.
+     * @return un ensemble de pays.
+     */
     private Set<Pays> creationPays(List<List<String>> liCSV){
         Set<Pays> setPays = new HashSet<>();
         for (List<String> line : liCSV){
@@ -60,6 +85,13 @@ public class importData{
         return setPays;
     }
 
+
+    /**
+     * Crée un ensemble de sports à partir des données CSV.
+     *
+     * @param liCSV les données CSV.
+     * @return un ensemble de sports.
+     */
     private Set<Sport> creationSport(List<List<String>> liCSV){
         Set<Sport> ensSport = new HashSet<>();
         for (List<String> line : liCSV){
@@ -75,6 +107,13 @@ public class importData{
         return ensSport;
     }
 
+
+    /**
+     * Crée un ensemble de compétitions à partir des sports.
+     *
+     * @param ensSport l'ensemble des sports.
+     * @return un ensemble de compétitions.
+     */
     private Set<Competition> creationCompetition(Set<Sport> ensSport){
         Set<Competition> ensCompetitions = new HashSet<>();
         for (Sport sport: ensSport){
@@ -109,6 +148,14 @@ public class importData{
         return ensCompetitions;
     }
 
+
+    /**
+     * Crée une liste d'équipes à partir des pays et des compétitions.
+     *
+     * @param ensPays l'ensemble des pays.
+     * @param ensCompetitions l'ensemble des compétitions.
+     * @return une liste d'équipes.
+     */
     private List<Equipe> creationEquipes(Set<Pays> ensPays, Set<Competition> ensCompetitions){
         List<Equipe> liEquipes = new ArrayList<>();
         for (Pays pays: ensPays){
@@ -128,6 +175,17 @@ public class importData{
 
     }
 
+
+    /**
+     * Crée une liste d'athlètes à partir des données CSV, des pays, des sports, des équipes et des compétitions.
+     *
+     * @param liCSV les données CSV.
+     * @param setPays l'ensemble des pays.
+     * @param setSport l'ensemble des sports.
+     * @param liEquipes la liste des équipes.
+     * @param ensCompetitions l'ensemble des compétitions.
+     * @return une liste d'athlètes.
+     */
     private List<Athlete> creationAthletes(List<List<String>> liCSV, Set<Pays> setPays, Set<Sport> setSport, List<Equipe> liEquipes, Set<Competition> ensCompetitions){
         List<Athlete> liAthletes = new ArrayList<>();
         for (List<String> line: liCSV){
@@ -186,6 +244,12 @@ public class importData{
     }
 
 
+
+    /**
+     * Construit une instance de la classe importData.
+     *
+     * @param chemin le chemin du fichier CSV à importer.
+     */
     public importData(String chemin){
         this.chemin = chemin;
         try{
@@ -204,22 +268,52 @@ public class importData{
 
     }
 
+
+    /**
+     * Retourne l'ensemble des sports importés.
+     *
+     * @return un ensemble de sports.
+     */
     public Set<Sport> getEnsSports(){
         return this.ensSport;
     }
 
+
+     /**
+     * Retourne l'ensemble des pays importés.
+     *
+     * @return un ensemble de pays.
+     */
     public Set<Pays> getEnsPays(){
         return this.ensPays;
     }
 
+
+    /**
+     * Retourne la liste des athlètes importés.
+     *
+     * @return une liste d'athlètes.
+     */
     public List<Athlete> getListAthletes(){
         return this.liAthletes;
     }
 
+
+    /**
+     * Retourne l'ensemble des compétitions importées.
+     *
+     * @return un ensemble de compétitions.
+     */
     public Set<Competition> getEnsCompetitions() {
         return ensCompetitions;
     }
 
+
+    /**
+     * Retourne la liste des équipes importées.
+     *
+     * @return une liste d'équipes.
+     */
     public List<Equipe> getListEquipes(){
         return this.liEquipes;
     }
