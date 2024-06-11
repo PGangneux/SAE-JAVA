@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class TestEpreuveIndMasc {
-    private static EpreuveIndMasc epreuveIndMasc;
+public class TestEpreuveIndFem {
+    private static EpreuveIndFem epreuveIndMasc;
     private static Sport volley;
     private static CompetInd competition;
     private static Athlete athlete1;
@@ -17,14 +17,14 @@ public class TestEpreuveIndMasc {
     public static void setUp(){
         volley = new Sport("Volley");
         pays = new Pays("France");
-        athlete1 = new Athlete("Randriantsoa", "Nathan", "M", pays, volley, 10, 20,65);
-        athlete2 = new Athlete("Voivenel", "Romain", "M", pays, volley, 11, 21, 66);
-        athlete3 = new Athlete("Gangneux", "Pierre", "M", pays, volley, 12, 22, 67);
+        athlete1 = new Athlete("Personne", "Femme1", "F", pays, volley, 10, 20,65);
+        athlete2 = new Athlete("Personne", "Femme2", "F", pays, volley, 11, 21, 66);
+        athlete3 = new Athlete("Personne", "Femme3", "F", pays, volley, 12, 22, 67);
         competition = new CompetInd("Compet", "M", volley);
         competition.participer(athlete1);
         competition.participer(athlete2);
         competition.participer(athlete3);
-        epreuveIndMasc = new EpreuveIndMasc("EpreuveTest", competition);
+        epreuveIndMasc = new EpreuveIndFem("EpreuveTest", competition);
         epreuveIndMasc.setScore(athlete1, 1);
         epreuveIndMasc.setScore(athlete2, 2);
         epreuveIndMasc.setScore(athlete3, 3);
