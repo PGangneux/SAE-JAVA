@@ -51,7 +51,7 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
         Comparator<Athlete> comparateur = new ComparateurAthlete(this);
         Collections.sort(listeAthlete,comparateur);
         for (int i = 0; i<listeAthlete.size(); ++i){
-            res += i + "|" + listeAthlete.get(i).getPrenom() + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i)) + System.lineSeparator();
+            res += i + "|" + listeAthlete.get(i).getPrenom() + " " + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i)) + System.lineSeparator();
         }
         return res;
     }
@@ -66,7 +66,7 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
         Comparator<Athlete> comparateur = new ComparateurAthleteTheorique(this);
         Collections.sort(listeAthlete,comparateur);
         for (int i = 0; i<listeAthlete.size(); ++i){
-            res += i + "|" + listeAthlete.get(i).getPrenom() + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i)) + System.lineSeparator();
+            res += i + "|" + listeAthlete.get(i).getPrenom() + " " + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i)) + System.lineSeparator();
         }
         return res;
     }
