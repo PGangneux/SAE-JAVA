@@ -85,4 +85,20 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
 
     }
 
+    @Override
+    public Map<Integer,Equipe> getDonneesClassement(){
+        
+        List<Equipe> liste = new ArrayList<>();
+        for(Equipe e : this.scores.keySet()){
+            liste.add(e);
+        }
+        ComparateurEquipeTheorique comparateur = new ComparateurEquipeTheorique(this);
+        Collections.sort(liste, comparateur);
+        Map<Integer,Equipe> dico = new HashMap<>();
+        for(Equipe e : liste){
+            dico.put((liste.indexOf(e)+1), e);
+        }
+        return dico;
+    }
+
 }
