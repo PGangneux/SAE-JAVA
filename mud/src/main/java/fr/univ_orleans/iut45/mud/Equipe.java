@@ -51,6 +51,7 @@ public class Equipe implements Participant {
     /**
      * @return le nom de l'équipe.
      */
+    @Override
     public String getNom() {
         return this.nom;
     }
@@ -67,6 +68,7 @@ public class Equipe implements Participant {
     /**
      * @return le sexe de l'équipe.
      */
+    @Override
     public String getSexe() {
         return this.sexe;
     }
@@ -74,6 +76,7 @@ public class Equipe implements Participant {
     /**
      * @return le pays de l'équipe.
      */
+    @Override
     public Pays getPays() {
         return this.pays;
     }
@@ -90,7 +93,8 @@ public class Equipe implements Participant {
     /**
      * @return le sport pratiqué par l'équipe.
      */
-    public Sport getSport() {
+    @Override
+    public Sport getSport(){
         return this.sport;
     }
 

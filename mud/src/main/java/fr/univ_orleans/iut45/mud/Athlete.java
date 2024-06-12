@@ -64,6 +64,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
     /**
      * @return le nom de l'athlète
      */
+    @Override
     public String getNom() {
         return this.nom;
     }
@@ -78,6 +79,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
     /**
      * @return le sexe de l'athlète "F" ou "M"
      */
+    @Override
     public String getSexe() {
         return this.sexe;
     }
@@ -85,6 +87,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
     /**
      * @return le pays de l'athlète 
      */
+    @Override
     public Pays getPays() {
         return this.pays;
     }
@@ -93,7 +96,8 @@ public class Athlete implements Participant, Comparable<Athlete>{
     /**
      * @return le sport de l'athlète 
      */
-    public Sport getSport() {
+    @Override
+    public Sport getSport(){
         return this.sport;
     }
 
@@ -223,6 +227,12 @@ public class Athlete implements Participant, Comparable<Athlete>{
     }
 
 
+    /**
+     * Compare l'athlète actuel à un autre athlète en fonction de la somme de leurs points d'agilité, de force et d'endurance.
+     *
+     * @param athlete L'athlète à comparer.
+     * @return une valeur négative si l'athlète actuel a une somme de points supérieure, zéro s'ils ont la même somme, une valeur positive sinon.
+     */
     @Override
     public int compareTo(Athlete athlete){
         return (athlete.getAgilite()+athlete.getForce()+athlete.getEndurance()) - (this.getAgilite()+this.getForce()+this.getEndurance());
