@@ -51,7 +51,7 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
         Comparator<Athlete> comparateur = new ComparateurAthlete(this);
         Collections.sort(listeAthlete,comparateur);
         for (int i = 0; i<listeAthlete.size(); ++i){
-            res += i + "|" + listeAthlete.get(i).getPrenom() + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i));
+            res += i + "|" + listeAthlete.get(i).getPrenom() + " " + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i)) + System.lineSeparator();
         }
         return res;
     }
@@ -66,9 +66,26 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
         Comparator<Athlete> comparateur = new ComparateurAthleteTheorique(this);
         Collections.sort(listeAthlete,comparateur);
         for (int i = 0; i<listeAthlete.size(); ++i){
-            res += i + "|" + listeAthlete.get(i).getPrenom() + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i));
+            res += i + "|" + listeAthlete.get(i).getPrenom() + " " + listeAthlete.get(i).getNom() + "|" + this.scores.get(listeAthlete.get(i)) + System.lineSeparator();
         }
         return res;
+    }
+
+
+    @Override
+    public Map<Integer,Athlete> getDonneesClassement(){
+        
+        List<Athlete> liste = new ArrayList<>();
+        for(Athlete a : this.scores.keySet()){
+            liste.add(a);
+        }
+        Comparator<Athlete> comparateur = new ComparateurAthleteTheorique(this);
+        Collections.sort(liste, comparateur);
+        Map<Integer,Athlete> dico = new HashMap<>();
+        for(Athlete a : liste){
+            dico.put((liste.indexOf(a)+1), a);
+        }
+        return dico;
     }
 
 
