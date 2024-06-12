@@ -10,15 +10,39 @@ public class CompetCoop implements Competition{
     private String nom;
     private String sexe;
     private Sport sport;
-    private List<Epreuve> liEpreuve;
+    private List<Epreuve<Participant>> liEpreuve;
     private List<Participant> liEquipe;
+    private int nbJoueursMax;
 
-    public CompetCoop(String nom, String sexe, Sport sport){
+    public CompetCoop(String nom, String sexe, Sport sport, int nbJoueursMax){
         this.nom=nom;
         this.sexe = sexe;
         this.sport = sport;
         this.liEquipe = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
+        this.nbJoueursMax = nbJoueursMax;
+    }
+
+
+    
+
+    public int getNbJoueursMax() {
+        return nbJoueursMax;
+    }
+
+
+
+
+    public void setNbJoueursMax(int nbJoueursMax) {
+        this.nbJoueursMax = nbJoueursMax;
+    }
+
+
+
+
+   @Override
+    public List<Epreuve<Participant>> getLiEpreuves(){
+        return this.liEpreuve;
     }
 
     @Override
@@ -39,7 +63,7 @@ public class CompetCoop implements Competition{
     @Override
     public Sport getSport() {
         return sport;
-}
+    }
 
     @Override
     public String classement(){
@@ -95,8 +119,8 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public double getScore(Participant participant){
-        return 22;
+    public void ajoutEpreuve(Epreuve<Participant> epreuve){
+        this.liEpreuve.add(epreuve);
     }
 
 

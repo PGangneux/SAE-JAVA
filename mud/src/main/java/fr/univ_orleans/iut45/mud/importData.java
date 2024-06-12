@@ -118,14 +118,14 @@ public class importData{
         Set<Competition> ensCompetitions = new HashSet<>();
         for (Sport sport: ensSport){
             if(sport.getNom().equals("Natation")){
-                ensCompetitions.add(new CompetCoop("Natation relais libre Homme", "M",sport));
-                ensCompetitions.add(new CompetCoop("Natation relais libre Femme", "F",sport));
+                ensCompetitions.add(new CompetCoop("Natation relais libre Homme", "M",sport,4));
+                ensCompetitions.add(new CompetCoop("Natation relais libre Femme", "F",sport,4));
                 ensCompetitions.add(new CompetInd("Natation 100 brasse Homme", "M",sport));
                 ensCompetitions.add(new CompetInd("Natation 100 brasse Femme", "F",sport));
             }
             else if(sport.getNom().equals("Volley-Ball")){
-                ensCompetitions.add(new CompetCoop("Volley-Ball Homme", "M", sport));
-                ensCompetitions.add(new CompetCoop("Volley-Ball Femme", "F", sport));
+                ensCompetitions.add(new CompetCoop("Volley-Ball Homme", "M", sport,6));
+                ensCompetitions.add(new CompetCoop("Volley-Ball Femme", "F", sport,6));
             }
             else if(sport.getNom().equals("Escrime")){
                 ensCompetitions.add(new CompetInd("Escrime fleuret Homme", "M",sport));
@@ -134,14 +134,14 @@ public class importData{
                 ensCompetitions.add(new CompetInd("Escrime épée Femme","F",sport));
             }
             else if(sport.getNom().equals("Athlétisme")){
-                ensCompetitions.add(new CompetCoop("Athlétisme relais 400m Homme", "M", sport));
-                ensCompetitions.add(new CompetCoop("Athlétisme relais 400m Femme", "F", sport));
+                ensCompetitions.add(new CompetCoop("Athlétisme relais 400m Homme", "M", sport,4));
+                ensCompetitions.add(new CompetCoop("Athlétisme relais 400m Femme", "F", sport,4));
                 ensCompetitions.add(new CompetInd("Athlétisme 110 haies Homme", "M", sport));
                 ensCompetitions.add(new CompetInd("Athlétisme 110 haies Femme", "F", sport));
             }
             else if(sport.getNom().equals("Handball")){
-                ensCompetitions.add(new CompetCoop("Handball Homme", "M", sport));
-                ensCompetitions.add(new CompetCoop("Handball Femme", "F", sport));
+                ensCompetitions.add(new CompetCoop("Handball Homme", "M", sport,7));
+                ensCompetitions.add(new CompetCoop("Handball Femme", "F", sport,7));
             }
         }
 
