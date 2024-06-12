@@ -2,6 +2,11 @@ package fr.univ_orleans.iut45.mud;
 
 import java.util.Comparator;
 
+
+/**
+ * La classe ComparateurAthleteTheorique implémente l'interface Comparator pour comparer deux athlètes
+ * en fonction de leur score théorique dans une épreuve individuelle donnée.
+ */
 public class ComparateurAthleteTheorique implements Comparator<Athlete>{
     
     private EpreuveInd epreuve;
