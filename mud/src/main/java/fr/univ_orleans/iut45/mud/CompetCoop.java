@@ -41,7 +41,7 @@ public class CompetCoop implements Competition{
         return sport;
 }
 
- @Override
+    @Override
     public String classement(){
         String texte="Place | Equipe" +System.lineSeparator();
         Map<Equipe, Integer> dico = new HashMap<>();

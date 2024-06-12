@@ -1,7 +1,10 @@
 package fr.univ_orleans.iut45.mud;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CompetInd implements Competition{
     private String nom;
@@ -40,7 +43,34 @@ public class CompetInd implements Competition{
 
     @Override
     public String classement(){
-        return "t";
+        String texte="Place | Athlete" +System.lineSeparator();
+        Map<Athlete, Integer> dico = new HashMap<>();
+        for(Participant p : this.liAthletes){
+            Athlete e = (Athlete) p;
+            dico.put(e, 0);
+        }
+
+        for(Epreuve epreuve : this.liEpreuve){
+            EpreuveInd epreuveCoop = (EpreuveInd) epreuve;
+            Map<Integer,Athlete> donnees = epreuveCoop.getDonneesClassement();
+            for(Integer i : donnees.keySet()){
+                dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
+            }
+        }
+
+        List<Athlete> liste = new ArrayList<>();
+        for(Participant p : this.liAthletes){
+            Athlete e = (Athlete) p;
+            liste.add(e);
+        }
+
+        ComparateurCompetInd comparator = new ComparateurCompetInd(dico);
+        Collections.sort(liste , comparator);
+        for(Athlete e : liste){
+            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+System.lineSeparator();
+        }
+        
+        return texte;
     }
 
     @Override
