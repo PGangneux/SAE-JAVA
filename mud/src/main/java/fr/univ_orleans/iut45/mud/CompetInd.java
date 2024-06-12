@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompetInd implements Competition<Athlete>{
+public class CompetInd implements Competition<Athlete , EpreuveInd>{
     private String nom;
     private String sexe;
     private Sport sport;
