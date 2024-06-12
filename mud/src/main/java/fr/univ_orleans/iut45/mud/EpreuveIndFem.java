@@ -10,6 +10,7 @@ public class EpreuveIndFem extends EpreuveInd {
                 this.scores.put(athlete, null);
             }
         }
+        competition.ajoutEpreuve((Epreuve) this);
     }
 
 }

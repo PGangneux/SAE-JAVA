@@ -37,12 +37,15 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
 
     @Override
     public Integer getScoreTheorique(Equipe equipe){
-        int nbJoueursMax = this.competition.getNbJoueursMax()+1;
+        int nbJoueursMax = this.competition.getNbJoueursMax();
         List<Athlete> joueurTerrain = new ArrayList<>();
         Collections.sort(equipe.getLiAthlete());
         //création d'une liste de joueur les plus fort de l'équipe
         for(int i=0; i<nbJoueursMax; ++i){
-            joueurTerrain.add(equipe.getLiAthlete().get(i));
+            if (i< equipe.getLiAthlete().size()){
+                joueurTerrain.add(equipe.getLiAthlete().get(i));
+            }
+            else{i=nbJoueursMax;}
         }
         // calcule de score
         int score = 0;
