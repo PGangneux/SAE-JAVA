@@ -1,18 +1,19 @@
 package fr.univ_orleans.iut45.mud;
 import java.util.List;
 
-public interface Competition {
+public interface Competition<T , E> {
 
     public String getNom();
     public String getSexe();
     public Sport getSport();
-    public List<Participant> getParticipant();
+    public List<T> getParticipant();
     public String classement();
-    public void participer(Participant participant);
-    public void suppParticipant(Participant participant);
+    public void participer(T participant);
+    public void suppParticipant(T participant);
     public void setNom(String nom);
-    public boolean participantPresent(Participant participant);
-    public void ajoutEpreuve(Epreuve<Participant> epreuve);
-    public List<Epreuve<Participant>> getLiEpreuves();
+    public boolean participantPresent(T participant);
+    public void ajoutEpreuve(E epreuve);
+    public List<E> getLiEpreuves();
+    public void attribuerMedaille();
     
 }

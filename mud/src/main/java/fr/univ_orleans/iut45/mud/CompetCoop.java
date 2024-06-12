@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompetCoop implements Competition{
+public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
     private String nom;
     private String sexe;
     private Sport sport;
-    private List<Epreuve<Participant>> liEpreuve;
-    private List<Participant> liEquipe;
+    private List<EpreuveCoop> liEpreuve;
+    private List<Equipe> liEquipe;
     private int nbJoueursMax;
 
     public CompetCoop(String nom, String sexe, Sport sport, int nbJoueursMax){
@@ -41,7 +41,7 @@ public class CompetCoop implements Competition{
 
 
    @Override
-    public List<Epreuve<Participant>> getLiEpreuves(){
+    public List<EpreuveCoop> getLiEpreuves(){
         return this.liEpreuve;
     }
 
@@ -56,7 +56,7 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public List<Participant> getParticipant(){
+    public List<Equipe> getParticipant(){
         return this.liEquipe;
     }
 
@@ -69,22 +69,19 @@ public class CompetCoop implements Competition{
     public String classement(){
         String texte="Place | Equipe" +System.lineSeparator();
         Map<Equipe, Integer> dico = new HashMap<>();
-        for(Participant p : this.liEquipe){
-            Equipe e = (Equipe) p;
+        for(Equipe e : this.liEquipe){
             dico.put(e, 0);
         }
 
-        for(Epreuve epreuve : this.liEpreuve){
-            EpreuveCoop epreuveCoop = (EpreuveCoop) epreuve;
-            Map<Integer,Equipe> donnees = epreuveCoop.getDonneesClassement();
+        for(EpreuveCoop epreuve : this.liEpreuve){
+            Map<Integer,Equipe> donnees = epreuve.getDonneesClassement();
             for(Integer i : donnees.keySet()){
                 dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
             }
         }
 
         List<Equipe> liste = new ArrayList<>();
-        for(Participant p : this.liEquipe){
-            Equipe e = (Equipe) p;
+        for(Equipe e : this.liEquipe){
             liste.add(e);
         }
 
@@ -98,13 +95,13 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public void participer(Participant participant){
-        if(participant instanceof Equipe){this.liEquipe.add((Equipe) participant);}
+    public void participer(Equipe participant){
+        this.liEquipe.add((Equipe) participant);
         
     }
 
     @Override
-    public void suppParticipant(Participant participant){
+    public void suppParticipant(Equipe participant){
         this.liEquipe.remove(participant);
     }
 
@@ -114,13 +111,44 @@ public class CompetCoop implements Competition{
     }
 
     @Override
-    public boolean participantPresent(Participant participant){
+    public boolean participantPresent(Equipe participant){
         return this.liEquipe.contains(participant);
     }
 
     @Override
-    public void ajoutEpreuve(Epreuve<Participant> epreuve){
+    public void ajoutEpreuve(EpreuveCoop epreuve){
         this.liEpreuve.add(epreuve);
+    }
+
+
+    @Override
+    public void attribuerMedaille(){
+        Map<Equipe, Integer> dico = new HashMap<>();
+        for(Equipe e : this.liEquipe){
+            dico.put(e, 0);
+        }
+
+        for(EpreuveCoop epreuve : this.liEpreuve){
+            Map<Integer,Equipe> donnees = epreuve.getDonneesClassement();
+            for(Integer i : donnees.keySet()){
+                dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
+            }
+        }
+
+        List<Equipe> liste = new ArrayList<>();
+        for(Equipe e : this.liEquipe){
+            liste.add(e);
+        }
+
+        ComparateurCompetCoop comparator = new ComparateurCompetCoop(dico);
+        Collections.sort(liste , comparator);
+
+        for(int i=0 ; i<3; i++){
+            if(i<1){
+                liste.get(i).getPays().setCompteurMedailleOr(liste.get(i).getPays().getCompteurMedailleOr()+1);
+            }
+            liste.get(i).getPays().setCompteurMedaille(liste.get(i).getPays().getCompteurMedaille()+1);
+        }
     }
 
 
