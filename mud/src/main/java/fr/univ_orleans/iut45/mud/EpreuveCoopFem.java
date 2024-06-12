@@ -9,6 +9,7 @@ public class EpreuveCoopFem extends EpreuveCoop {
                 this.scores.put(equipe, null);
             }
         }
+        competition.ajoutEpreuve((Epreuve) this);
     }
 
 }

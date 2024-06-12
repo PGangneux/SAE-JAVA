@@ -11,5 +11,6 @@ public class EpreuveIndMasc extends EpreuveInd {
                 this.scores.put(athlete, null);
             }
         }
+        competition.ajoutEpreuve((Epreuve) this);
     }
 }

@@ -79,39 +79,34 @@ public class JeuxOlympique
         for (Competition competition : ensCompetitions){
             if (competition instanceof CompetCoop){
                 if (competition.getSexe().equals("F")){
-                    String nom = "Epreuve de "+competition.getSport().getNom() + "feminin"; 
+                    String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
                     EpreuveCoop epreuve = new EpreuveCoopFem(nom, (CompetCoop) competition);
-                    CompetCoop competCoop = (CompetCoop) competition; 
-                    competCoop.ajoutEpreuve(epreuve);
+                    
                 }
                 else{
-                    String nom = "Epreuve de "+competition.getSport().getNom() + "masculin"; 
+                    String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
                     EpreuveCoopMasc epreuve = new EpreuveCoopMasc(nom, (CompetCoop) competition);
-                    CompetCoop competCoop = (CompetCoop) competition;
-                    competCoop.ajoutEpreuve(epreuve);
+
                 }
             }
             else{
                 if (competition.getSexe().equals("F")){
-                    String nom = "Epreuve de "+competition.getSport().getNom() + "feminin"; 
+                    String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
                     EpreuveIndFem epreuve = new EpreuveIndFem(nom, (CompetInd) competition);
-                    CompetInd competInd = (CompetInd) competition;
-                    competInd.ajoutEpreuve(epreuve);
+                    
                 }
                 else{
-                    String nom = "Epreuve de "+competition.getSport().getNom() + "masculin"; 
+                    String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
                     EpreuveIndMasc epreuve = new EpreuveIndMasc(nom, (CompetInd) competition);
-                    CompetInd competInd = (CompetInd) competition;
-                    competInd.ajoutEpreuve(epreuve);
+                
                 }
 
             }
         }
 
-        List<Competition> li =  new ArrayList<>(ensCompetitions);
-        Competition compet = li.get(0);
-        CompetCoop competCoop = (CompetCoop) compet;
-        System.out.println(competCoop.getLiEpreuves());
+        
+        
+        
         
     
     }
