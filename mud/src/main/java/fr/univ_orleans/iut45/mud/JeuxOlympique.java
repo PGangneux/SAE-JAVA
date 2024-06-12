@@ -18,7 +18,8 @@ public class JeuxOlympique
         importData donnees = new importData(chemin);
         Set<Pays> ensPays = donnees.getEnsPays();
         Set<Sport> ensSports = donnees.getEnsSports();
-        Set<Competition> ensCompetitions = donnees.getEnsCompetitions();
+        Set<CompetCoop> ensCompetitionsCoop = donnees.getEnsCompetitionsCoop();
+        Set<CompetInd> ensCompetitionsInd = donnees.getEnsCompetitionsInd();
         List<Athlete> liAthletes = donnees.getListAthletes();  
         List<Equipe> liEquipes = donnees.getListEquipes();
 
@@ -77,51 +78,67 @@ public class JeuxOlympique
 
 
          // ajout de une épreuve à chaque compétition
-        for (Competition competition : ensCompetitions){
-            if (competition instanceof CompetCoop){
-                if (competition.getSexe().equals("F")){
-                    String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
-                    EpreuveCoop epreuve = new EpreuveCoopFem(nom, (CompetCoop) competition);
+        for (CompetCoop competition : ensCompetitionsCoop){
+            if (competition.getSexe().equals("F")){
+                String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
+                EpreuveCoop epreuve = new EpreuveCoopFem(nom, (CompetCoop) competition);
                     
-                }
-                else{
-                    String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
-                    EpreuveCoopMasc epreuve = new EpreuveCoopMasc(nom, (CompetCoop) competition);
-
-                }
             }
             else{
-                if (competition.getSexe().equals("F")){
-                    String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
-                    EpreuveIndFem epreuve = new EpreuveIndFem(nom, (CompetInd) competition);
+                String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
+                EpreuveCoopMasc epreuve = new EpreuveCoopMasc(nom, (CompetCoop) competition);
+
+            }
+            }
+        for (CompetInd competition : ensCompetitionsInd){
+            if (competition.getSexe().equals("F")){
+                String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
+                EpreuveIndFem epreuve = new EpreuveIndFem(nom, (CompetInd) competition);
                     
                 }
-                else{
-                    String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
-                    EpreuveIndMasc epreuve = new EpreuveIndMasc(nom, (CompetInd) competition);
+            else{
+                String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
+                EpreuveIndMasc epreuve = new EpreuveIndMasc(nom, (CompetInd) competition);
                 
-                }
-
             }
 
         }
 
         
+
+        
         // execution de l'epreuve dans chaque compétition
-        for (Competition<Participant,Epreuve<Participant>> competition : ensCompetitions){
-            for(Epreuve ep : competition.getLiEpreuves()){
-                for(Participant participant : competition.getParticipant()){
+        for (CompetCoop competition : ensCompetitionsCoop){
+            for(Epreuve<Equipe> ep : competition.getLiEpreuves()){
+                for(Equipe equipe : competition.getParticipant()){
                     Random random = new Random();
                     int randomNumber = random.nextInt(10);
-                    ep.setScore(participant, randomNumber);
+                    ep.setScore(equipe, randomNumber);
+                }
+            }
+            competition.attribuerMedaille();;
+        }
+        for (CompetInd competition : ensCompetitionsInd){
+            for(Epreuve<Athlete> ep : competition.getLiEpreuves()){
+                for(Athlete athlete : competition.getParticipant()){
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(10);
+                    ep.setScore(athlete, randomNumber);
                 }
             }
             competition.attribuerMedaille();;
         }
 
-        Pays.classementPaysMedaille(ensPays);
-        Pays.classementPaysMedailleOr(ensPays);
-
+        List<Pays> liMedaille = Pays.classementPaysMedaille(ensPays);
+        System.out.println("classment des Pays par nombre de médaille\n");
+        for (Pays pays : liMedaille){
+            System.out.println(pays.getCompteurMedaille() + " " + pays.getNom());
+        }
+        System.out.println("\n classment des Pays par nombre de médaille d'or\n");
+        List<Pays> liMedailleOr = Pays.classementPaysMedailleOr(ensPays);
+        for (Pays pays : liMedailleOr){
+            System.out.println(pays.getCompteurMedailleOr() + " " + pays.getNom());
+        }
 
         
     
