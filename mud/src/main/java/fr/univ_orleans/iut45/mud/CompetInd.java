@@ -10,7 +10,7 @@ public class CompetInd implements Competition{
     private String nom;
     private String sexe;
     private Sport sport;
-    private List<Epreuve<Participant>> liEpreuve;
+    private List<EpreuveInd> liEpreuve;
     private List<Participant> liAthletes;
 
     public CompetInd(String nom, String sexe, Sport sport){
@@ -42,7 +42,7 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public List<Epreuve<Participant>> getLiEpreuves(){
+    public List<EpreuveInd> getLiEpreuves(){
         return this.liEpreuve;
     }
 
@@ -55,8 +55,7 @@ public class CompetInd implements Competition{
             dico.put(e, 0);
         }
 
-        for(Epreuve epreuve : this.liEpreuve){
-            EpreuveInd epreuveCoop = (EpreuveInd) epreuve;
+        for(EpreuveInd epreuveCoop : this.liEpreuve){
             Map<Integer,Athlete> donnees = epreuveCoop.getDonneesClassement();
             for(Integer i : donnees.keySet()){
                 dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
@@ -99,7 +98,7 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public void ajoutEpreuve(Epreuve<Participant> epreuve){
+    public void ajoutEpreuve(EpreuveInd epreuve){
         this.liEpreuve.add(epreuve);
     }
     
