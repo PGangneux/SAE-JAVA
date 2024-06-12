@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompetInd implements Competition{
+public class CompetInd implements Competition<Athlete>{
     private String nom;
     private String sexe;
     private Sport sport;
     private List<EpreuveInd> liEpreuve;
-    private List<Participant> liAthletes;
+    private List<Athlete> liAthletes;
 
     public CompetInd(String nom, String sexe, Sport sport){
         this.nom=nom;
@@ -37,7 +37,7 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public List<Participant> getParticipant(){
+    public List<Athlete> getParticipant(){
         return  this.liAthletes;
     }
 
@@ -50,9 +50,8 @@ public class CompetInd implements Competition{
     public String classement(){
         String texte="Place | Athlete" +System.lineSeparator();
         Map<Athlete, Integer> dico = new HashMap<>();
-        for(Participant p : this.liAthletes){
-            Athlete e = (Athlete) p;
-            dico.put(e, 0);
+        for(Athlete a : this.liAthletes){
+            dico.put(a, 0);
         }
 
         for(EpreuveInd epreuveCoop : this.liEpreuve){
@@ -63,9 +62,8 @@ public class CompetInd implements Competition{
         }
 
         List<Athlete> liste = new ArrayList<>();
-        for(Participant p : this.liAthletes){
-            Athlete e = (Athlete) p;
-            liste.add(e);
+        for(Athlete a : this.liAthletes){
+            liste.add(a);
         }
 
         ComparateurCompetInd comparator = new ComparateurCompetInd(dico);
@@ -78,12 +76,12 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public void participer(Participant participant){
-        if(participant instanceof Athlete){this.liAthletes.add(participant);}
+    public void participer(Athlete participant){
+        this.liAthletes.add(participant);
     }
 
     @Override
-    public void suppParticipant(Participant participant){
+    public void suppParticipant(Athlete participant){
         this.liAthletes.remove(participant);
     }
 
@@ -93,7 +91,7 @@ public class CompetInd implements Competition{
     }
 
     @Override
-    public boolean participantPresent(Participant participant){
+    public boolean participantPresent(Athlete participant){
         return this.liAthletes.contains(participant);
     }
 
