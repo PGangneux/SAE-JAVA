@@ -72,4 +72,21 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
     }
 
 
+    @Override
+    public Map<Integer,Athlete> getDonneesClassement(){
+        
+        List<Athlete> liste = new ArrayList<>();
+        for(Athlete a : this.scores.keySet()){
+            liste.add(a);
+        }
+        Comparator<Athlete> comparateur = new ComparateurAthleteTheorique(this);
+        Collections.sort(liste, comparateur);
+        Map<Integer,Athlete> dico = new HashMap<>();
+        for(Athlete a : liste){
+            dico.put((liste.indexOf(a)+1), a);
+        }
+        return dico;
+    }
+
+
 }
