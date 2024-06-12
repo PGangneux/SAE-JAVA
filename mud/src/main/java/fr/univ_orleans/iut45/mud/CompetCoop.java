@@ -1,7 +1,10 @@
 package fr.univ_orleans.iut45.mud;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CompetCoop implements Competition{
     private String nom;
@@ -38,9 +41,36 @@ public class CompetCoop implements Competition{
         return sport;
 }
 
- @Override
+    @Override
     public String classement(){
-        return "t";
+        String texte="Place | Equipe" +System.lineSeparator();
+        Map<Equipe, Integer> dico = new HashMap<>();
+        for(Participant p : this.liEquipe){
+            Equipe e = (Equipe) p;
+            dico.put(e, 0);
+        }
+
+        for(Epreuve epreuve : this.liEpreuve){
+            EpreuveCoop epreuveCoop = (EpreuveCoop) epreuve;
+            Map<Integer,Equipe> donnees = epreuveCoop.getDonneesClassement();
+            for(Integer i : donnees.keySet()){
+                dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
+            }
+        }
+
+        List<Equipe> liste = new ArrayList<>();
+        for(Participant p : this.liEquipe){
+            Equipe e = (Equipe) p;
+            liste.add(e);
+        }
+
+        ComparateurCompetCoop comparator = new ComparateurCompetCoop(dico);
+        Collections.sort(liste , comparator);
+        for(Equipe e : liste){
+            texte += (liste.indexOf(e)+1)+" | "+e.getNom()+System.lineSeparator();
+        }
+        
+        return texte;
     }
 
     @Override
