@@ -2,6 +2,7 @@ package fr.univ_orleans.iut45.mud;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -102,11 +103,26 @@ public class JeuxOlympique
                 }
 
             }
+
         }
 
         
-        
-        
+        // execution de l'epreuve dans chaque compétition
+        for (Competition<Participant,Epreuve<Participant>> competition : ensCompetitions){
+            for(Epreuve ep : competition.getLiEpreuves()){
+                for(Participant participant : competition.getParticipant()){
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(10);
+                    ep.setScore(participant, randomNumber);
+                }
+            }
+            competition.attribuerMedaille();;
+        }
+
+        Pays.classementPaysMedaille(ensPays);
+        Pays.classementPaysMedailleOr(ensPays);
+
+
         
     
     }
