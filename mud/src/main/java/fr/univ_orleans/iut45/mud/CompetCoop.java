@@ -121,4 +121,35 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
     }
 
 
+    @Override
+    public void attribuerMedaille(){
+        Map<Equipe, Integer> dico = new HashMap<>();
+        for(Equipe e : this.liEquipe){
+            dico.put(e, 0);
+        }
+
+        for(EpreuveCoop epreuve : this.liEpreuve){
+            Map<Integer,Equipe> donnees = epreuve.getDonneesClassement();
+            for(Integer i : donnees.keySet()){
+                dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
+            }
+        }
+
+        List<Equipe> liste = new ArrayList<>();
+        for(Equipe e : this.liEquipe){
+            liste.add(e);
+        }
+
+        ComparateurCompetCoop comparator = new ComparateurCompetCoop(dico);
+        Collections.sort(liste , comparator);
+
+        for(int i=0 ; i<3; i++){
+            if(i<1){
+                liste.get(i).getPays().setCompteurMedailleOr(liste.get(i).getPays().getCompteurMedailleOr()+1);
+            }
+            liste.get(i).getPays().setCompteurMedaille(liste.get(i).getPays().getCompteurMedaille()+1);
+        }
+    }
+
+
 }

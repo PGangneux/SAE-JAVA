@@ -14,5 +14,6 @@ public interface Competition<T , E> {
     public boolean participantPresent(T participant);
     public void ajoutEpreuve(E epreuve);
     public List<E> getLiEpreuves();
+    public void attribuerMedaille();
     
 }

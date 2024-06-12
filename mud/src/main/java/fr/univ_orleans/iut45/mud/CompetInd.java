@@ -99,6 +99,36 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
     public void ajoutEpreuve(EpreuveInd epreuve){
         this.liEpreuve.add(epreuve);
     }
+
+    @Override
+    public void attribuerMedaille(){
+        Map<Athlete, Integer> dico = new HashMap<>();
+        for(Athlete a : this.liAthletes){
+            dico.put(a, 0);
+        }
+
+        for(EpreuveInd epreuveCoop : this.liEpreuve){
+            Map<Integer,Athlete> donnees = epreuveCoop.getDonneesClassement();
+            for(Integer i : donnees.keySet()){
+                dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
+            }
+        }
+
+        List<Athlete> liste = new ArrayList<>();
+        for(Athlete a : this.liAthletes){
+            liste.add(a);
+        }
+
+        ComparateurCompetInd comparator = new ComparateurCompetInd(dico);
+        Collections.sort(liste , comparator);
+
+        for(int i=0 ; i<3; i++){
+            if(i<1){
+                liste.get(i).getPays().setCompteurMedailleOr(liste.get(i).getPays().getCompteurMedailleOr()+1);
+            }
+            liste.get(i).getPays().setCompteurMedaille(liste.get(i).getPays().getCompteurMedaille()+1);
+        }
+    }
     
 
 
