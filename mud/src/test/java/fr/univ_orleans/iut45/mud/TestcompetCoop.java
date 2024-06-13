@@ -18,7 +18,7 @@ public class TestcompetCoop {
 
     @BeforeAll
     public static void setUp() {
-        competCoop = new CompetCoop("Volley Competition", "M", new Sport("Volley"));
+        competCoop = new CompetCoop("Volley Competition", "M", new Sport("Volley"),4);
         paysE1 = new Pays("France");
         vollley = new Sport("Volley");
         athlete1 = new Athlete("Randriantsoa", "Nathan", "M", paysE1, vollley, 10, 20,65);
@@ -77,11 +77,6 @@ public class TestcompetCoop {
     @Disabled
     public void TestClassement() {
         Assertions.assertEquals(competCoop.classement().equals("t"), true);
-    }
-
-    @Disabled
-    public void TestGetScore() {
-        Assertions.assertEquals(competCoop.getScore(athlete1), 1.2);
     }
 
 }

@@ -74,10 +74,5 @@ public class TestCompetInd {
         Assertions.assertEquals(competInd1.classement().equals("t"), true);
     }
 
-    @Disabled
-    public void TestGetScore() {
-        Assertions.assertEquals(competInd1.getScore(athlete1), 1.2);
-    }
-
 }
     
