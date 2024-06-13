@@ -40,7 +40,7 @@ public class ComparateurEquipe implements Comparator<Equipe> {
         if((epreuve.getScore(e1) == null) ){
             return -1;
         }
-        return epreuve.getScore(e1)-epreuve.getScore(e2);
+        return epreuve.getScore(e2)-epreuve.getScore(e1);
 
     }
 

@@ -107,7 +107,6 @@ public class Pays implements Comparable<Pays>{
     public static List<Pays> classementPaysMedaille(Set<Pays> ensPays){
         List<Pays> liPays = new ArrayList<>(ensPays);
         Collections.sort(liPays);
-        System.out.println(liPays);
         return liPays;
     }
 
