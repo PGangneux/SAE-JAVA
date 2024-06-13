@@ -116,7 +116,7 @@ public class JeuxOlympique
                     ep.setScore(equipe, randomNumber);
                 }
             }
-            competition.attribuerMedaille();;
+            competition.attribuerMedaille();
         }
         for (CompetInd competition : ensCompetitionsInd){
             for(Epreuve<Athlete> ep : competition.getLiEpreuves()){
@@ -126,8 +126,12 @@ public class JeuxOlympique
                     ep.setScore(athlete, randomNumber);
                 }
             }
-            competition.attribuerMedaille();;
+            competition.attribuerMedaille();
         }
+        List<CompetCoop> listeCompet = new ArrayList<>(ensCompetitionsCoop);
+        CompetCoop compet = listeCompet.get(0);
+        System.out.println("affichage du classsment de l'épreuve " + compet.getLiEpreuves().get(0).getNom() + "\n" + compet.getLiEpreuves().get(0).classementEpreuve()+"\n");
+        System.out.println("affichage du classsment de la compétition " + compet.getNom() + "\n" + compet.classement()+"\n");
 
         List<Pays> liMedaille = Pays.classementPaysMedaille(ensPays);
         System.out.println("classment des Pays par nombre de médaille\n");
