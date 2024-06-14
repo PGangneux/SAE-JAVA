@@ -9,12 +9,33 @@ import java.util.Comparator;
  */
 public class ComparateurAthleteTheorique implements Comparator<Athlete>{
     
+
+
+    /**
+     * L'épreuve individuelle utilisée pour obtenir les scores des athlètes.
+     */
     private EpreuveInd epreuve;
 
+
+    /**
+     * Constructeur pour créer un comparateur d'athlètes avec une épreuve individuelle spécifiée.
+     *
+     * @param epreuve L'épreuve individuelle pour laquelle les athlètes seront comparés.
+     */
     public ComparateurAthleteTheorique(EpreuveInd epreuve){
         this.epreuve = epreuve;
     }
 
+
+    /**
+     * Compare deux athlètes en fonction de leur score dans l'épreuve individuelle.
+     * Si l'un des athlètes n'a pas de score, il est considéré comme ayant un score inférieur.
+     *
+     * @param arg0 Le premier athlète à comparer.
+     * @param arg1 Le deuxième athlète à comparer.
+     * @return une valeur négative si arg0 a un score inférieur à arg1,
+     *         zéro s'ils ont le même score, une valeur positive sinon.
+     */
     @Override
     public int compare(Athlete arg0, Athlete arg1) {
         if((epreuve.getScore(arg0) == null) && (epreuve.getScore(arg1) == null)){
