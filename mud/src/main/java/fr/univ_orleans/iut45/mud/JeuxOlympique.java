@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Hello world!
+ * Executable JeuxOlympique, simule le déroulement des jeux Olympique
  *
  */
 public class JeuxOlympique 

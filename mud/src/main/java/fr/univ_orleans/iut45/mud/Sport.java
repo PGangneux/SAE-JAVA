@@ -75,7 +75,12 @@ public class Sport {
     }
 
 
-    
+    /**
+     * Compare ce Sport à un autre objet. Ils sont égaux si l'objet est un Sport et qu'ils portent le meme nom. 
+     * 
+     * @param object L'objet à comparer avec ce Sport.
+     * @return true si l'objet donné représente un Sport équivalent à ce Sport, false sinon.
+     */
     @Override
     public boolean equals(Object object){
         if (object == null){return false;}
@@ -85,7 +90,11 @@ public class Sport {
         return tmp.getNom().equals(this.getNom());
     }
 
-    
+    /**
+     * Retourne un code de hachage pour ce Sport.
+     *
+     * @return Un code de hachage pour ce Sport.
+     */
     @Override
     public int hashCode(){
         return this.getNom().hashCode();

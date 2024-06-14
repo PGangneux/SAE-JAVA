@@ -6,10 +6,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * la classe abstraite EpreuveCoop représente une épreuve coopérative dans une compétitions
+ */
 public abstract class EpreuveCoop implements Epreuve<Equipe> {
 
+    /**
+     * Le nom de l'épreuve.
+     */
     protected String nom;
+
+    /**
+     * Un map qui stocke les scores des équipes participantes. 
+     * La clé est l'équipe et la valeur est le score de l'équipe.
+     */
     protected Map<Equipe, Integer> scores;
+
+    /**
+     * La compétition coopérative à laquelle cette épreuve est associée.
+     */
     protected CompetCoop competition;
 
 
