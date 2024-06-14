@@ -175,6 +175,7 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
      * Ajoute une équipe à la liste des participants de la compétition.
      *
      * @param participant L'équipe à ajouter.
+     * @return Le score théorique total de l'équipe c'est à dire agilité + endurance + force.
      */
     @Override
 
@@ -183,7 +184,7 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
             this.liEquipe.add( participant);
             Integer scoreTheorique = 0;
             for (Athlete athlete : participant.getLiAthlete()){
-                scoreTheorique += participant.getForce() + participant.getAgilite() + participant.getEndurance();
+                scoreTheorique += athlete.getForce() + athlete.getAgilite() + athlete.getEndurance();
             }
         }
         return 0;
