@@ -258,7 +258,7 @@ public class importData{
 
 
     /**
-     * Construit une instance de la classe importData.
+     * Permet d'importer des donner d'un fichier csv.
      *
      * @param chemin le chemin du fichier CSV à importer.
      */

@@ -23,10 +23,10 @@ public class JeuxOlympique
         List<Athlete> liAthletes = donnees.getListAthletes();  
         List<Equipe> liEquipes = donnees.getListEquipes();
 
-        /*
-        // ajout d'un pays manuellement 
+        //// ajouts manuels ////
+        // ajout d'un pays 
         Pays pologne = new Pays("Pologne");
-        System.out.println("ajout de la"+pologne.getNom());
+        System.out.println("ajout de la "+pologne.getNom());
         ensPays.add(pologne);
 
         // ajout d'un Sport
@@ -35,12 +35,12 @@ public class JeuxOlympique
         System.out.println("ajout du " +football.getNom());
 
         //ajout competitons collective
-        Competition competFootCoop = new CompetCoop("competFootCoopFem", "F", football, 11);
+        CompetCoop competFootCoop = new CompetCoop("competFootCoopFem", "F", football, 11);
         System.out.println("ajout de la compétition Coop"+competFootCoop.getNom()+" "+competFootCoop.getSexe()+" "+competFootCoop.getSport().getNom());
         System.out.println("voici les compétitions collective du sport " + football.getNom() +" "+ football.getLiCompetCoop()+" (doit pas etre vide)"); // ajout automatique de la compet dans le sport
 
         //ajout competitons collective
-        Competition competFootSolo = new CompetInd("competFootSoloMasc", "H", football);
+        CompetInd competFootSolo = new CompetInd("competFootSoloMasc", "H", football);
         System.out.println("ajout de la compétition Ind"+competFootSolo.getNom()+" "+competFootSolo.getSexe()+" "+competFootSolo.getSport().getNom());
         System.out.println("voici les compétitions individuelle du sport " + football.getNom() + football.getLiCompetInd() +" (doit pas etre vide)"); // ajout automatique de la compet dans le sport
 
@@ -65,17 +65,8 @@ public class JeuxOlympique
         System.out.println("ajout d'une épreuve coop feminin "+epreuveCoopFem.getNom());
         System.out.println("ajout d'une épreuve ind mascluin "+epreuveIndMasc.getNom());
 
-        //suppresion ajout 
-        */
-
-        // lancement d'une compétition
-        //manque épreuve
-         
-
-        //epreuve
-        
-
-
+    
+        //// Simulation des Jeux Olympique /////
 
          // ajout de une épreuve à chaque compétition
         for (CompetCoop competition : ensCompetitionsCoop){
