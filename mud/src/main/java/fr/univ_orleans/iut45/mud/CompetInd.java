@@ -117,6 +117,21 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
      * @return Le classement des athlètes.
      */
     @Override
+    public List<Epreuve> getEpreuve(){
+        return this.liEpreuve;
+    }
+
+    @Override
+    public String getSexe(){
+        if (this.liAthletes.size()>0){
+            return this.liAthletes.get(0).getSexe();
+        }
+        else{
+            return "NA";
+        }
+    }
+
+    @Override
     public String classement(){
         String texte="Place | Athlete" +System.lineSeparator();
         Map<Athlete, Integer> dico = new HashMap<>();
@@ -202,6 +217,8 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
     public void ajoutEpreuve(EpreuveInd epreuve){
         this.liEpreuve.add(epreuve);
     }
+
+    
 
 
     /**
