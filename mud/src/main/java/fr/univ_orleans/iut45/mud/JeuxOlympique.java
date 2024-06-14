@@ -1,6 +1,8 @@
 package fr.univ_orleans.iut45.mud;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -16,13 +18,15 @@ public class JeuxOlympique
         importData donnees = new importData(chemin);
         Set<Pays> ensPays = donnees.getEnsPays();
         Set<Sport> ensSports = donnees.getEnsSports();
-        Set<Competition> ensCompetitions = donnees.getEnsCompetitions();
+        Set<CompetCoop> ensCompetitionsCoop = donnees.getEnsCompetitionsCoop();
+        Set<CompetInd> ensCompetitionsInd = donnees.getEnsCompetitionsInd();
         List<Athlete> liAthletes = donnees.getListAthletes();  
         List<Equipe> liEquipes = donnees.getListEquipes();
 
-        // ajout d'un pays manuellement 
+        //// ajouts manuels ////
+        // ajout d'un pays 
         Pays pologne = new Pays("Pologne");
-        System.out.println("ajout de la"+pologne.getNom());
+        System.out.println("ajout de la "+pologne.getNom());
         ensPays.add(pologne);
 
         // ajout d'un Sport
@@ -31,17 +35,14 @@ public class JeuxOlympique
         System.out.println("ajout du " +football.getNom());
 
         //ajout competitons collective
-        Competition competFootCoop = new CompetCoop("competFootCoop", "F", football);
+        CompetCoop competFootCoop = new CompetCoop("competFootCoopFem", "F", football, 11);
         System.out.println("ajout de la compétition Coop"+competFootCoop.getNom()+" "+competFootCoop.getSexe()+" "+competFootCoop.getSport().getNom());
         System.out.println("voici les compétitions collective du sport " + football.getNom() +" "+ football.getLiCompetCoop()+" (doit pas etre vide)"); // ajout automatique de la compet dans le sport
 
         //ajout competitons collective
-        Competition competFootSolo = new CompetInd("competFootSolo", "H", football);
+        CompetInd competFootSolo = new CompetInd("competFootSoloMasc", "H", football);
         System.out.println("ajout de la compétition Ind"+competFootSolo.getNom()+" "+competFootSolo.getSexe()+" "+competFootSolo.getSport().getNom());
         System.out.println("voici les compétitions individuelle du sport " + football.getNom() + football.getLiCompetInd() +" (doit pas etre vide)"); // ajout automatique de la compet dans le sport
-
-        //ajout epreuve
-        //à rajouter 
 
         // ajout equipe
         Equipe equipePologneFoot = new Equipe("Equipe de Foot de Pologne", "F", pologne, football);
@@ -58,10 +59,83 @@ public class JeuxOlympique
         competFootSolo.participer(athlete2);
         System.out.println("ajout d'un athlèthe dans la compétition "+competFootSolo.getNom() + " "+competFootSolo.getParticipant().get(0).getNom());
 
-        //suppresion ajout 
+        //ajout epreuves
+        EpreuveCoopFem epreuveCoopFem = new EpreuveCoopFem("epreuveFootCoopFem", (CompetCoop) competFootCoop);
+        EpreuveIndMasc epreuveIndMasc = new EpreuveIndMasc("epreuveFootSoloMasc", (CompetInd) competFootSolo);
+        System.out.println("ajout d'une épreuve coop feminin "+epreuveCoopFem.getNom());
+        System.out.println("ajout d'une épreuve ind mascluin "+epreuveIndMasc.getNom());
+
+    
+        //// Simulation des Jeux Olympique /////
+
+         // ajout de une épreuve à chaque compétition
+        for (CompetCoop competition : ensCompetitionsCoop){
+            if (competition.getSexe().equals("F")){
+                String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
+                EpreuveCoop epreuve = new EpreuveCoopFem(nom, (CompetCoop) competition);
+                    
+            }
+            else{
+                String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
+                EpreuveCoopMasc epreuve = new EpreuveCoopMasc(nom, (CompetCoop) competition);
+
+            }
+            }
+        for (CompetInd competition : ensCompetitionsInd){
+            if (competition.getSexe().equals("F")){
+                String nom = "Epreuve de "+competition.getSport().getNom() + " feminin"; 
+                EpreuveIndFem epreuve = new EpreuveIndFem(nom, (CompetInd) competition);
+                    
+                }
+            else{
+                String nom = "Epreuve de "+competition.getSport().getNom() + " masculin"; 
+                EpreuveIndMasc epreuve = new EpreuveIndMasc(nom, (CompetInd) competition);
+                
+            }
+
+        }
+
         
 
-        // lancement d'une compétition
-        //manque épreuve
+        
+        // execution de l'epreuve dans chaque compétition
+        for (CompetCoop competition : ensCompetitionsCoop){
+            for(Epreuve<Equipe> ep : competition.getLiEpreuves()){
+                for(Equipe equipe : competition.getParticipant()){
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(10);
+                    ep.setScore(equipe, randomNumber);
+                }
+            }
+            competition.attribuerMedaille();
+        }
+        for (CompetInd competition : ensCompetitionsInd){
+            for(Epreuve<Athlete> ep : competition.getLiEpreuves()){
+                for(Athlete athlete : competition.getParticipant()){
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(10);
+                    ep.setScore(athlete, randomNumber);
+                }
+            }
+            competition.attribuerMedaille();
+        }
+        List<CompetCoop> listeCompet = new ArrayList<>(ensCompetitionsCoop);
+        CompetCoop compet = listeCompet.get(0);
+        System.out.println("affichage du classsment de l'épreuve " + compet.getLiEpreuves().get(0).getNom() + "\n" + compet.getLiEpreuves().get(0).classementEpreuve()+"\n");
+        System.out.println("affichage du classsment de la compétition " + compet.getNom() + "\n" + compet.classement()+"\n");
+
+        List<Pays> liMedaille = Pays.classementPaysMedaille(ensPays);
+        System.out.println("classment des Pays par nombre de médaille\n");
+        for (Pays pays : liMedaille){
+            System.out.println(pays.getCompteurMedaille() + " " + pays.getNom());
+        }
+        System.out.println("\n classment des Pays par nombre de médaille d'or\n");
+        List<Pays> liMedailleOr = Pays.classementPaysMedailleOr(ensPays);
+        for (Pays pays : liMedailleOr){
+            System.out.println(pays.getCompteurMedailleOr() + " " + pays.getNom());
+        }
+
+        
+    
     }
 }
