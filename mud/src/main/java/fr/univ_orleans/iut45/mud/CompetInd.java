@@ -39,7 +39,8 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
     private List<Athlete> liAthletes;
 
     /**
-     * Constructeur pour créer une compétition individuelle avec un nom, un sexe et un sport spécifiés.
+     * Constructeur pour créer une compétition individuelle.
+     * Ajout automatique de la compétitions dans la liste de compétitions de Sport.
      *
      * @param nom Le nom de la compétition.
      * @param sexe Le sexe des participants ("M" ou "F").
@@ -51,6 +52,7 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         this.sport = sport;
         this.liAthletes = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
+        this.sport.getLiCompetInd().add(this);
     }
 
 

@@ -39,6 +39,7 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
 
     /**
      * Constructeur pour initialiser une compétition coopérative.
+     * Ajout automatique de la compétitions dans la liste de compétitions de Sport.
      *
      * @param nom Le nom de la compétition.
      * @param sexe Le sexe des participants ("M" ou "F").
@@ -52,6 +53,7 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
         this.liEquipe = new ArrayList<>();
         this.liEpreuve = new ArrayList<>();
         this.nbJoueursMax = nbJoueursMax;
+        this.sport.getLiCompetCoop().add(this);
     }
 
 
