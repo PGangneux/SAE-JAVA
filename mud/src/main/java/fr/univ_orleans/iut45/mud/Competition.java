@@ -49,8 +49,9 @@ public interface Competition<T, E> {
      * Ajoute un participant à la compétition.
      *
      * @param participant Le participant à ajouter.
+     * @return Le score théorique c'est à dire agilité + endurance + force.
      */
-    public void participer(T participant);
+    public Integer participer(T participant);
 
     /**
      * Supprime un participant de la compétition.

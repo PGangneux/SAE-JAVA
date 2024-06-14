@@ -110,27 +110,6 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         return this.liEpreuve;
     }
 
-
-    /**
-     * Retourne le classement des athlètes dans la compétition sous forme de chaîne de caractères.
-     *
-     * @return Le classement des athlètes.
-     */
-    @Override
-    public List<Epreuve> getEpreuve(){
-        return this.liEpreuve;
-    }
-
-    @Override
-    public String getSexe(){
-        if (this.liAthletes.size()>0){
-            return this.liAthletes.get(0).getSexe();
-        }
-        else{
-            return "NA";
-        }
-    }
-
     @Override
     public String classement(){
         String texte="Place | Athlete" +System.lineSeparator();
@@ -165,12 +144,17 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
      * Ajoute un athlète à la compétition si son sexe et son sport correspondent à ceux de la compétition.
      *
      * @param participant L'athlète participant à ajouter.
+     * @return Le score théorique de l'athlète c'est à dire agilité + endurance + force.
      */
     @Override
-    public void participer(Athlete participant){
+    public Integer participer(Athlete participant){
+        Integer scoreTheorique = 0; 
         if (participant.getSexe().equals(this.getSexe()) && participant.getSport().equals(this.getSport())){
             this.liAthletes.add(participant);
+            scoreTheorique = participant.getForce() + participant.getAgilite() + participant.getEndurance();
+            return scoreTheorique;
         }
+        return 0;
     }
 
 
