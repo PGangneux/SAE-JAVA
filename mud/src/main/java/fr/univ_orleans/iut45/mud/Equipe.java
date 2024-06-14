@@ -1,7 +1,6 @@
 package fr.univ_orleans.iut45.mud;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Equipe implements Participant{
     private String nom;
@@ -107,11 +106,18 @@ public class Equipe implements Participant{
 
     @Override
     public int hashCode(){
-        Object nom = (Object) this.nom;
-        Object sexe = (Object) this.sexe;
-        Object pays = (Object) this.pays;
-        Object sport = (Object) this.sport;
-        return Objects.hash(nom,sexe,sport,pays);
+        int res = this.nom.hashCode();
+        res += this.sexe.hashCode();
+        res += this.pays.getNom().hashCode();
+        res += this.sport.getNom().hashCode();
+        for (Athlete athlete : this.getLiAthlete()) {
+            res += athlete.getNom().hashCode();
+            res += athlete.getPrenom().hashCode();
+            res += athlete.getForce().hashCode();
+            res += athlete.getAgilite().hashCode();
+            res += athlete.getEndurance().hashCode();
+        }
+        return res;
     }
 }
 
