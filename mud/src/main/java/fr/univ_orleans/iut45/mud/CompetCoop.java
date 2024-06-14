@@ -177,6 +177,7 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
      * @param participant L'équipe à ajouter.
      */
     @Override
+
     public Integer participer(Equipe participant){
         if (participant.getSexe().equals(this.getSexe()) && participant.getSport().equals(this.getSport())){
             this.liEquipe.add( participant);
