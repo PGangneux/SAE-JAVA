@@ -96,8 +96,9 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
 
     @Override
     public void participer(Equipe participant){
-        this.liEquipe.add((Equipe) participant);
-        
+        if (participant.getSexe().equals(this.getSexe()) && participant.getSport().equals(this.getSport())){
+            this.liEquipe.add( participant);
+        }
     }
 
     @Override

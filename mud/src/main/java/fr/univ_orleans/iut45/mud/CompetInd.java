@@ -77,7 +77,9 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
 
     @Override
     public void participer(Athlete participant){
-        this.liAthletes.add(participant);
+        if (participant.getSexe().equals(this.getSexe()) && participant.getSport().equals(this.getSport())){
+            this.liAthletes.add(participant);
+        }
     }
 
     @Override
