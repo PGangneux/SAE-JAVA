@@ -12,17 +12,37 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
     protected Map<Equipe, Integer> scores;
     protected CompetCoop competition;
 
+
+    /**
+     * Constructeur pour créer une épreuve coopérative avec un nom et une compétition associée.
+     *
+     * @param nom Le nom de l'épreuve.
+     * @param competition La compétition associée.
+     */
     public EpreuveCoop(String nom, CompetCoop competition){
         this.nom=nom;
         this.scores = new HashMap<>();
         this.competition = competition;
     }
 
+    /**
+     * Retourne le score d'une équipe pour cette épreuve.
+     *
+     * @param equipe L'équipe dont on souhaite obtenir le score.
+     * @return Le score de l'équipe.
+     */
     @Override
     public Integer getScore(Equipe equipe){
         return this.scores.get(equipe);
     }
 
+
+    /**
+     * Définit le score d'une équipe pour cette épreuve.
+     *
+     * @param equipe L'équipe dont on souhaite définir le score.
+     * @param valeur Le score à attribuer à l'équipe.
+     */
     @Override
     public void setScore(Equipe equipe, Integer valeur){
         if( this.scores.keySet().contains(equipe)){
@@ -30,11 +50,24 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         }
     }
 
+
+    /**
+     * Retourne le nom de l'épreuve.
+     *
+     * @return Le nom de l'épreuve.
+     */
     @Override
     public String getNom(){
         return this.nom;
     }
 
+
+     /**
+     * Retourne le score théorique d'une équipe pour cette épreuve.
+     *
+     * @param equipe L'équipe dont on souhaite obtenir le score théorique.
+     * @return Le score théorique de l'équipe.
+     */
     @Override
     public Integer getScoreTheorique(Equipe equipe){
         int nbJoueursMax = this.competition.getNbJoueursMax();
@@ -55,6 +88,12 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         return score;
     }
 
+
+    /**
+     * Retourne le classement des équipes pour cette épreuve sous forme de chaîne de caractères.
+     *
+     * @return Le classement des équipes pour cette épreuve.
+     */
     @Override
     public String classementEpreuve(){
         String texte="Place | Equipe | Score" +System.lineSeparator();
@@ -71,6 +110,12 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         return texte;
     }
 
+
+    /**
+     * Retourne le classement théorique des équipes pour cette épreuve sous forme de chaîne de caractères.
+     *
+     * @return Le classement théorique des équipes pour cette épreuve.
+     */
     @Override
     public String classementTheorique(){
         String texte="Place | Equipe | ScoreThéorique "+System.lineSeparator();
@@ -88,6 +133,13 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
 
     }
 
+
+    /**
+     * Retourne les données du classement sous forme de map, où la clé est la position dans le classement
+     * et la valeur est l'équipe correspondante.
+     *
+     * @return Les données du classement.
+     */
     @Override
     public Map<Integer,Equipe> getDonneesClassement(){
         

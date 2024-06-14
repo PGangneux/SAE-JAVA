@@ -6,13 +6,45 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * La classe CompetInd représente une compétition individuelle pour les athlètes.
+ */
 public class CompetInd implements Competition<Athlete , EpreuveInd>{
+
+
+    /**
+     * Le nom de la compétition.
+     */
     private String nom;
+    
+    /**
+     * Le sexe des participants à la compétition ("M" ou "F").
+     */
     private String sexe;
+    
+    /**
+     * Le sport associé à la compétition.
+     */
     private Sport sport;
+    
+    /**
+     * La liste des épreuves individuelles de la compétition.
+     */
     private List<EpreuveInd> liEpreuve;
+    
+    /**
+     * La liste des athlètes participant à la compétition.
+     */
     private List<Athlete> liAthletes;
 
+    /**
+     * Constructeur pour créer une compétition individuelle avec un nom, un sexe et un sport spécifiés.
+     *
+     * @param nom Le nom de la compétition.
+     * @param sexe Le sexe des participants ("M" ou "F").
+     * @param sport Le sport associé à la compétition.
+     */
     public CompetInd(String nom, String sexe, Sport sport){
         this.nom=nom;
         this.sexe = sexe;
@@ -21,31 +53,67 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         this.liEpreuve = new ArrayList<>();
     }
 
+
+    /**
+     * Retourne le nom de la compétition.
+     *
+     * @return Le nom de la compétition.
+     */
     @Override
     public String getNom(){
         return this.nom;
     }
 
+
+    /**
+     * Retourne le sexe des participants.
+     *
+     * @return Le sexe des participants.
+     */
     @Override
     public String getSexe(){
         return this.sexe;
     }
     
+
+    /**
+     * Retourne le sport associé à la compétition.
+     *
+     * @return Le sport associé à la compétition.
+     */
     @Override
     public Sport getSport() {
         return this.sport;
     }
 
+
+    /**
+     * Retourne la liste des participants (athlètes) de la compétition.
+     *
+     * @return La liste des participants.
+     */
     @Override
     public List<Athlete> getParticipant(){
         return  this.liAthletes;
     }
 
+
+    /**
+     * Retourne la liste des épreuves individuelles de la compétition.
+     *
+     * @return La liste des épreuves individuelles.
+     */
     @Override
     public List<EpreuveInd> getLiEpreuves(){
         return this.liEpreuve;
     }
 
+
+    /**
+     * Retourne le classement des athlètes dans la compétition sous forme de chaîne de caractères.
+     *
+     * @return Le classement des athlètes.
+     */
     @Override
     public String classement(){
         String texte="Place | Athlete" +System.lineSeparator();
@@ -75,6 +143,12 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         return texte;
     }
 
+
+    /**
+     * Ajoute un athlète à la compétition si son sexe et son sport correspondent à ceux de la compétition.
+     *
+     * @param participant L'athlète participant à ajouter.
+     */
     @Override
     public void participer(Athlete participant){
         if (participant.getSexe().equals(this.getSexe()) && participant.getSport().equals(this.getSport())){
@@ -82,26 +156,58 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         }
     }
 
+
+    /**
+     * Supprime un athlète de la compétition.
+     *
+     * @param participant L'athlète participant à supprimer.
+     */
     @Override
     public void suppParticipant(Athlete participant){
         this.liAthletes.remove(participant);
     }
 
+
+    /**
+     * Définit un nouveau nom pour la compétition.
+     *
+     * @param newNom Le nouveau nom de la compétition.
+     */
     @Override
     public void setNom(String newNom){
         this.nom = newNom;
     }
 
+
+    /**
+     * Vérifie si un athlète est présent dans la liste des participants.
+     *
+     * @param participant L'athlète à vérifier.
+     * @return true si l'athlète est présent, false sinon.
+     */
     @Override
     public boolean participantPresent(Athlete participant){
         return this.liAthletes.contains(participant);
     }
 
+
+    /**
+     * Ajoute une épreuve individuelle à la liste des épreuves de la compétition.
+     *
+     * @param epreuve L'épreuve individuelle à ajouter.
+     */
     @Override
     public void ajoutEpreuve(EpreuveInd epreuve){
         this.liEpreuve.add(epreuve);
     }
 
+
+    /**
+     * Attribue des médailles aux trois premiers athlètes de la compétition.
+     * L'athlète en première place reçoit une médaille d'or.
+     * Les trois premiers athlètes reçoivent chacun une médaille.
+     * Ces Médailles sont ajouter aux compteur de leurs pays
+     */
     @Override
     public void attribuerMedaille(){
         Map<Athlete, Integer> dico = new HashMap<>();
