@@ -1,7 +1,6 @@
 package fr.univ_orleans.iut45.mud;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Classe représentant une équipe participant.
@@ -171,8 +170,20 @@ public class Equipe implements Participant {
      * @return le code de hachage de l'équipe.
      */
     @Override
-    public int hashCode() {
-        return Objects.hash(nom, sexe, pays, sport);
+    public int hashCode(){
+        int res = this.nom.hashCode();
+        res += this.sexe.hashCode();
+        res += this.pays.getNom().hashCode();
+        res += this.sport.getNom().hashCode();
+        for (Athlete athlete : this.getLiAthlete()) {
+            res += athlete.getNom().hashCode();
+            res += athlete.getPrenom().hashCode();
+            res += athlete.getForce().hashCode();
+            res += athlete.getAgilite().hashCode();
+            res += athlete.getEndurance().hashCode();
+        }
+        return res;
+
     }
 }
 
