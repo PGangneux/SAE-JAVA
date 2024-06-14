@@ -48,6 +48,7 @@ public class Equipe implements Participant {
     }
 
     /**
+     * Retourne le nom de l'équipe.
      * @return le nom de l'équipe.
      */
     @Override
@@ -65,6 +66,7 @@ public class Equipe implements Participant {
     }
 
     /**
+     * Retourne le sexe de l'équipe.
      * @return le sexe de l'équipe.
      */
     @Override
@@ -73,6 +75,7 @@ public class Equipe implements Participant {
     }
 
     /**
+     * Retourne le pays de l'équipe.
      * @return le pays de l'équipe.
      */
     @Override
@@ -90,6 +93,7 @@ public class Equipe implements Participant {
     }
 
     /**
+     * Retourne le sport pratiqué par l'équipe.
      * @return le sport pratiqué par l'équipe.
      */
     @Override
@@ -107,6 +111,7 @@ public class Equipe implements Participant {
     }
 
     /**
+     * Retourne la liste des athlètes de l'équipe.
      * @return la liste des athlètes de l'équipe.
      */
     public List<Athlete> getLiAthlete() {

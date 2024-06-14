@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * La classe CompetInd représente une compétitions collective pour les équipes
+ */
 public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
     /**
      * Le nom de la compétition coopérative.

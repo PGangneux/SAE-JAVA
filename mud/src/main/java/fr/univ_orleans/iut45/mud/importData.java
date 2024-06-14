@@ -313,15 +313,19 @@ public class importData{
 
 
     /**
-     * Retourne l'ensemble des compétitions importées.
+     * Retourne l'ensemble des compétitions coopérative importées.
      *
-     * @return un ensemble de compétitions.
+     * @return un ensemble de CompetCoop.
      */
     public Set<CompetCoop> getEnsCompetitionsCoop() {
         return this.ensCompetitionsCoop;
     }
 
-
+    /**
+     * Retourne l'ensemble des compétitions individuel importées.
+     *
+     * @return un ensemble de CompetInd.
+     */
     public Set<CompetInd> getEnsCompetitionsInd() {
         return this.ensCompetitionsInd;
     }

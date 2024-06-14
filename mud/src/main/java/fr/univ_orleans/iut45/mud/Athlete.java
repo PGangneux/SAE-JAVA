@@ -62,6 +62,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
     }
 
     /**
+     * Retourne le nom de l'athlète
      * @return le nom de l'athlète
      */
     @Override
@@ -70,13 +71,15 @@ public class Athlete implements Participant, Comparable<Athlete>{
     }
 
     /**
-     * @return le prénom de l'athlète
+     * Retourne le prenom de l'athlète
+     * @return le prenom de l'athlète
      */
     public String getPrenom() {
         return this.prenom;
     }
 
     /**
+     * Retourne le sexe de l'athlète "F" ou "M"
      * @return le sexe de l'athlète "F" ou "M"
      */
     @Override
@@ -85,6 +88,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
     }
 
     /**
+     * Retourne le pays de l'athlète 
      * @return le pays de l'athlète 
      */
     @Override
@@ -94,6 +98,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
 
     
     /**
+     * Retourne le sport de l'athlète 
      * @return le sport de l'athlète 
      */
     @Override
@@ -103,6 +108,7 @@ public class Athlete implements Participant, Comparable<Athlete>{
 
 
     /**
+     * Retourne la force de l'athlète.
      * @return la force de l'athlète.
      */
     public Integer getForce() {
@@ -110,13 +116,15 @@ public class Athlete implements Participant, Comparable<Athlete>{
     }
 
     /**
-     * @return l'agilité de l'athlète.
+     * Retourne l'agilité de l'athlète
+     * @return l'agilité de l'athlète
      */
     public Integer getAgilite() {
         return this.agilite;
     }
 
     /**
+     * Retourne l'endurance de l'athlète.
      * @return l'endurance de l'athlète.
      */
     public Integer getEndurance() {

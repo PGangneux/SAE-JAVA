@@ -77,6 +77,12 @@ public class Pays implements Comparable<Pays>{
         this.compteurMedailleOr = compteurMedailleOr;
     }
 
+    /**
+     * Vérifie l'égalité entre ce pays et un autre objet. Ils sont égaux si l'objet est un pays et qu'ils portent le meme nom.
+     *
+     * @param objet L'objet à comparer avec ce pays.
+     * @return true si les objets sont égaux, false sinon.
+     */
     @Override
     public boolean equals(Object objet){
         if (objet == null){return false;}
@@ -86,12 +92,26 @@ public class Pays implements Comparable<Pays>{
         return tmp.getNom().equals(this.getNom());
     }
 
+
+    /**
+     * Retourne le code de hachage pour ce pays.
+     *
+     * @return Le code de hachage basé sur le nom du pays.
+     */
     @Override
     public int hashCode() {
         return this.getNom().hashCode();
         
     }
 
+
+    /**
+     * Compare ce pays à un autre pays pour l'ordre naturel (basé sur le compteur de médailles).
+     *
+     * @param unPays Le pays à comparer.
+     * @return une valeur négative, zéro ou une valeur positive selon que ce pays est moins que,
+     *         égal à ou plus grand que le pays spécifié.
+     */
     @Override
     public int compareTo(Pays unPays){
         return  unPays.getCompteurMedaille() - this.compteurMedaille;
