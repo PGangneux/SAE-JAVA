@@ -25,7 +25,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                <Button fx:id="btnAffichage" mnemonicParsing="false" text="Affichage" />
+                <Button fx:id="btnAffichage" mnemonicParsing="false" onAction="#handleParamAffichage" text="Affichage" />
                   <Button fx:id="btnAudio" mnemonicParsing="false" onAction="#handleParamAudio" text="Audio" />
                   <Button fx:id="btnPref" cache="true" mnemonicParsing="false" onAction="#handleParamPref" style="-fx-background-color: darkkhaki;" text="Préférences" />
                </children>
