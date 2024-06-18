@@ -73,13 +73,13 @@
                   <ButtonBar>
                     <buttons>
                       <Button fx:id="btnCompetitions" mnemonicParsing="false" onAction="#handleCompetition" prefHeight="50.0" text="Compétitions" />
-                        <Button fx:id="btnClassement" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: khaki;" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="btnClassement" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: darkkhaki;" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
                         <Button fx:id="btnParticipant" mnemonicParsing="false" onAction="#handleParticipant" prefHeight="50.0" text="Participant" />
                     </buttons>
                   </ButtonBar>
                   <ButtonBar>
                     <buttons>
-                        <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" text="Paramètre">
+                        <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleParamAffichage" text="Paramètre">
                            <graphic>
                               <ImageView blendMode="MULTIPLY" cache="true" fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
