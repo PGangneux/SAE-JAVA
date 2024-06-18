@@ -1,0 +1,9 @@
+drop table DISPUTE;
+drop table APPARTENIR;
+drop table PARTICIPE;
+drop table EPREUVE;
+drop table COMPETITION;
+drop table EQUIPE;
+drop table ATHLETE;
+drop table SPORT;
+drop table PAYS;
