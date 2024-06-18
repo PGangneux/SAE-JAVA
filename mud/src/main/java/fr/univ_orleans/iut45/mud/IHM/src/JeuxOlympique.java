@@ -44,7 +44,6 @@ public class JeuxOlympique extends Application{
         this.controleur = new Controleur(this);
         this.scene = new Scene(new Pane(), 400, 300);
         ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        this.model = data;
         this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
         this.ensCompetitionsInd = data.getEnsCompetitionsInd();
         
