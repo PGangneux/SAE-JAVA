@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -14,124 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
-         <children>
-            <ButtonBar>
-              <buttons>
-                  <Button fx:id="btnAcceuil" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;">
-                     <graphic>
-                        <ImageView blendMode="MULTIPLY" fitHeight="91.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/logoJO.jpg" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-              </buttons>
-            </ButtonBar>
-            <ButtonBar>
-              <buttons>
-                <Button fx:id="btnCompetition" mnemonicParsing="false" onAction="#handleCompetition" prefHeight="50.0" text="Compétitions" />
-                  <Button fx:id="btnClassement" mnemonicParsing="false" onAction="#handlePays" prefHeight="50.0" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="btnAthlete" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: lime;" text="Participant" />
-              </buttons>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </ButtonBar>
-            <ButtonBar>
-              <buttons>
-                  <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" text="Paramètre">
-                     <graphic>
-                        <ImageView blendMode="MULTIPLY" cache="true" fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/logoParam.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                <Button fx:id="btnDeco" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleDeconnexion" text="Déconnexion">
-                     <graphic>
-                        <ImageView blendMode="MULTIPLY" cache="true" fitHeight="62.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/logoDeconnexion.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-              </buttons>
-            </ButtonBar>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </HBox>
-   </top>
-   <left>
-      <VBox prefHeight="349.0" prefWidth="214.0" style="-fx-border-color: black; -fx-border-style: solid;" BorderPane.alignment="CENTER">
-         <children>
-            <SplitMenuButton fx:id="menuHommeEpreuve" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="200.0" text="Homme">
-              <items>
-                  <MenuItem mnemonicParsing="false" text="Natation">
-                     <graphic>
-                        <SplitMenuButton fx:id="menuNatationH" mnemonicParsing="false" text="Natation" />
-                     </graphic>
-                  </MenuItem>
-                <MenuItem mnemonicParsing="false" text="Handball">
-                     <graphic>
-                        <Button fx:id="btnHandballH" mnemonicParsing="false" text="Hanball" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Volleyball">
-                     <graphic>
-                        <Button fx:id="btnVolleyballH" mnemonicParsing="false" text="Volleyball" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Escrime">
-                     <graphic>
-                        <SplitMenuButton fx:id="menuEscrimeH" mnemonicParsing="false" text="Escrime" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Athlétisme">
-                     <graphic>
-                        <SplitMenuButton fx:id="menuAthletismeH" mnemonicParsing="false" text="Athlétisme" />
-                     </graphic>
-                  </MenuItem>
-              </items>
-            </SplitMenuButton>
-            <SplitMenuButton fx:id="menuFemmeEpreuve" layoutX="11.0" layoutY="11.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="200.0" text="Femme">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Natation">
-                     <graphic>
-                        <SplitMenuButton fx:id="menuNatationF" mnemonicParsing="false" text="Natation" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Handball">
-                     <graphic>
-                        <Button fx:id="btnHandballF" mnemonicParsing="false" text="Hanball" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Volleyball">
-                     <graphic>
-                        <Button fx:id="btnVolleyballF" mnemonicParsing="false" text="Volleyball" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Escrime">
-                     <graphic>
-                        <SplitMenuButton fx:id="menuEscrimeF" mnemonicParsing="false" text="Escrime" />
-                     </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Athlétisme">
-                     <graphic>
-                        <SplitMenuButton fx:id="menuAthletismeF" mnemonicParsing="false" text="Athlétisme" />
-                     </graphic>
-                  </MenuItem>
-               </items>
-            </SplitMenuButton>
-         </children>
-      </VBox>
-   </left>
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -156,4 +39,138 @@
          </children>
       </VBox>
    </center>
+   <top>
+      <VBox prefHeight="100.0" prefWidth="890.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ButtonBar>
+                    <buttons>
+                        <Button fx:id="btnAcceuil" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                           <graphic>
+                              <ImageView blendMode="MULTIPLY" fitHeight="91.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/logoJO.jpg" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    </buttons>
+                  </ButtonBar>
+                  <ButtonBar>
+                    <buttons>
+                      <Button fx:id="btnCompetition" mnemonicParsing="false" onAction="#handleCompetition" prefHeight="50.0" text="Compétitions" />
+                        <Button fx:id="btnClassement" mnemonicParsing="false" onAction="#handlePays" prefHeight="50.0" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="btnAthlete" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: khaki;" text="Participant" />
+                    </buttons>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ButtonBar>
+                  <ButtonBar>
+                    <buttons>
+                        <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" text="Paramètre">
+                           <graphic>
+                              <ImageView blendMode="MULTIPLY" cache="true" fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/logoParam.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                      <Button fx:id="btnDeco" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleDeconnexion" text="Déconnexion">
+                           <graphic>
+                              <ImageView blendMode="MULTIPLY" cache="true" fitHeight="62.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/logoDeconnexion.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </HBox>
+            <Separator prefWidth="890.0" style="-fx-background-color: black;" />
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <HBox prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="350.0" prefWidth="215.0">
+               <children>
+                  <SplitMenuButton fx:id="menuHommeEpreuve" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="200.0" text="Homme">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Natation">
+                           <graphic>
+                              <SplitMenuButton fx:id="menuNatationH" mnemonicParsing="false" text="Natation" />
+                           </graphic>
+                        </MenuItem>
+                      <MenuItem mnemonicParsing="false" text="Handball">
+                           <graphic>
+                              <Button fx:id="btnHandballH" mnemonicParsing="false" text="Hanball" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Volleyball">
+                           <graphic>
+                              <Button fx:id="btnVolleyballH" mnemonicParsing="false" text="Volleyball" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Escrime">
+                           <graphic>
+                              <SplitMenuButton fx:id="menuEscrimeH" mnemonicParsing="false" text="Escrime" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Athlétisme">
+                           <graphic>
+                              <SplitMenuButton fx:id="menuAthletismeH" mnemonicParsing="false" text="Athlétisme" />
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </SplitMenuButton>
+                  <SplitMenuButton fx:id="menuFemmeEpreuve" layoutX="11.0" layoutY="11.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="200.0" text="Femme">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Natation">
+                           <graphic>
+                              <SplitMenuButton fx:id="menuNatationF" mnemonicParsing="false" text="Natation" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Handball">
+                           <graphic>
+                              <Button fx:id="btnHandballF" mnemonicParsing="false" text="Hanball" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Volleyball">
+                           <graphic>
+                              <Button fx:id="btnVolleyballF" mnemonicParsing="false" text="Volleyball" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Escrime">
+                           <graphic>
+                              <SplitMenuButton fx:id="menuEscrimeF" mnemonicParsing="false" text="Escrime" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Athlétisme">
+                           <graphic>
+                              <SplitMenuButton fx:id="menuAthletismeF" mnemonicParsing="false" text="Athlétisme" />
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </SplitMenuButton>
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" top="10.0" />
+               </HBox.margin>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="396.0" prefWidth="0.0" style="-fx-background-color: black;" />
+         </children>
+      </HBox>
+   </left>
 </BorderPane>

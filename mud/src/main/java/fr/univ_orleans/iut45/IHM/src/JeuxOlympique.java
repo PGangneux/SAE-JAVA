@@ -97,6 +97,10 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
+    public void popUpParamètres(){
+        
+    }
+
 
 
 
