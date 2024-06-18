@@ -65,17 +65,26 @@ create table DISPUTE (
 -- # Partie comptes et administration #
 -- ####################################
 -- création des rôle pour les comptes
-create role 'administrateur';
-create role 'journalist';
-create role 'organisateur';
+create role 'administrateur'@'%';
+create role 'journalist'@'%';
+create role 'organisateur'@'%';
+create role 'administrateur'@'localhost';
+create role 'journalist'@'localhost';
+create role 'organisateur'@'localhost';
 flush privileges;
 
 -- attibution des rôles
-grant all privileges on SAE.* to 'administrateur' with grant option;
-grant select,update,insert on SAE.* to 'organisateur';
-grant select on SAE.* to 'journalist';
+grant all privileges on SAE.* to 'administrateur'@'%' with grant option;
+grant select,update,insert on SAE.* to 'organisateur'@'%';
+grant select on SAE.* to 'journalist'@'%';
+flush privileges;
+grant all privileges on SAE.* to 'administrateur'@'localhost' with grant option;
+grant select,update,insert on SAE.* to 'organisateur'@'localhost';
+grant select on SAE.* to 'journalist'@'localhost';
 flush privileges;
 
 -- creation d'un super user
 create user 'admin'@'%' identified by 'admin';
-grant 'administrateur' to 'admin'@'%';
+create user 'admin'@'localhost' identified by 'admin';
+grant  administrateur to admin@'%';
+grant  administrateur to admin@'localhost';
