@@ -11,6 +11,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
 import fr.univ_orleans.iut45.mud.IHM.src.*;
+import fr.univ_orleans.iut45.mud.items.*;
 public class Controleur {
     @FXML
     private Button btnCo;

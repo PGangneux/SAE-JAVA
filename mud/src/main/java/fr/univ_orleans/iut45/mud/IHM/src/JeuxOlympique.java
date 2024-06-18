@@ -41,7 +41,7 @@ public class JeuxOlympique extends Application{
 
    @Override
     public void init() throws IOException{
-        this.controleur = new Controleur(this);
+        this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
