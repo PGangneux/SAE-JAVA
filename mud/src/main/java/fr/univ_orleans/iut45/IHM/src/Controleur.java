@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import mud.src.main.java.fr.univ_orleans.iut45.mud.*;
 
 public class Controleur {
     @FXML
