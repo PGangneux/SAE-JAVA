@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <ButtonBar>
+              <buttons>
+                  <Button fx:id="btnAcceuil" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                     <graphic>
+                        <ImageView blendMode="MULTIPLY" fitHeight="91.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/logoJO.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+              </buttons>
+            </ButtonBar>
+            <ButtonBar>
+              <buttons>
+                <Button fx:id="btnCompetitions" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: lime;" text="Compétitions" />
+                  <Button fx:id="btnClassement" mnemonicParsing="false" onAction="#handlePays" prefHeight="50.0" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="btnParticipant" mnemonicParsing="false" onAction="#handleParticipant" prefHeight="50.0" text="Participant" />
+              </buttons>
+            </ButtonBar>
+            <ButtonBar>
+              <buttons>
+                  <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" text="Paramètre">
+                     <graphic>
+                        <ImageView blendMode="MULTIPLY" cache="true" fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/logoParam.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                <Button fx:id="btnCompte" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleAccueil" text="Mon Compte">
+                     <graphic>
+                        <ImageView blendMode="MULTIPLY" cache="true" fitHeight="62.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/logoUtilisateur.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+              </buttons>
+            </ButtonBar>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="349.0" prefWidth="214.0" style="-fx-border-color: black; -fx-border-style: solid;" BorderPane.alignment="CENTER">
+         <children>
+
+            <Button fx:id="homme" mnemonicParsing="false" onAction="#handleHommeEnable" text="H" />
+            <RadioButton fx:id="sport1" mnemonicParsing="false" text="handball" visible="false" />
+            <RadioButton mnemonicParsing="false" text="RadioButton" />
+            <Button mnemonicParsing="false" text="F" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="classement" prefHeight="45.0" prefWidth="289.0" text="Classement Compétitions">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="premier" text="Premier">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="deuxieme" text="Deuxième">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="troisieme" text="Troisième ">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="voirPlus1" mnemonicParsing="false" onAction="#handleCompetitionClassement" text="voir plus ...">
+               <VBox.margin>
+                  <Insets left="480.0" />
+               </VBox.margin>
+            </Button>
+            <Label fx:id="liEpreuve" prefHeight="45.0" prefWidth="273.0" text="Liste des Epreuves">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="dernierEp" text="dernière épreuve">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="prochainEp" text="prochaine épreuve">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="voirPlus2" mnemonicParsing="false" onAction="#handleCompetitionLiEp" text="voir plus ...">
+               <VBox.margin>
+                  <Insets left="480.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>
