@@ -11,7 +11,7 @@ public class Connexion {
 	public Connexion() throws ClassNotFoundException{
 		this.mysql=null;
 		this.connecte=false;
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 	}
 
 	public void connecter(String nomServeur, String nomBase, String nomLogin, String motDePasse) throws SQLException {
