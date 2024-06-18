@@ -114,6 +114,9 @@ public class Controleur {
             if (radioButton.isVisible()){
                 radioButton.setVisible(false);
             }
+            if (radioButton.isSelected()){
+                radioButton.setSelected(false);
+            }
         }
     }
 

@@ -49,6 +49,7 @@ public class ControlleurRadioButtonCompetition implements EventHandler<ActionEve
                 troisieme += clasement.get(2).getNom()+ " " + clasement.get(2).getPrenom(); 
             }
         }
+        
         this.vue.majCompet(premier,second,troisieme);
 
     }
