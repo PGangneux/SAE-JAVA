@@ -7,7 +7,9 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -34,6 +36,9 @@ public class JeuxOlympique extends Application{
     private Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
 
+    @FXML
+    private VBox rightVboxCompet;
+
 
 
 
@@ -41,7 +46,9 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException{
         this.controleur = new Controleur(this);
         this.scene = new Scene(new Pane(), 400, 300);
-        ImportData data = new ImportData("mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv");
+        ImportData data = new ImportData("mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv"); /////////////////////////////
+        this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
+        this.ensCompetitionsInd = data.getEnsCompetitionsInd();
     }
 
     @Override
@@ -76,6 +83,16 @@ public class JeuxOlympique extends Application{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetition.fxml"));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
+        this.rightVboxCompet = new VBox();
+        this.rightVboxCompet.getChildren().add(new Button("Homme"));
+        ToggleGroup groupH = new ToggleGroup();
+        for (CompetCoop compet: this.ensCompetitionsCoop){
+            RadioButton r = new RadioButton(compet.getNom());
+            r.setToggleGroup(groupH);
+            r.setVisible(false);
+            this.rightVboxCompet.getChildren().add(r);
+        } 
+        
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         this.stage.setMaximized(true);
@@ -138,6 +155,19 @@ public class JeuxOlympique extends Application{
     public void modePays() throws IOException{
         this.scene.setRoot(this.pagePays());
     }
+
+
+
+    public Set<CompetCoop> getCompetCoop(){
+        return this.ensCompetitionsCoop;
+    }
+
+    public Set<CompetInd> getCompetInd(){
+        return this.ensCompetitionsInd;
+    }
+
+
+
 
     public static void main(String[] args) {
         launch(args);

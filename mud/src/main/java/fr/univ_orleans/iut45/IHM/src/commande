@@ -1,5 +1,6 @@
 Pierre
-cd mud/src/main/java/fr/univ_orleans/iut45/IHM/src/
-javac --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls --add-modules javafx.fxml *.java
-java --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls --add-modules javafx.fxml JeuxOlympique
+cd mud/
+javac --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls --add-modules javafx.fxml src/main/java/fr/univ_orleans/iut45/mud/*.java -d target/classes src/main/java/fr/univ_orleans/iut45/IHM/src/*.java
+
+java --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls --add-modules javafx.fxml -cp target/classes fr.univ_orleans.iut45.IHM.src.JeuxOlympique
 cd ~/Cour/SAE/SAE-JAVA/
