@@ -1,5 +1,6 @@
 create database if not exists SAE;
 use SAE;
+source ./src/main/java/fr/univ_orleans/iut45/mud/data/DataSup.sql;
 
 -- SET default_storage_engine = InnoDB;
 create table PAYS(
@@ -42,6 +43,12 @@ create table EPREUVE(
     idCompet int references COMPETITION.idCompet
 );
 
+create table PARTICIPE (
+    idCompet int references COMPETITION.idCompet,
+    idAthlete int references ATHLETE.idAthlete,
+    primary key (idCompet,idAthlete)
+);
+
 create table APPARTENIR (
     idEquipe int references EQUIPE.idEquipe,
     idAthlete int references ATHLETE.idAthlete,
@@ -54,3 +61,21 @@ create table DISPUTE (
     primary key (idEquipe,idCompet)
 );
 
+-- ####################################
+-- # Partie comptes et administration #
+-- ####################################
+-- création des rôle pour les comptes
+create role 'administrateur';
+create role 'journalist';
+create role 'organisateur';
+flush privileges;
+
+-- attibution des rôles
+grant all privileges on SAE.* to 'administrateur' with grant option;
+grant select,update,insert on SAE.* to 'organisateur';
+grant select on SAE.* to 'journalist';
+flush privileges;
+
+-- creation d'un super user
+create user 'admin'@'%' identified by 'admin';
+grant 'administrateur' to 'admin'@'%';
