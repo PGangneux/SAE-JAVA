@@ -61,7 +61,7 @@
                     <buttons>
                       <Button fx:id="btnCompetition" mnemonicParsing="false" onAction="#handleCompetition" prefHeight="50.0" text="Compétitions" />
                         <Button fx:id="btnClassement" mnemonicParsing="false" onAction="#handlePays" prefHeight="50.0" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
-                        <Button fx:id="btnAthlete" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: khaki;" text="Participant" />
+                        <Button fx:id="btnAthlete" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: darkkhaki;" text="Participant" />
                     </buttons>
                      <HBox.margin>
                         <Insets />
@@ -69,7 +69,7 @@
                   </ButtonBar>
                   <ButtonBar>
                     <buttons>
-                        <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" text="Paramètre">
+                        <Button fx:id="btnParam" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleParamAffichage" text="Paramètre">
                            <graphic>
                               <ImageView blendMode="MULTIPLY" cache="true" fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

@@ -2,11 +2,15 @@ package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.io.IOException;
 
-import fr.univ_orleans.iut45.mud.IHM.src.JeuxOlympique;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
+
+import fr.univ_orleans.iut45.mud.IHM.src.*;
 
 public class Controleur {
     @FXML
@@ -14,10 +18,6 @@ public class Controleur {
 
     @FXML
     private Button btnAccueil;
-
-    @FXML
-    private RadioButton sport1;
-
     private JeuxOlympique vue;
 
     @FXML
@@ -36,7 +36,7 @@ public class Controleur {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException{
         this.vue.modeConnexion();
-        System.out.println("Affichage fenete Déconnexion");
+        System.out.println("Affichage fenete Connexion");
     }
 
     
@@ -62,20 +62,29 @@ public class Controleur {
         this.vue.modeCompetitionClassement();
     }
 
-
-    @FXML
-    private void handleHommeEnable(ActionEvent event) throws IOException{
-        if (sport1.isVisible()){
-            sport1.setVisible(false);
-        }
-        else{
-            sport1.setVisible(true);
-        }
-    }
-        
     @FXML
     private void handlePays(ActionEvent event) throws IOException{
         this.vue.modePays();
+    }
+
+    @FXML
+    private void handleParamAffichage(ActionEvent event) throws IOException{
+        this.vue.modeParamAffichage();
+    }
+
+    @FXML
+    private void handleParamAudio(ActionEvent event) throws IOException{
+        this.vue.modeParamAudio();
+    }
+
+    @FXML
+    private void handleParamPref(ActionEvent event) throws IOException{
+        this.vue.modeParamPref();
+    }
+
+    @FXML
+    private void handleAppliquer(ActionEvent event){
+        System.out.println("Appliqué");
     }
 
 }
