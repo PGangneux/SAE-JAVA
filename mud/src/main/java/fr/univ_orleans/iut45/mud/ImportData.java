@@ -13,7 +13,7 @@ import java.util.Set;
  * Classe permettant d'importer des données à partir d'un fichier CSV et de créer des instances de divers objets tels que 
  * des athlètes, des équipes, des sports, des pays et des compétitions.
  */
-public class importData{
+public class ImportData{
     private String chemin;
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
@@ -62,7 +62,7 @@ public class importData{
         line = reader.readLine();
         List<List<String>> liCSV = new ArrayList<>();
 		while (line != null) {
-			liCSV.add(importData.lineAMot(line));
+			liCSV.add(ImportData.lineAMot(line));
 			line = reader.readLine();
 		}
 		reader.close();
@@ -262,7 +262,7 @@ public class importData{
      *
      * @param chemin le chemin du fichier CSV à importer.
      */
-    public importData(String chemin){
+    public ImportData(String chemin){
         this.chemin = chemin;
         try{
             List<List<String>> liDonnees = this.CSVtoJava(this.chemin);

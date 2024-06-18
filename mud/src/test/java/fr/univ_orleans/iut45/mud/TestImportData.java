@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class TestImportData { 
     private static String chemin;
-    private static importData donnees;
+    private static ImportData donnees;
     private static Set<Pays> ensPays;
     private static Set<Sport> ensSports;
     private static List<Athlete> liAthletes;
@@ -16,8 +16,8 @@ public class TestImportData {
     @BeforeAll
     public static void setUp() {
         chemin = "./src/test/java/fr/univ_orleans/iut45/mud/donnees.csv";
-        donnees = new importData(chemin);
-        importData dataerrorTest = new importData("");
+        donnees = new ImportData(chemin);
+        ImportData dataerrorTest = new ImportData("");
         ensSports = donnees.getEnsSports();
         liAthletes = donnees.getListAthletes();
     }

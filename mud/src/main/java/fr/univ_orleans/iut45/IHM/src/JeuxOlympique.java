@@ -1,7 +1,8 @@
-
+package fr.univ_orleans.iut45.IHM.src;
 
 import java.io.IOException;
-
+import java.util.List;
+import java.util.Set;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +12,27 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import mud.src.main.java.fr.univ_orleans.iut45.mud.*;
+
+import fr.univ_orleans.iut45.mud.Sport;
+import fr.univ_orleans.iut45.mud.Pays;
+import fr.univ_orleans.iut45.mud.Athlete;
+import fr.univ_orleans.iut45.mud.CompetCoop;
+import fr.univ_orleans.iut45.mud.CompetInd;
+import fr.univ_orleans.iut45.mud.Equipe;
+import fr.univ_orleans.iut45.mud.ImportData;
+
 
 public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
     
+    private Set<Sport> ensSport;
+    private Set<Pays> ensPays;
+    private List<Athlete> liAthletes;
+    private Set<CompetCoop> ensCompetitionsCoop;
+    private Set<CompetInd> ensCompetitionsInd;
+    private List<Equipe> liEquipes;
 
 
 
@@ -26,7 +41,7 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException{
         this.controleur = new Controleur(this);
         this.scene = new Scene(new Pane(), 400, 300);
-        
+        ImportData data = new ImportData("mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv");
     }
 
     @Override
