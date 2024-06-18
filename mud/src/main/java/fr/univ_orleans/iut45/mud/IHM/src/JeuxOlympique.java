@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -37,6 +38,9 @@ public class JeuxOlympique extends Application{
     private Label competClassement1;
     private Label competClassement2;
     private Label competClassement3;
+
+    private GridPane classementPays;
+    private GridPane recherchePays;
 
 
 
@@ -207,6 +211,20 @@ public class JeuxOlympique extends Application{
         loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
+        this.classementPays = (GridPane) root.lookup("#classementPays");
+        List<Pays> classementTotal = Pays.classementPaysMedaille(this.model.getEnsPays());
+        int i = 0;
+        for (Pays pays: classementTotal){
+            i++;
+            this.classementPays.add(new Label(String.valueOf(i)), 0, i);
+            this.classementPays.add(new Label(pays.getNom()), 1, i);
+            this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedaille())), 2, i);
+            this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedailleOr())), 5, i);
+        }
+
+        this.recherchePays = (GridPane) root.lookup("#recherchePays");
+        // à voir 
+
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         this.stage.setMaximized(true);
@@ -271,7 +289,7 @@ public class JeuxOlympique extends Application{
     }
 
 
-
+    /*
     public Set<CompetCoop> getCompetCoop(){
         return this.ensCompetitionsCoop;
     }
@@ -279,6 +297,7 @@ public class JeuxOlympique extends Application{
     public Set<CompetInd> getCompetInd(){
         return this.ensCompetitionsInd;
     }
+        */
 
     
     public void modeParamAffichage() throws IOException{
