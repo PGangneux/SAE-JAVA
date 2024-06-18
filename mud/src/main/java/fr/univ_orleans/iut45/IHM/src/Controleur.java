@@ -75,4 +75,24 @@ public class Controleur {
         this.vue.modePays();
     }
 
+    @FXML
+    private void handleParamAffichage(ActionEvent event) throws IOException{
+        this.vue.modeParamAffichage();
+    }
+
+    @FXML
+    private void handleParamAudio(ActionEvent event) throws IOException{
+        this.vue.modeParamAudio();
+    }
+
+    @FXML
+    private void handleParamPref(ActionEvent event) throws IOException{
+        this.vue.modeParamPref();
+    }
+
+    @FXML
+    private void handleAppliquer(ActionEvent event){
+        System.out.println("Appliqué");
+    }
+
 }

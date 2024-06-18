@@ -96,12 +96,32 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
-    public void popUpParamètres(){
-        
+    public BorderPane pageParamAffichage() throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAffichage.fxml"));
+        loader.setController(this.controleur);
+        BorderPane root = loader.load();
+        this.stage.setMinWidth(600);
+        this.stage.setMinHeight(450);
+        return root;
     }
 
+    public BorderPane pageParamAudio() throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAudio.fxml"));
+        loader.setController(this.controleur);
+        BorderPane root = loader.load();
+        this.stage.setMinWidth(600);
+        this.stage.setMinHeight(450);
+        return root;
+    }
 
-
+    public BorderPane pageParamPref() throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamPref.fxml"));
+        loader.setController(this.controleur);
+        BorderPane root = loader.load();
+        this.stage.setMinWidth(600);
+        this.stage.setMinHeight(450);
+        return root;
+    }
 
     public void modeConnexion() throws IOException{
         this.scene.setRoot(this.pageConnexion());
@@ -125,6 +145,18 @@ public class JeuxOlympique extends Application{
 
     public void modePays() throws IOException{
         this.scene.setRoot(this.pagePays());
+    }
+
+    public void modeParamAffichage() throws IOException{
+        this.scene.setRoot(this.pageParamAffichage());
+    }
+
+    public void modeParamAudio() throws IOException{
+        this.scene.setRoot(this.pageParamAudio());
+    }
+
+    public void modeParamPref() throws IOException{
+        this.scene.setRoot(this.pageParamPref());
     }
 
     public static void main(String[] args) {
