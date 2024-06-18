@@ -15,7 +15,7 @@ public class JeuxOlympique
     {
         // imporatation de données via un fichier csv
         String chemin = "./mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv";
-        importData donnees = new importData(chemin);
+        ImportData donnees = new ImportData(chemin);
         Set<Pays> ensPays = donnees.getEnsPays();
         Set<Sport> ensSports = donnees.getEnsSports();
         Set<CompetCoop> ensCompetitionsCoop = donnees.getEnsCompetitionsCoop();
