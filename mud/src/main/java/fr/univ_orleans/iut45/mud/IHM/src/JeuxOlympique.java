@@ -24,6 +24,7 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
+    private ImportData model;
     
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
@@ -59,7 +60,8 @@ public class JeuxOlympique extends Application{
 
     public VBox pageConnexion() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageConnexion.fxml"));
-        loader.setController(this.controleur);
+        loader.setControllerFactory(c -> new Controleur(this,model)); //A mettre a la place de tout les loader.setControler(this.controleur)
+        // loader.setController(this.controleur);
         VBox root = loader.load();
         this.stage.setMinWidth(300);
         this.stage.setMinHeight(400);
