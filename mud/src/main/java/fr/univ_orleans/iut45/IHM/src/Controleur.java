@@ -32,9 +32,9 @@ public class Controleur {
     }
 
     @FXML
-    private void handleAccueil(ActionEvent event) throws IOException{
+    private void handleDeconnexion(ActionEvent event) throws IOException{
         this.vue.modeConnexion();
-        System.out.println("Affichage fenete Connexion");
+        System.out.println("Affichage fenete Déconnexion");
     }
 
     
