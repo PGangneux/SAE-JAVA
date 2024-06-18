@@ -1,21 +1,15 @@
-create database if not exists JeuxOlympique;
-use JeuxOlympique;
+create database if not exists SAE;
+use SAE;
 
---SET default_storage_engine = InnoDB;
+-- SET default_storage_engine = InnoDB;
 create table PAYS(
     idPays int primary key,
-    nomPays varchar(50)   
+    nomPays varchar(50) unique  
 );
 
 create table SPORT(
     idSport int primary key,
     nomSport varchar(50)
-);
-
-create table EPREUVE(
-    idEpreuve int primary key,
-    nomEpreuve varchar(100),
-    idSport int 
 );
 
 create table ATHLETE(
@@ -29,13 +23,34 @@ create table ATHLETE(
     idPays int
 );
 
-create table PARTICIPE(
-    idEpreuve int,
-    idAthlete int,
-    primary key (idEpreuve,idAthlete)
+create table EQUIPE (
+    idEquipe int primary key,
+    nomEquipe varchar(50)
 );
 
-alter table EPREUVE add foreign key (idSport) references SPORT (idSport);
-alter table ATHLETE add foreign key (idPays) references PAYS (idPays);
-alter table PARTICIPE add foreign key (idEpreuve) references EPREUVE (idEpreuve);
-alter table PARTICIPE add foreign key (idAthlete) references ATHLETE (idAthlete);
+create table COMPETITION (
+    idCompet int primary key,
+    idSport int references SPORT.idSport,
+    nomCompet varchar(50),
+    individuelle int not null
+    constraint chk_ind CHECK (individuelle in (0,1))
+);
+
+create table EPREUVE(
+    idEpreuve int primary key,
+    nomEpreuve varchar(50),
+    idCompet int references COMPETITION.idCompet
+);
+
+create table APPARTENIR (
+    idEquipe int references EQUIPE.idEquipe,
+    idAthlete int references ATHLETE.idAthlete,
+    primary key (idEquipe,idAthlete)
+);
+
+create table DISPUTE (
+    idCompet int references COMPETITION.idCompet,
+    idEquipe int references EQUIPE.idEquipe,
+    primary key (idEquipe,idCompet)
+);
+
