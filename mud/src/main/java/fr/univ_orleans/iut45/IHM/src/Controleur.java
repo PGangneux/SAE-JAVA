@@ -73,7 +73,6 @@ public class Controleur {
     @FXML
     private void handlePays(ActionEvent event) throws IOException{
         this.vue.modePays();
-
     }
 
 }
