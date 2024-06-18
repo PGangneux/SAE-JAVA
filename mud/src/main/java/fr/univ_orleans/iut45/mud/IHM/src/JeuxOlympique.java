@@ -289,15 +289,16 @@ public class JeuxOlympique extends Application{
     }
 
 
-    /*
-    public Set<CompetCoop> getCompetCoop(){
-        return this.ensCompetitionsCoop;
-    }
 
-    public Set<CompetInd> getCompetInd(){
-        return this.ensCompetitionsInd;
-    }
-        */
+
+    // public Set<CompetCoop> getCompetCoop(){
+    //     return this.model.getEnsCompetitionsCoop();
+    // }
+
+    // public Set<CompetInd> getCompetInd(){
+    //     return this.model.getEnsCompetitionsInd();
+    // }
+
 
     
     public void modeParamAffichage() throws IOException{
