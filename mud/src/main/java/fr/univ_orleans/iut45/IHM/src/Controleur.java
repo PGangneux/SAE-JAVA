@@ -1,10 +1,14 @@
 package fr.univ_orleans.iut45.IHM.src;
 
 import java.io.IOException;
+
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import fr.univ_orleans.iut45.mud.*;
 
 public class Controleur {
@@ -14,8 +18,7 @@ public class Controleur {
     @FXML
     private Button btnAccueil;
 
-    @FXML
-    private RadioButton sport1;
+    
 
     private JeuxOlympique vue;
 
@@ -62,15 +65,7 @@ public class Controleur {
     }
 
 
-    @FXML
-    private void handleHommeEnable(ActionEvent event) throws IOException{
-        if (sport1.isVisible()){
-            sport1.setVisible(false);
-        }
-        else{
-            sport1.setVisible(true);
-        }
-    }
+
         
     @FXML
     private void handlePays(ActionEvent event) throws IOException{

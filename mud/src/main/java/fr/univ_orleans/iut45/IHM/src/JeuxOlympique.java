@@ -6,6 +6,7 @@ import java.util.Set;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -36,8 +37,8 @@ public class JeuxOlympique extends Application{
     private Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
 
-    @FXML
-    private VBox rightVboxCompet;
+    
+    private VBox leftVboxCompet;
 
 
 
@@ -46,9 +47,10 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException{
         this.controleur = new Controleur(this);
         this.scene = new Scene(new Pane(), 400, 300);
-        ImportData data = new ImportData("mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv"); /////////////////////////////
+        ImportData data = new ImportData("/home/iut45/Etudiants/o22300799/Cour/SAE/SAE-JAVA/mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv");
         this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
         this.ensCompetitionsInd = data.getEnsCompetitionsInd();
+        
     }
 
     @Override
@@ -82,16 +84,56 @@ public class JeuxOlympique extends Application{
     public BorderPane pageCompetition() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetition.fxml"));
         loader.setController(this.controleur);
+        
         BorderPane root = loader.load();
-        this.rightVboxCompet = new VBox();
-        this.rightVboxCompet.getChildren().add(new Button("Homme"));
-        ToggleGroup groupH = new ToggleGroup();
+        this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
+        Button homme = new Button("Homme");
+        VBox.setMargin(homme, new Insets(10, 0, 0, 10));
+
+        this.leftVboxCompet.getChildren().add(homme);
+
+        ToggleGroup groupRadioBCompetHomme = new ToggleGroup();
         for (CompetCoop compet: this.ensCompetitionsCoop){
-            RadioButton r = new RadioButton(compet.getNom());
-            r.setToggleGroup(groupH);
-            r.setVisible(false);
-            this.rightVboxCompet.getChildren().add(r);
+            if (compet.getSexe().equals("M")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetHomme);
+                this.leftVboxCompet.getChildren().add(r);
+            }
         } 
+        for (CompetInd compet : this.ensCompetitionsInd){
+            if (compet.getSexe().equals("M")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetHomme);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        }
+        
+
+        Button femme = new Button("Femme");
+        
+        this.leftVboxCompet.getChildren().add(femme);
+        VBox.setMargin(femme, new Insets(10, 0, 0, 10));
+
+
+        ToggleGroup groupRadioBCompetFemme = new ToggleGroup();
+        for (CompetCoop compet: this.ensCompetitionsCoop){
+            if (compet.getSexe().equals("F")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetFemme);
+                r.setVisible(false);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        } 
+        for (CompetInd compet : this.ensCompetitionsInd){
+            if (compet.getSexe().equals("F")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetFemme);
+                r.setVisible(false);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        }
+        homme.setOnAction(new ControleurRadioButtonCompetition(this, groupRadioBCompetHomme, groupRadioBCompetFemme));
+        femme.setOnAction(new ControleurRadioButtonCompetition(this,groupRadioBCompetFemme, groupRadioBCompetHomme));
         
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
@@ -165,6 +207,8 @@ public class JeuxOlympique extends Application{
     public Set<CompetInd> getCompetInd(){
         return this.ensCompetitionsInd;
     }
+
+    
 
 
 

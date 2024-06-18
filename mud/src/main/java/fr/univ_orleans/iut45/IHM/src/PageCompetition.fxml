@@ -61,7 +61,7 @@
       </HBox>
    </top>
    <left>
-      <VBox fx:id="rightVboxCompet" prefHeight="349.0" prefWidth="214.0" style="-fx-border-color: black; -fx-border-style: solid;" BorderPane.alignment="CENTER" />
+      <VBox fx:id="leftVboxCompet" prefHeight="349.0" prefWidth="214.0" style="-fx-border-color: black; -fx-border-style: solid;" BorderPane.alignment="CENTER"/>
    </left>
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">

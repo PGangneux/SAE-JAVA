@@ -1,4 +1,4 @@
-Pierre
+
 cd mud/
 javac --module-path /usr/share/openjfx/lib/ --add-modules javafx.controls --add-modules javafx.fxml src/main/java/fr/univ_orleans/iut45/mud/*.java -d target/classes src/main/java/fr/univ_orleans/iut45/IHM/src/*.java
 
