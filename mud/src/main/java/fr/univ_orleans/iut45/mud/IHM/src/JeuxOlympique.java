@@ -24,6 +24,7 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
+    private ImportData model;
     
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
@@ -40,7 +41,7 @@ public class JeuxOlympique extends Application{
 
    @Override
     public void init() throws IOException{
-        this.controleur = new Controleur(this, null);
+        this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
@@ -59,7 +60,8 @@ public class JeuxOlympique extends Application{
 
     public VBox pageConnexion() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageConnexion.fxml"));
-        loader.setController(this.controleur);
+        loader.setControllerFactory(c -> new Controleur(this,model)); //A mettre a la place de tout les loader.setControler(this.controleur)
+        // loader.setController(this.controleur);
         VBox root = loader.load();
         this.stage.setMinWidth(300);
         this.stage.setMinHeight(400);
@@ -242,11 +244,6 @@ public class JeuxOlympique extends Application{
     public void modeParamPref() throws IOException{
         this.scene.setRoot(this.pageParamPref());
     }
-
-    
-
-
-
 
     public static void main(String[] args) {
         launch(args);
