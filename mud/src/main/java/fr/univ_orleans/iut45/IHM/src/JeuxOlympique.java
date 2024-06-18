@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mud.src.main.java.fr.univ_orleans.iut45.mud.*;
 
 public class JeuxOlympique extends Application{
     private Controleur controleur;
