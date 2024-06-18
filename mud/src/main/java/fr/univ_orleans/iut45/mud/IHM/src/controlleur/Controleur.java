@@ -11,7 +11,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
 import fr.univ_orleans.iut45.mud.IHM.src.*;
-
+import fr.univ_orleans.iut45.mud.items.*;
 public class Controleur {
     @FXML
     private Button btnCo;
@@ -19,12 +19,14 @@ public class Controleur {
     @FXML
     private Button btnAccueil;
     private JeuxOlympique vue;
+    private ImportData model;
 
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue){
+    public Controleur(JeuxOlympique vue, ImportData model){
         this.vue = vue;
+        this.model = model;
     }
 
     @FXML

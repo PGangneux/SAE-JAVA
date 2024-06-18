@@ -24,6 +24,7 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
+    private ImportData model;
     
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
@@ -40,7 +41,7 @@ public class JeuxOlympique extends Application{
 
    @Override
     public void init() throws IOException{
-        this.controleur = new Controleur(this);
+        this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
@@ -55,10 +56,12 @@ public class JeuxOlympique extends Application{
         this.stage.setTitle("Jeux Olympique");
         this.modeConnexion();
         this.stage.show();
+        
     }
 
     public VBox pageConnexion() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageConnexion.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model)); //A mettre a la place de tout les loader.setControler(this.controleur)
         loader.setController(this.controleur);
         VBox root = loader.load();
         this.stage.setMinWidth(300);
@@ -68,6 +71,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageParticipant() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParticipant.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
@@ -78,8 +82,8 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageCompetition() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetition.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
-        
         BorderPane root = loader.load();
         this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
         Button homme = new Button("Homme");
@@ -138,6 +142,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageCompetitionClassement() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionClassement.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
@@ -148,6 +153,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageCompetitionLiEp() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionListeEp.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
@@ -158,6 +164,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pagePays() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PagePays.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
@@ -168,6 +175,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageParamAffichage() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAffichage.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(600);
@@ -177,6 +185,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageParamAudio() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAudio.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(600);
@@ -186,6 +195,7 @@ public class JeuxOlympique extends Application{
 
     public BorderPane pageParamPref() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamPref.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(600);
