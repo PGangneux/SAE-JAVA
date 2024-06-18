@@ -9,6 +9,8 @@ import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_orleans.iut45.mud.items.Pays;
+
 
 
 public class PaysTest {

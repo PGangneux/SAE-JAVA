@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
+import fr.univ_orleans.iut45.mud.items.Athlete;
+import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.Pays;
+import fr.univ_orleans.iut45.mud.items.Sport;
+
 public class TestEquipe {
     private static Equipe equipeTest1;
     private static Athlete athlete1;
