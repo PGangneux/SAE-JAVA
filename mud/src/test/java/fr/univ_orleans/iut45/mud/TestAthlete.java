@@ -2,6 +2,11 @@ package fr.univ_orleans.iut45.mud;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import fr.univ_orleans.iut45.mud.items.Athlete;
+import fr.univ_orleans.iut45.mud.items.Pays;
+import fr.univ_orleans.iut45.mud.items.Sport;
+
 import org.junit.jupiter.api.BeforeAll;
 public class TestAthlete {
     private static Sport sport;

@@ -5,6 +5,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_orleans.iut45.mud.competition.CompetCoop;
+import fr.univ_orleans.iut45.mud.items.Athlete;
+import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.Pays;
+import fr.univ_orleans.iut45.mud.items.Sport;
+
 public class TestcompetCoop {
     private static CompetCoop competCoop;
     private static Pays paysE1;

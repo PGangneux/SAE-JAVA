@@ -8,6 +8,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_orleans.iut45.mud.competition.CompetInd;
+import fr.univ_orleans.iut45.mud.items.Athlete;
+import fr.univ_orleans.iut45.mud.items.Participant;
+import fr.univ_orleans.iut45.mud.items.Pays;
+import fr.univ_orleans.iut45.mud.items.Sport;
+
 public class TestCompetInd {
     private static CompetInd competInd1;
     private static List<Participant> liParticipantCheck;

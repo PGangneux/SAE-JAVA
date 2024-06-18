@@ -3,6 +3,8 @@ package fr.univ_orleans.iut45.mud;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import fr.univ_orleans.iut45.mud.items.Sport;
+
 public class TestSport {
     Sport natation = new Sport("Volley");
     
