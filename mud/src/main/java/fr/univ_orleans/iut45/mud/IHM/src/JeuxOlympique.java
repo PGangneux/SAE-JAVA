@@ -5,20 +5,19 @@ import java.util.List;
 import java.util.Set;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import fr.univ_orleans.iut45.mud.IHM.src.controlleur.Controleur;
-import fr.univ_orleans.iut45.mud.competition.CompetCoop;
-import fr.univ_orleans.iut45.mud.competition.CompetInd;
-import fr.univ_orleans.iut45.mud.items.Athlete;
-import fr.univ_orleans.iut45.mud.items.Equipe;
-import fr.univ_orleans.iut45.mud.items.ImportData;
-import fr.univ_orleans.iut45.mud.items.Pays;
-import fr.univ_orleans.iut45.mud.items.Sport;
+
+import fr.univ_orleans.iut45.mud.items.*;
+import fr.univ_orleans.iut45.mud.competition.*;
+import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;;
 
 
 public class JeuxOlympique extends Application{
@@ -33,6 +32,9 @@ public class JeuxOlympique extends Application{
     private Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
 
+    
+    private VBox leftVboxCompet;
+
 
 
 
@@ -40,7 +42,10 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException{
         this.controleur = new Controleur(this);
         this.scene = new Scene(new Pane(), 400, 300);
-        ImportData data = new ImportData("mud/src/main/java/fr/univ_orleans/iut45/mud/donnees.csv");
+        ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
+        this.ensCompetitionsInd = data.getEnsCompetitionsInd();
+        
     }
 
     @Override
@@ -68,14 +73,63 @@ public class JeuxOlympique extends Application{
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         this.stage.setMaximized(true);
-
         return root;
     }
 
     public BorderPane pageCompetition() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetition.fxml"));
         loader.setController(this.controleur);
+        
         BorderPane root = loader.load();
+        this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
+        Button homme = new Button("Homme");
+        VBox.setMargin(homme, new Insets(10, 0, 0, 10));
+
+        this.leftVboxCompet.getChildren().add(homme);
+
+        ToggleGroup groupRadioBCompetHomme = new ToggleGroup();
+        for (CompetCoop compet: this.ensCompetitionsCoop){
+            if (compet.getSexe().equals("M")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetHomme);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        } 
+        for (CompetInd compet : this.ensCompetitionsInd){
+            if (compet.getSexe().equals("M")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetHomme);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        }
+        
+
+        Button femme = new Button("Femme");
+        
+        this.leftVboxCompet.getChildren().add(femme);
+        VBox.setMargin(femme, new Insets(10, 0, 0, 10));
+
+
+        ToggleGroup groupRadioBCompetFemme = new ToggleGroup();
+        for (CompetCoop compet: this.ensCompetitionsCoop){
+            if (compet.getSexe().equals("F")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetFemme);
+                r.setVisible(false);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        } 
+        for (CompetInd compet : this.ensCompetitionsInd){
+            if (compet.getSexe().equals("F")){
+                RadioButton r = new RadioButton(compet.getNom());
+                r.setToggleGroup(groupRadioBCompetFemme);
+                r.setVisible(false);
+                this.leftVboxCompet.getChildren().add(r);
+            }
+        }
+        homme.setOnAction(new ControleurRadioButtonCompetition(this, groupRadioBCompetHomme, groupRadioBCompetFemme));
+        femme.setOnAction(new ControleurRadioButtonCompetition(this,groupRadioBCompetFemme, groupRadioBCompetHomme));
+        
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         this.stage.setMaximized(true);
@@ -112,8 +166,31 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
-    public void popUpParamètres(){
-        
+    public BorderPane pageParamAffichage() throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAffichage.fxml"));
+        loader.setController(this.controleur);
+        BorderPane root = loader.load();
+        this.stage.setMinWidth(600);
+        this.stage.setMinHeight(450);
+        return root;
+    }
+
+    public BorderPane pageParamAudio() throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAudio.fxml"));
+        loader.setController(this.controleur);
+        BorderPane root = loader.load();
+        this.stage.setMinWidth(600);
+        this.stage.setMinHeight(450);
+        return root;
+    }
+
+    public BorderPane pageParamPref() throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamPref.fxml"));
+        loader.setController(this.controleur);
+        BorderPane root = loader.load();
+        this.stage.setMinWidth(600);
+        this.stage.setMinHeight(450);
+        return root;
     }
 
 
@@ -141,6 +218,29 @@ public class JeuxOlympique extends Application{
 
     public void modePays() throws IOException{
         this.scene.setRoot(this.pagePays());
+    }
+
+
+
+    public Set<CompetCoop> getCompetCoop(){
+        return this.ensCompetitionsCoop;
+    }
+
+    public Set<CompetInd> getCompetInd(){
+        return this.ensCompetitionsInd;
+    }
+
+    
+    public void modeParamAffichage() throws IOException{
+        this.scene.setRoot(this.pageParamAffichage());
+    }
+
+    public void modeParamAudio() throws IOException{
+        this.scene.setRoot(this.pageParamAudio());
+    }
+
+    public void modeParamPref() throws IOException{
+        this.scene.setRoot(this.pageParamPref());
     }
 
     public static void main(String[] args) {
