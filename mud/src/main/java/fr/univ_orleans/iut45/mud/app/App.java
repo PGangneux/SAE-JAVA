@@ -7,7 +7,7 @@ import fr.univ_orleans.iut45.mud.JDBC.*;
 public class App {
     private Connexion loggingConnexion;
     private Connexion jeuxConnexion;
-    private Requetes logQueryAPI;
+    private RequeteLogAPI logQueryAPI;
     private Requetes jeuxQueryAPI;
     private String statusCompte;
     public final static String ADMINISTRATEUR = "administrateur";
@@ -21,7 +21,7 @@ public class App {
         String password = "DoNotShare";
         this.loggingConnexion = new Connexion();
         this.loggingConnexion.connecter(server, baseName, user, password);
-        this.logQueryAPI = new Requetes(this.loggingConnexion);
+        this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
     }
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
@@ -36,6 +36,14 @@ public class App {
 
     public App() throws ClassNotFoundException, SQLException  {
         initLoggingConnexion();
+    }
+
+    public void setStatusCompte(String status) {
+        this.statusCompte = status;
+    }
+
+    public String getStatusCompte() {
+        return this.statusCompte;
     }
 
 }
