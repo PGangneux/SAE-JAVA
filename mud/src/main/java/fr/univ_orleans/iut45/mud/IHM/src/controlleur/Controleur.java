@@ -1,16 +1,24 @@
 package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.io.IOException;
+
+import java.util.List;
+import fr.univ_orleans.iut45.mud.IHM.src.*;
+import fr.univ_orleans.iut45.mud.competition.CompetCoop;
+import fr.univ_orleans.iut45.mud.competition.CompetInd;
+
 import java.sql.SQLException;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.app.App;
+
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -24,6 +32,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 public class Controleur {
     
 
@@ -35,6 +44,9 @@ public class Controleur {
 
     @FXML
     private PasswordField mdp;
+
+    @FXML
+    private VBox leftVboxCompet;
 
     @FXML
     private void init(){}
@@ -86,13 +98,29 @@ public class Controleur {
 
 
     @FXML
-    private void handleCompetitionLiEp(ActionEvent event) throws IOException{
-        this.vue.modeCompetitionLiEp();
-    }
-
-    @FXML
     private void handleCompetitionClassement(ActionEvent event) throws IOException{
-        this.vue.modeCompetitionClassement();
+        for (Node node: this.leftVboxCompet.getChildren()){
+            if (node instanceof RadioButton){
+                RadioButton radioButton = (RadioButton) node;
+                if(radioButton.isSelected()){
+                    Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
+                    for(CompetCoop compet:ensCompetitionsCoop){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            System.out.println(compet.getNom());
+                            this.vue.modeCompetitionClassement(compet);
+                        }
+                    }
+                    Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
+                    for(CompetInd compet:ensCompetitionsInd){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            this.vue.modeCompetitionClassement(compet);
+                        }
+                    }
+                }
+            }
+        }
+        
+        
     }
 
     @FXML
