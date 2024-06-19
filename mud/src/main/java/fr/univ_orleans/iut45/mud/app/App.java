@@ -61,6 +61,15 @@ public class App {
         initLoggingConnexion();
     }
 
+    public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
+        if (this.logQueryAPI.checkUser(username, password)) {
+            String appProvilegethis = this.logQueryAPI.getUserPrivilege(username);
+            this.initJeuxDBConnexion(appProvilegethis, "applicationPrivateLoginKey");
+            return true;
+        }
+        return false;
+    }
+
     public void setStatusCompte(String status) {
         this.statusCompte = status;
     }
