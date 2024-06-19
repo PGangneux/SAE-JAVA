@@ -3,9 +3,15 @@ package fr.univ_orleans.iut45.mud.JDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import fr.univ_orleans.iut45.mud.competition.*;
-import fr.univ_orleans.iut45.mud.epreuve.*;
-import fr.univ_orleans.iut45.mud.items.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.univ_orleans.iut45.mud.competition.CompetCoop;
+import fr.univ_orleans.iut45.mud.competition.Competition;
+import fr.univ_orleans.iut45.mud.items.Athlete;
+import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.Pays;
+import fr.univ_orleans.iut45.mud.items.Sport;
 
 
 public class Requetes {
@@ -125,6 +131,81 @@ public class Requetes {
 		st.executeUpdate(requete);
     }
 
+    public List<Equipe> getListeEquipe(int compet) throws SQLException{
+        List<Equipe> listeEquipe = new ArrayList<>();
+        st=laConnexion.createStatement();
+        String requete = "select idEquipe from DISPUTE where idCompet="+compet;
+        ResultSet rs = st.executeQuery(requete);
+        while (rs.next()) {
+            
+            listeEquipe.add(this.getEquipe(rs.getInt("idEquipe")));
+
+        }
+        return listeEquipe;
+    }
+
+    public Equipe getEquipe(int equipe) throws SQLException{
+        st=laConnexion.createStatement();
+        String requete = "select nomEquipe, sexe, idSport, idPays from Equipe where idEquipe="+equipe;
+        ResultSet rs = st.executeQuery(requete);
+        Equipe e = null;
+        while(rs.next()){
+            e = new Equipe(rs.getString("nomEquipe"), rs.getString("sexe"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")));
+            List<Athlete> listeAthlete = this.getAthleteEquipe(equipe);
+            for (Athlete a : listeAthlete){
+                e.ajouteAthlete(a);
+            }
+        }
+        return e;
+    }
+
+    public Athlete getAthlete(int athlete) throws SQLException{
+        Athlete a = null;
+        st=laConnexion.createStatement();
+        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, force, endurance, agilite from ATHLETE where idAthlete="+athlete;
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+            a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("force"), rs.getInt("agilite"), rs.getInt("endurance"));
+        }
+        return a;
+        
+    }
+
+    public Sport getSport(int sport) throws SQLException{
+        st=laConnexion.createStatement();
+        String requete = "select nomSport from SPORT where idSport="+sport;
+        ResultSet rs = st.executeQuery(requete);
+        Sport s = null;
+        while (rs.next()) {
+            s = new Sport(rs.getString("nomSport"));            
+        }
+        return s;
+    }
+
+    public Pays getPays(int pays) throws SQLException{
+        st=laConnexion.createStatement();
+        String requete = "select nomPays from Pays where idPays="+pays;
+        ResultSet rs = st.executeQuery(requete);
+        Pays p = null;
+        while (rs.next()) {
+            p = new Pays(rs.getString("nomPays"));            
+        }
+        return p;
+    }
+
+
+    public List<Athlete> getAthleteEquipe(int equipe) throws SQLException{
+        List<Athlete> listeAthlete = new ArrayList<>();
+        st=laConnexion.createStatement();
+        String requete = "select idAthlete from ATHLETE where idEquipe="+equipe;
+        ResultSet rs = st.executeQuery(requete);
+        while (rs.next()) {
+            
+            listeAthlete.add(this.getAthlete(rs.getInt("idAthlete")));
+
+        }
+        return listeAthlete;
+    }
     
 
 
