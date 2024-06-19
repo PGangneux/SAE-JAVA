@@ -85,6 +85,42 @@ public class Controleur {
     }
 
     @FXML
+    public void handleRadioBCompet(ActionEvent actionEvent) {
+        Button bouton = (Button) actionEvent.getSource();
+        ToggleGroup toggleGroup1;
+        ToggleGroup toggleGroup2;
+        if(bouton.getText().equals("Femme")){
+            toggleGroup1 = this.vue.getGroupRadioBCompetFemme();
+            toggleGroup2 = this.vue.getGroupRadioBCompetHomme();
+        }
+        else{
+            toggleGroup2 = this.vue.getGroupRadioBCompetFemme();
+            toggleGroup1 = this.vue.getGroupRadioBCompetHomme();
+        }
+
+
+        for (Toggle toggle : toggleGroup1.getToggles()) {
+            RadioButton radioButton = (RadioButton) toggle;
+            if (radioButton.isVisible()){
+                radioButton.setVisible(false);
+            }
+            else{
+                radioButton.setVisible(true);
+            }
+        }
+
+        for (Toggle toggle : toggleGroup2.getToggles()) {
+            RadioButton radioButton = (RadioButton) toggle;
+            if (radioButton.isVisible()){
+                radioButton.setVisible(false);
+            }
+            if (radioButton.isSelected()){
+                radioButton.setSelected(false);
+            }
+        }
+    }
+
+    @FXML
     private void handleAppliquer(ActionEvent event){
         System.out.println("Appliqué");
     }

@@ -151,8 +151,8 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
      * @return Le texte représentant le classement des équipes.
      */
     @Override
-    public String classement(){
-        String texte="Place | Equipe" +System.lineSeparator();
+    public List<Equipe> classement(){
+        //String texte="Place | Equipe" +System.lineSeparator();
         Map<Equipe, Integer> dico = new HashMap<>();
         for(Equipe e : this.liEquipe){
             dico.put(e, 0);
@@ -172,11 +172,13 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
 
         ComparateurCompetCoop comparator = new ComparateurCompetCoop(dico);
         Collections.sort(liste , comparator);
+        /*
         for(Equipe e : liste){
             texte += (liste.indexOf(e)+1)+" | "+e.getNom()+System.lineSeparator();
         }
+        */
         
-        return texte;
+        return liste;
     }
 
 

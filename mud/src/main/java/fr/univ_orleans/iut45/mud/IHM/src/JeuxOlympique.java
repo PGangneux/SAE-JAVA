@@ -8,9 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,26 +28,54 @@ public class JeuxOlympique extends Application{
     private Stage stage;
     private ImportData model;
     
-    private Set<Sport> ensSport;
-    private Set<Pays> ensPays;
-    private List<Athlete> liAthletes;
-    private Set<CompetCoop> ensCompetitionsCoop;
-    private Set<CompetInd> ensCompetitionsInd;
-    private List<Equipe> liEquipes;
 
     
     private VBox leftVboxCompet;
+    private Button femme;
+    private Button homme;
+    private ToggleGroup groupRadioBCompetHomme;
+    private ToggleGroup groupRadioBCompetFemme;
+    private Label competClassement1;
+    private Label competClassement2;
+    private Label competClassement3;
+
+    private GridPane classementPays;
+    private GridPane recherchePays;
 
 
 
 
-   @Override
+    
+        
+    public void setCompetClassement1(Label competClassement1) {
+        this.competClassement1 = competClassement1;
+    }
+
+    public void setCompetClassement2(Label competClassement2) {
+        this.competClassement2 = competClassement2;
+    }
+
+    public void setCompetClassement3(Label competClassement3) {
+        this.competClassement3 = competClassement3;
+    }
+
+    
+
+    public ToggleGroup getGroupRadioBCompetHomme() {
+        return groupRadioBCompetHomme;
+    }
+
+    public ToggleGroup getGroupRadioBCompetFemme() {
+        return groupRadioBCompetFemme;
+    }
+
+    @Override
     public void init() throws IOException{
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        this.ensCompetitionsCoop = data.getEnsCompetitionsCoop();
-        this.ensCompetitionsInd = data.getEnsCompetitionsInd();
+        this.model = data;
+        
         
     }
 
@@ -86,58 +116,72 @@ public class JeuxOlympique extends Application{
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
-        Button homme = new Button("Homme");
-        VBox.setMargin(homme, new Insets(10, 0, 0, 10));
+        this.homme = (Button) root.lookup("#homme");
+        this.femme = (Button) root.lookup("#femme");
+        this.competClassement1 = (Label) root.lookup("#premier");
+        this.competClassement2 = (Label) root.lookup("#deuxieme");
+        this.competClassement3 = (Label) root.lookup("#troisieme");
 
-        this.leftVboxCompet.getChildren().add(homme);
 
-        ToggleGroup groupRadioBCompetHomme = new ToggleGroup();
-        for (CompetCoop compet: this.ensCompetitionsCoop){
+
+        this.leftVboxCompet.getChildren().remove(1);   
+        this.groupRadioBCompetHomme = new ToggleGroup();
+
+        ControlleurRadioButtonCompetition controlleurRadioBCompet = new ControlleurRadioButtonCompetition(this, this.model);
+        for (CompetCoop compet: this.model.getEnsCompetitionsCoop()){
             if (compet.getSexe().equals("M")){
                 RadioButton r = new RadioButton(compet.getNom());
-                r.setToggleGroup(groupRadioBCompetHomme);
+                r.setOnAction(controlleurRadioBCompet);
+                r.setToggleGroup(this.groupRadioBCompetHomme);
                 this.leftVboxCompet.getChildren().add(r);
             }
         } 
-        for (CompetInd compet : this.ensCompetitionsInd){
+        for (CompetInd compet : this.model.getEnsCompetitionsInd()){
             if (compet.getSexe().equals("M")){
                 RadioButton r = new RadioButton(compet.getNom());
-                r.setToggleGroup(groupRadioBCompetHomme);
+                r.setOnAction(controlleurRadioBCompet);
+                r.setToggleGroup(this.groupRadioBCompetHomme);
                 this.leftVboxCompet.getChildren().add(r);
             }
         }
         
-
-        Button femme = new Button("Femme");
         
-        this.leftVboxCompet.getChildren().add(femme);
-        VBox.setMargin(femme, new Insets(10, 0, 0, 10));
-
-
-        ToggleGroup groupRadioBCompetFemme = new ToggleGroup();
-        for (CompetCoop compet: this.ensCompetitionsCoop){
+        
+        this.leftVboxCompet.getChildren().add(this.femme);  
+        this.groupRadioBCompetFemme = new ToggleGroup();
+        for (CompetCoop compet: this.model.getEnsCompetitionsCoop()){
             if (compet.getSexe().equals("F")){
                 RadioButton r = new RadioButton(compet.getNom());
-                r.setToggleGroup(groupRadioBCompetFemme);
+                r.setOnAction(controlleurRadioBCompet);
+                r.setToggleGroup(this.groupRadioBCompetFemme);
                 r.setVisible(false);
                 this.leftVboxCompet.getChildren().add(r);
             }
         } 
-        for (CompetInd compet : this.ensCompetitionsInd){
+        for (CompetInd compet : this.model.getEnsCompetitionsInd()){
             if (compet.getSexe().equals("F")){
                 RadioButton r = new RadioButton(compet.getNom());
-                r.setToggleGroup(groupRadioBCompetFemme);
+                r.setOnAction(controlleurRadioBCompet);
+                r.setToggleGroup(this.groupRadioBCompetFemme);
                 r.setVisible(false);
                 this.leftVboxCompet.getChildren().add(r);
             }
         }
-        homme.setOnAction(new ControleurRadioButtonCompetition(this, groupRadioBCompetHomme, groupRadioBCompetFemme));
-        femme.setOnAction(new ControleurRadioButtonCompetition(this,groupRadioBCompetFemme, groupRadioBCompetHomme));
+        
+        
+
         
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         this.stage.setMaximized(true);
         return root;
+    }
+
+
+    public void majCompet(String premier, String seccond, String troisieme){
+        this.competClassement1.setText(premier);
+        this.competClassement2.setText(seccond);
+        this.competClassement3.setText(troisieme);
     }
 
     public BorderPane pageCompetitionClassement() throws IOException{
@@ -167,6 +211,20 @@ public class JeuxOlympique extends Application{
         loader.setControllerFactory(c -> new Controleur(this,model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
+        this.classementPays = (GridPane) root.lookup("#classementPays");
+        List<Pays> classementTotal = Pays.classementPaysMedaille(this.model.getEnsPays());
+        int i = 0;
+        for (Pays pays: classementTotal){
+            i++;
+            this.classementPays.add(new Label(String.valueOf(i)), 0, i);
+            this.classementPays.add(new Label(pays.getNom()), 1, i);
+            this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedaille())), 2, i);
+            this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedailleOr())), 5, i);
+        }
+
+        this.recherchePays = (GridPane) root.lookup("#recherchePays");
+        // à voir 
+
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         this.stage.setMaximized(true);
@@ -232,13 +290,15 @@ public class JeuxOlympique extends Application{
 
 
 
-    public Set<CompetCoop> getCompetCoop(){
-        return this.ensCompetitionsCoop;
-    }
 
-    public Set<CompetInd> getCompetInd(){
-        return this.ensCompetitionsInd;
-    }
+    // public Set<CompetCoop> getCompetCoop(){
+    //     return this.model.getEnsCompetitionsCoop();
+    // }
+
+    // public Set<CompetInd> getCompetInd(){
+    //     return this.model.getEnsCompetitionsInd();
+    // }
+
 
     
     public void modeParamAffichage() throws IOException{
