@@ -50,12 +50,16 @@ public class JeuxOlympique extends Application{
     private Label competClassement2;
     private Label competClassement3;
 
+    private ScrollPane classementCompetScrollPane;
+    private GridPane classementCompet;
+
     
     private GridPane classementPays;
     private GridPane recherchePays;
     private TextField textFieldPays;
 
     private ScrollPane liEpreuve;
+
 
 
 
@@ -227,25 +231,50 @@ public class JeuxOlympique extends Application{
         
     }
 
-    public BorderPane pageCompetitionClassement() throws IOException{
+    public BorderPane pageCompetitionClassement(CompetCoop compet) throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionClassement.fxml"));
         loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
+        this.classementCompetScrollPane =  (ScrollPane) root.lookup("#classementCompet");
+        this.classementCompet = (GridPane) classementCompetScrollPane.getContent();
+        List<Equipe> classement = compet.classement();
+        int i = 1;
+        for(Equipe equipe:classement){
+            this.classementCompet.add(new Label(String.valueOf(i)),0,i);
+            this.classementCompet.add(new Label(equipe.getNom()),1,i);
+            this.classementCompet.add(new Label(equipe.getPays().getNom()),2,i);
+            i++;
+        }
+        this.classementCompet.setVgap(20);
         return root;
     }
 
-    public BorderPane pageCompetitionLiEp() throws IOException{
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionListeEp.fxml"));
+    public BorderPane pageCompetitionClassement(CompetInd compet) throws IOException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionClassement.fxml"));
         loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
+        this.classementCompetScrollPane =  (ScrollPane) root.lookup("#classementCompet");
+        this.classementCompet = (GridPane) classementCompetScrollPane.getContent();
+
+        List<Athlete> classement = compet.classement();
+        int i = 1;
+        for(Athlete athlete:classement){
+            this.classementCompet.add(new Label(String.valueOf(i)),0,i);
+            this.classementCompet.add(new Label(athlete.getNom()+ " "+athlete.getPrenom()),1,i);
+            this.classementCompet.add(new Label(athlete.getPays().getNom()),2,i);
+            i++;
+        }
+        this.classementCompet.setVgap(20);
         return root;
     }
+
+    
 
     public BorderPane pagePays() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PagePays.fxml"));
@@ -354,12 +383,13 @@ public class JeuxOlympique extends Application{
         this.scene.setRoot(this.pageCompetition());
     }
 
-    public void modeCompetitionLiEp() throws IOException{
-        this.scene.setRoot(this.pageCompetitionLiEp());
+
+    public void modeCompetitionClassement(CompetCoop compet) throws IOException{
+        this.scene.setRoot(this.pageCompetitionClassement(compet));
     }
 
-    public void modeCompetitionClassement() throws IOException{
-        this.scene.setRoot(this.pageCompetitionClassement());
+    public void modeCompetitionClassement(CompetInd compet) throws IOException{
+        this.scene.setRoot(this.pageCompetitionClassement(compet));
     }
 
     public void modePays() throws IOException{
