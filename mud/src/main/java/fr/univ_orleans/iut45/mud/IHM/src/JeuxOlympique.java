@@ -293,7 +293,7 @@ public class JeuxOlympique extends Application{
 
     public void themeClair(){
         this.theme = true;
-        setUserAgentStylesheet("themeClair.css");
+        this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
     }
 
 
