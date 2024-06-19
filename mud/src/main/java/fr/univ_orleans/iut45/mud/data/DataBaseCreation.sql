@@ -68,39 +68,39 @@ create table DISPUTE (
 -- # Partie comptes et administration #
 -- ####################################
 -- création des rôle pour les comptes
-create role 'administrateur';
-create role 'journalist';
-create role 'organisateur';
-flush privileges;
+-- create role 'administrateur';
+-- create role 'journalist';
+-- create role 'organisateur';
+-- flush privileges;
 
--- attibution des rôles
-grant usage on *.* to 'administrateur';
-grant all privileges on SAE.* to 'administrateur' with grant option;
-flush privileges;
+-- -- attibution des rôles
+-- grant usage on *.* to 'administrateur';
+-- grant all privileges on SAE.* to 'administrateur' with grant option;
+-- flush privileges;
 
-grant usage on *.* to 'journalist';
-grant all privileges on *.* to 'journalist';
-flush privileges;
+-- grant usage on *.* to 'journalist';
+-- grant select on *.* to 'journalist';
+-- flush privileges;
 
-grant usage on *.* to 'organisateur';
-grant select,update,insert on SAE.* to 'organisateur';
-flush privileges;
+-- grant usage on *.* to 'organisateur';
+-- grant select,update,insert on SAE.* to 'organisateur';
+-- flush privileges;
 
 -- creation d'un super user
 create user 'admin'@'%' identified by 'admin';
 create user 'admin'@'localhost' identified by 'admin';
-grant 'administrateur' to 'admin'@'%';
-grant 'administrateur' to 'admin'@'localhost';
+grant all on SAE.* to 'admin'@'%';
+grant all on SAE.* to 'admin'@'localhost';
 flush privileges;
 
-create user 'journalist'@'%' identified by 'admin';
-create user 'journalist'@'localhost' identified by 'admin';
-grant 'journalist' to 'journalist'@'%';
-grant 'journalist' to 'journalist'@'localhost';
+create user 'journalist'@'%' identified by 'journ';
+create user 'journalist'@'localhost' identified by 'journ';
+grant select on SAE.* to 'journalist'@'%';
+grant select on SAE.* to 'journalist'@'localhost';
 flush privileges;
 
-create user 'organisateur'@'%' identified by 'admin';
-create user 'organisateur'@'localhost' identified by 'admin';
-grant 'organisateur' to 'organisateur'@'%';
-grant 'organisateur' to 'organisateur'@'localhost';
+create user 'organisateur'@'%' identified by 'orga';
+create user 'organisateur'@'localhost' identified by 'orga';
+grant select,update,insert on SAE.* to 'organisateur'@'%';
+grant select,update,insert on SAE.* to 'organisateur'@'localhost';
 flush privileges;
