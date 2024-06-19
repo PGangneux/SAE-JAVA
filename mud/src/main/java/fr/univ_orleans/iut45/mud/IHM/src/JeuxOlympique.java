@@ -1,11 +1,15 @@
 package fr.univ_orleans.iut45.mud.IHM.src;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;
 import fr.univ_orleans.iut45.mud.competition.*;
+import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -15,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -50,21 +55,16 @@ public class JeuxOlympique extends Application{
     private GridPane recherchePays;
     private TextField textFieldPays;
 
+    private ScrollPane liEpreuve;
+
 
 
 
     
         
-    public void setCompetClassement1(Label competClassement1) {
-        this.competClassement1 = competClassement1;
-    }
 
-    public void setCompetClassement2(Label competClassement2) {
-        this.competClassement2 = competClassement2;
-    }
-
-    public void setCompetClassement3(Label competClassement3) {
-        this.competClassement3 = competClassement3;
+    public Stage getStage(){
+        return this.stage;
     }
 
     
@@ -107,8 +107,8 @@ public class JeuxOlympique extends Application{
         loader.setControllerFactory(c -> new Controleur(this,this.model)); //A mettre a la place de tout les loader.setControler(this.controleur)
         loader.setController(this.controleur);
         VBox root = loader.load();
-        this.stage.setMinWidth(300);
-        this.stage.setMinHeight(400);
+        this.stage.setWidth(300);
+        this.stage.setHeight(400);
         return root;
     }
 
@@ -119,7 +119,6 @@ public class JeuxOlympique extends Application{
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -131,6 +130,7 @@ public class JeuxOlympique extends Application{
         this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
         this.homme = (Button) root.lookup("#homme");
         this.femme = (Button) root.lookup("#femme");
+        this.liEpreuve = (ScrollPane) root.lookup("#liEpreuve");
         this.competClassement1 = (Label) root.lookup("#premier");
         this.competClassement2 = (Label) root.lookup("#deuxieme");
         this.competClassement3 = (Label) root.lookup("#troisieme");
@@ -186,15 +186,45 @@ public class JeuxOlympique extends Application{
         
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
 
-    public void majCompet(String premier, String seccond, String troisieme){
+    public void majCompet(String premier, String seccond, String troisieme, CompetCoop compet){
         this.competClassement1.setText(premier);
         this.competClassement2.setText(seccond);
         this.competClassement3.setText(troisieme);
+        VBox epreuves = new VBox();
+        if(compet.getLiEpreuves().equals(new ArrayList<>())){
+            Label label = new Label("Il n'y a pas encore d'épreuve");
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        for (EpreuveCoop ep:compet.getLiEpreuves()){
+            Label label = new Label(ep.getNom());
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        
+        
+    }
+
+    public void majCompet(String premier, String seccond, String troisieme, CompetInd compet){
+        this.competClassement1.setText(premier);
+        this.competClassement2.setText(seccond);
+        this.competClassement3.setText(troisieme);
+        VBox epreuves = new VBox();
+        if(compet.getLiEpreuves().equals(new ArrayList<>())){
+            Label label = new Label("Il n'y a pas encore d'épreuve");
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        for (EpreuveInd ep:compet.getLiEpreuves()){
+            Label label = new Label(ep.getNom());
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        
     }
 
     public BorderPane pageCompetitionClassement() throws IOException{
@@ -204,7 +234,6 @@ public class JeuxOlympique extends Application{
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -215,7 +244,6 @@ public class JeuxOlympique extends Application{
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -244,7 +272,6 @@ public class JeuxOlympique extends Application{
 
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
