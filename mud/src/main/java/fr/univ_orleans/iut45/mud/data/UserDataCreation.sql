@@ -30,3 +30,8 @@ insert into USERACCOUNT values
     (0,'admin1',SHA('admin1'),2),
     (1,'orga1',SHA('orga1'),1),
     (2,'j1',SHA('j1'),0);
+
+create user 'applogin'@'%' identified by 'applicationPrivateLoginKey';
+create user 'applogin'@'localhost' identified by 'applicationPrivateLoginKey';
+grant select on SAEACCOUNT.* to 'applogin'@'%';
+grant select on SAEACCOUNT.* to 'applogin'@'localhost';
