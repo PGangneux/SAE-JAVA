@@ -35,7 +35,7 @@ create table EQUIPE (
     idEquipe int primary key,
     nomEquipe varchar(50),
     idPays int references PAYS.idPays,
-    idSport references SPORT.idSport
+    idSport int references SPORT.idSport
 );
 
 
