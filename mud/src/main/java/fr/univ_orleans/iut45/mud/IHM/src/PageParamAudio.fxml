@@ -19,17 +19,17 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="25.0" prefWidth="600.0" text="Affichage">
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="600.0" text="Audio">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R">
-               <buttons>
+            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" prefHeight="40.0" prefWidth="200.0">
+              <buttons>
                 <Button fx:id="btnAffichage" mnemonicParsing="false" onAction="#handleParamAffichage" text="Affichage" />
                   <Button fx:id="btnAudio" mnemonicParsing="false" style="-fx-background-color: darkkhaki;" text="Audio" />
                   <Button fx:id="btnPref" cache="true" mnemonicParsing="false" onAction="#handleParamPref" text="Préférences" />
-               </buttons>
+              </buttons>
             </ButtonBar>
             <Separator prefHeight="1.0" prefWidth="600.0" style="-fx-background-color: black;" />
          </children>
@@ -51,11 +51,11 @@
       </VBox>
    </center>
    <bottom>
-      <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" nodeOrientation="RIGHT_TO_LEFT" BorderPane.alignment="CENTER">
-         <buttons>
-            <Button fx:id="btnRetour" mnemonicParsing="false" onAction="#handleRetour" text="Retour" />
+      <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
             <Button fx:id="btnAppliquer" mnemonicParsing="false" onAction="#handleAppliquer" prefWidth="81.0" text="Appliquer" />
-         </buttons>
+          <Button fx:id="btnRetour" mnemonicParsing="false" onAction="#handleRetour" text="Retour" />
+        </buttons>
          <BorderPane.margin>
             <Insets bottom="50.0" />
          </BorderPane.margin>

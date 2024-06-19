@@ -1,25 +1,34 @@
 package fr.univ_orleans.iut45.mud.IHM.src;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;
+import fr.univ_orleans.iut45.mud.competition.*;
+import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
+import fr.univ_orleans.iut45.mud.items.*;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
-import fr.univ_orleans.iut45.mud.items.*;
-import fr.univ_orleans.iut45.mud.competition.*;
-import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;;
+import javafx.stage.Stage;;
 
 
 public class JeuxOlympique extends Application{
@@ -27,11 +36,9 @@ public class JeuxOlympique extends Application{
     private Scene scene;
     private Stage stage;
     private ImportData model;
+    private boolean themeClair;
 
-    /**
-     * Si true le thème est clair sinon le thème est sombre
-     */
-    private boolean theme;
+    
     
 
     
@@ -44,16 +51,22 @@ public class JeuxOlympique extends Application{
     private Label competClassement2;
     private Label competClassement3;
 
-    // private MediaPlayer son;
-
+    
     private GridPane classementPays;
     private GridPane recherchePays;
+    private TextField textFieldPays;
+
+    private ScrollPane liEpreuve;
 
 
 
 
-
+    
         
+
+    public Stage getStage(){
+        return this.stage;
+    }
 
     
 
@@ -67,13 +80,16 @@ public class JeuxOlympique extends Application{
 
     @Override
     public void init() throws IOException{
-        this.theme = true;
+        this.themeClair = true;
+        ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        this.model = data;
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
-        ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        this.model = data;
-        // Ajouter import pour media pour le son et un attribut
-        // this.son = new MediaPlayer(new Media("acces fichier son"));
+        
+        
+        
+        
+        
         
     }
 
@@ -89,33 +105,34 @@ public class JeuxOlympique extends Application{
 
     public VBox pageConnexion() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageConnexion.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,model)); //A mettre a la place de tout les loader.setControler(this.controleur)
+        System.out.println(this.model);
+        loader.setControllerFactory(c -> new Controleur(this,this.model)); //A mettre a la place de tout les loader.setControler(this.controleur)
         loader.setController(this.controleur);
         VBox root = loader.load();
-        this.stage.setMinWidth(300);
-        this.stage.setMinHeight(400);
+        this.stage.setWidth(300);
+        this.stage.setHeight(400);
         return root;
     }
 
     public BorderPane pageParticipant() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParticipant.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,model));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
     public BorderPane pageCompetition() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetition.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,model));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
         this.homme = (Button) root.lookup("#homme");
         this.femme = (Button) root.lookup("#femme");
+        this.liEpreuve = (ScrollPane) root.lookup("#liEpreuve");
         this.competClassement1 = (Label) root.lookup("#premier");
         this.competClassement2 = (Label) root.lookup("#deuxieme");
         this.competClassement3 = (Label) root.lookup("#troisieme");
@@ -171,45 +188,76 @@ public class JeuxOlympique extends Application{
         
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
 
-    public void majCompet(String premier, String seccond, String troisieme){
+    public void majCompet(String premier, String seccond, String troisieme, CompetCoop compet){
         this.competClassement1.setText(premier);
         this.competClassement2.setText(seccond);
         this.competClassement3.setText(troisieme);
+        VBox epreuves = new VBox();
+        if(compet.getLiEpreuves().equals(new ArrayList<>())){
+            Label label = new Label("Il n'y a pas encore d'épreuve");
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        for (EpreuveCoop ep:compet.getLiEpreuves()){
+            Label label = new Label(ep.getNom());
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        
+        
+    }
+
+    public void majCompet(String premier, String seccond, String troisieme, CompetInd compet){
+        this.competClassement1.setText(premier);
+        this.competClassement2.setText(seccond);
+        this.competClassement3.setText(troisieme);
+        VBox epreuves = new VBox();
+        if(compet.getLiEpreuves().equals(new ArrayList<>())){
+            Label label = new Label("Il n'y a pas encore d'épreuve");
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        for (EpreuveInd ep:compet.getLiEpreuves()){
+            Label label = new Label(ep.getNom());
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        
     }
 
     public BorderPane pageCompetitionClassement() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionClassement.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,model));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
     public BorderPane pageCompetitionLiEp() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageCompetitionListeEp.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,model));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
     public BorderPane pagePays() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PagePays.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,model));
+        
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
-        this.classementPays = (GridPane) root.lookup("#classementPays");
+        ScrollPane scrollPane = (ScrollPane)root.lookup("#scrollPays");
+        this.classementPays = (GridPane) scrollPane.getContent().lookup("#classementPays");
+        // this.classementPays = (GridPane) scrollPane.lookup("#classementPays");
         List<Pays> classementTotal = Pays.classementPaysMedaille(this.model.getEnsPays());
         int i = 0;
         for (Pays pays: classementTotal){
@@ -217,17 +265,53 @@ public class JeuxOlympique extends Application{
             this.classementPays.add(new Label(String.valueOf(i)), 0, i);
             this.classementPays.add(new Label(pays.getNom()), 1, i);
             this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedaille())), 2, i);
+            this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedailleBronze())), 3, i);
+            this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedailleArgent())), 4, i);
             this.classementPays.add(new Label(String.valueOf(pays.getCompteurMedailleOr())), 5, i);
         }
 
         this.recherchePays = (GridPane) root.lookup("#recherchePays");
-        // à voir 
+        this.textFieldPays = (TextField) root.lookup("#textFieldPays");
+        
 
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
+
+    public void majPays(Pays pays){
+        try{
+            this.modePays();
+        }
+        catch(IOException e){}
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + pays.getNom() + ".png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50); 
+        imageView.setFitHeight(35); 
+        imageView.setPreserveRatio(true);
+        GridPane.setMargin(imageView, new Insets(0,0,0,10));
+        Label nom = new Label(pays.getNom());
+
+                    
+        Label nbMedaille = new Label(String.valueOf(pays.getCompteurMedaille()));
+        Label nbMedailleOr = new Label(String.valueOf(pays.getCompteurMedailleOr()));
+        Label nbMedailleArgent = new Label(String.valueOf(pays.getCompteurMedailleArgent()));
+        Label nbMedailleBronze = new Label(String.valueOf(pays.getCompteurMedailleBronze()));
+        this.recherchePays.add(imageView, 0, 1);
+        this.recherchePays.add(nom, 1, 1);
+        this.recherchePays.add(nbMedaille, 1, 2);
+        this.recherchePays.add(nbMedailleOr, 1, 3);
+        this.recherchePays.add(nbMedailleArgent, 1, 4);
+        this.recherchePays.add(nbMedailleBronze, 1, 5);
+
+        GridPane.setMargin(nbMedaille, new Insets(0,0,50,25));
+        GridPane.setMargin(nbMedailleOr, new Insets(0,0,50,25));
+        GridPane.setMargin(nbMedailleArgent, new Insets(0,0,50,25));
+        GridPane.setMargin(nbMedailleBronze, new Insets(0,0,50,25));
+    }
+            
+            
+
 
     public BorderPane pageParamAffichage() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAffichage.fxml"));
@@ -259,6 +343,16 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
+    public void themeSombre(){
+        this.themeClair = false;
+        this.scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
+    }
+
+    public void themeClair(){
+        this.themeClair = true;
+        this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
+    }
+
 
 
 
@@ -286,16 +380,6 @@ public class JeuxOlympique extends Application{
         this.scene.setRoot(this.pagePays());
     }
 
-    public void themeSombre(){
-        this.theme = false;
-        this.scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
-    }
-
-    public void themeClair(){
-        this.theme = true;
-        this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
-    }
-
 
 
 
@@ -313,7 +397,7 @@ public class JeuxOlympique extends Application{
         this.scene.setRoot(this.pageParamAffichage());
         RadioButton radioClair = (RadioButton)this.scene.lookup("#radioClair");
         RadioButton radioSombre = (RadioButton)this.scene.lookup("#radioSombre");
-        if (this.theme == true){
+        if (this.themeClair == true){
             radioSombre.setSelected(false);
             radioClair.setSelected(true);
         } else {

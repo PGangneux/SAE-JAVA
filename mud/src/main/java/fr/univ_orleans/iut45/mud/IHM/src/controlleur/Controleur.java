@@ -1,23 +1,29 @@
 package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.io.IOException;
+import java.util.Set;
 
+import fr.univ_orleans.iut45.mud.IHM.src.*;
+import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import fr.univ_orleans.iut45.mud.IHM.src.*;
-import fr.univ_orleans.iut45.mud.items.*;
+import javafx.scene.layout.GridPane;
 public class Controleur {
-    @FXML
-    private Button btnCo;
+    
 
-    @FXML
-    private Button btnAccueil;
     private JeuxOlympique vue;
     private ImportData model;
 
@@ -27,10 +33,13 @@ public class Controleur {
     public Controleur(JeuxOlympique vue, ImportData model){
         this.vue = vue;
         this.model = model;
+        System.out.println(this.model);
+        
     }
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException{
+        this.vue.getStage().setMaximized(true);
         this.vue.modeParticipant();
         System.out.println("Affichage fenetre Participants");
     }
@@ -106,7 +115,7 @@ public class Controleur {
     }
 
     @FXML
-    private void handleSelectColor(ActionEvent event) throws IOException{
+    private void handleCouleur(ActionEvent event) throws IOException{
         System.out.println("Couleur bouton modifié");
     }
 
@@ -149,6 +158,21 @@ public class Controleur {
     @FXML
     private void handleAppliquer(ActionEvent event){
         System.out.println("Appliqué");
+    }
+
+    @FXML
+    private void handleTextFieldPays(KeyEvent event){
+        if (event.getCode() == KeyCode.ENTER) {
+            
+            TextField textField = (TextField) event.getSource();
+            Pays pays = new Pays(textField.getText());
+            
+            Set<Pays> ensPays = this.model.getEnsPays();
+            if(ensPays.contains(pays)){
+                this.vue.majPays(pays);
+            }
+            
+        }
     }
 
 }
