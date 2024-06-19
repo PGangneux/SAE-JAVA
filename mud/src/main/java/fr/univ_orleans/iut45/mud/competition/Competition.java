@@ -1,7 +1,6 @@
 package fr.univ_orleans.iut45.mud.competition;
 import java.util.List;
 
-
 import fr.univ_orleans.iut45.mud.items.Sport;
 
 

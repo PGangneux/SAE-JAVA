@@ -1,7 +1,6 @@
 package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.util.Set;
-import java.util.List;
 
 import fr.univ_orleans.iut45.mud.IHM.src.JeuxOlympique;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
@@ -9,6 +8,9 @@ import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
 import fr.univ_orleans.iut45.mud.items.ImportData;
+
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
