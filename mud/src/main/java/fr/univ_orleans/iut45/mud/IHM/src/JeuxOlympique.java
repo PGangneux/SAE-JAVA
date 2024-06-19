@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -216,7 +217,9 @@ public class JeuxOlympique extends Application{
         loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
-        this.classementPays = (GridPane) root.lookup("#classementPays");
+        ScrollPane scrollPane = (ScrollPane)root.lookup("#scrollPays");
+        this.classementPays = (GridPane) scrollPane.getContent().lookup("#classementPays");
+        // this.classementPays = (GridPane) scrollPane.lookup("#classementPays");
         List<Pays> classementTotal = Pays.classementPaysMedaille(this.model.getEnsPays());
         int i = 0;
         for (Pays pays: classementTotal){
