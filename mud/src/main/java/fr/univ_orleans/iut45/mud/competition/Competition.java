@@ -41,11 +41,11 @@ public interface Competition<T, E> {
     public List<T> getParticipant();
 
     /**
-     * Retourne le classement des participants dans la compétition sous forme de chaîne de caractères.
+     * Retourne le classement des participants dans la compétition sous forme de liste de Participant.
      *
      * @return Le classement des participants.
      */
-    public String classement();
+    public List<T> classement();
 
     /**
      * Ajoute un participant à la compétition.

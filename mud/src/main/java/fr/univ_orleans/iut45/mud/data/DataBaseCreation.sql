@@ -1,6 +1,5 @@
 create database if not exists SAE;
 use SAE;
-source ./src/main/java/fr/univ_orleans/iut45/mud/data/DataSup.sql;
 
 -- SET default_storage_engine = InnoDB;
 create table PAYS(
@@ -24,11 +23,6 @@ create table ATHLETE(
     idPays int
 );
 
-create table EQUIPE (
-    idEquipe int primary key,
-    nomEquipe varchar(50)
-);
-
 create table COMPETITION (
     idCompet int primary key,
     idSport int references SPORT.idSport,
@@ -36,6 +30,14 @@ create table COMPETITION (
     individuelle int not null
     constraint chk_ind CHECK (individuelle in (0,1))
 );
+
+create table EQUIPE (
+    idEquipe int primary key,
+    nomEquipe varchar(50),
+    idPays int references PAYS.idPays,
+    idSport int references SPORT.idSport
+);
+
 
 create table EPREUVE(
     idEpreuve int primary key,
@@ -65,17 +67,39 @@ create table DISPUTE (
 -- # Partie comptes et administration #
 -- ####################################
 -- création des rôle pour les comptes
-create role 'administrateur';
-create role 'journalist';
-create role 'organisateur';
-flush privileges;
+-- create role 'administrateur';
+-- create role 'journalist';
+-- create role 'organisateur';
+-- flush privileges;
 
--- attibution des rôles
-grant all privileges on SAE.* to 'administrateur' with grant option;
-grant select,update,insert on SAE.* to 'organisateur';
-grant select on SAE.* to 'journalist';
-flush privileges;
+-- -- attibution des rôles
+-- grant usage on *.* to 'administrateur';
+-- grant all privileges on SAE.* to 'administrateur' with grant option;
+-- flush privileges;
+
+-- grant usage on *.* to 'journalist';
+-- grant select on *.* to 'journalist';
+-- flush privileges;
+
+-- grant usage on *.* to 'organisateur';
+-- grant select,update,insert on SAE.* to 'organisateur';
+-- flush privileges;
 
 -- creation d'un super user
 create user 'admin'@'%' identified by 'admin';
-grant 'administrateur' to 'admin'@'%';
+create user 'admin'@'localhost' identified by 'admin';
+grant all on SAE.* to 'admin'@'%';
+grant all on SAE.* to 'admin'@'localhost';
+flush privileges;
+
+create user 'journalist'@'%' identified by 'journ';
+create user 'journalist'@'localhost' identified by 'journ';
+grant select on SAE.* to 'journalist'@'%';
+grant select on SAE.* to 'journalist'@'localhost';
+flush privileges;
+
+create user 'organisateur'@'%' identified by 'orga';
+create user 'organisateur'@'localhost' identified by 'orga';
+grant select,update,insert on SAE.* to 'organisateur'@'%';
+grant select,update,insert on SAE.* to 'organisateur'@'localhost';
+flush privileges;

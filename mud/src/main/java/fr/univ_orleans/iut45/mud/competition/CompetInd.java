@@ -116,8 +116,8 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
     }
 
     @Override
-    public String classement(){
-        String texte="Place | Athlete" +System.lineSeparator();
+    public List<Athlete> classement(){
+        //String texte="Place | Athlete" +System.lineSeparator();
         Map<Athlete, Integer> dico = new HashMap<>();
         for(Athlete a : this.liAthletes){
             dico.put(a, 0);
@@ -136,12 +136,15 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         }
 
         ComparateurCompetInd comparator = new ComparateurCompetInd(dico);
+        
         Collections.sort(liste , comparator);
+        /*
         for(Athlete e : liste){
             texte += (liste.indexOf(e)+1)+" | "+e.getNom()+System.lineSeparator();
         }
+        */
         
-        return texte;
+        return liste;
     }
 
 
@@ -239,8 +242,14 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         Collections.sort(liste , comparator);
 
         for(int i=0 ; i<3; i++){
-            if(i<1){
+            if(i==0){
                 liste.get(i).getPays().setCompteurMedailleOr(liste.get(i).getPays().getCompteurMedailleOr()+1);
+            }
+            else if(i==1){
+                liste.get(i).getPays().setCompteurMedailleArgent(liste.get(i).getPays().getCompteurMedailleArgent()+1);
+            }
+            else if(i==2){
+                liste.get(i).getPays().setCompteurMedailleBronze(liste.get(i).getPays().getCompteurMedailleBronze()+1);
             }
             liste.get(i).getPays().setCompteurMedaille(liste.get(i).getPays().getCompteurMedaille()+1);
         }

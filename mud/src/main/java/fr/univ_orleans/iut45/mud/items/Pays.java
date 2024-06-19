@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import fr.univ_orleans.iut45.mud.comparator.CompareArgent;
+import fr.univ_orleans.iut45.mud.comparator.CompareBronze;
 import fr.univ_orleans.iut45.mud.comparator.CompareOr;
 
 
@@ -16,6 +18,8 @@ public class Pays implements Comparable<Pays>{
     private String nom;
     private int compteurMedaille;
     private int compteurMedailleOr;
+    private int compteurMedailleArgent;
+    private int compteurMedailleBronze;
 
 
     /**
@@ -27,6 +31,8 @@ public class Pays implements Comparable<Pays>{
         this.nom = nom;
         this.compteurMedaille = 0;
         this.compteurMedailleOr = 0;
+        this.compteurMedailleArgent=0;
+        this.compteurMedailleBronze=0;
     }
 
 
@@ -77,6 +83,44 @@ public class Pays implements Comparable<Pays>{
      */
     public void setCompteurMedailleOr(int compteurMedailleOr) {
         this.compteurMedailleOr = compteurMedailleOr;
+    }
+
+    /**
+     * Retourne le compteur de médailles d'Argent du pays.
+     *
+     * @return Le compteur de médailles d'Argent.
+     */
+    public int getCompteurMedailleArgent() {
+        return compteurMedailleArgent;
+    }
+
+
+    /**
+     * Définit le compteur de médailles d'Argent du pays.
+     *
+     * @param compteurMedailleArgent Le nouveau compteur de médailles d'Argent.
+     */
+    public void setCompteurMedailleArgent(int compteurMedailleArgent) {
+        this.compteurMedailleArgent = compteurMedailleArgent;
+    }
+
+    /**
+     * Retourne le compteur de médailles de Bronze du pays.
+     *
+     * @return Le compteur de médailles de Bronze.
+     */
+    public int getCompteurMedailleBronze() {
+        return compteurMedailleBronze;
+    }
+
+
+    /**
+     * Définit le compteur de médailles de Bronze du pays.
+     *
+     * @param compteurMedailleBronze Le nouveau compteur de médailles de Bronze.
+     */
+    public void setCompteurMedailleBronze(int compteurMedailleBronze) {
+        this.compteurMedailleBronze = compteurMedailleBronze;
     }
 
     /**
@@ -143,6 +187,32 @@ public class Pays implements Comparable<Pays>{
         List<Pays> liPays = new ArrayList<>(ensPays);
         CompareOr compareOr = new CompareOr();
         Collections.sort(liPays, compareOr);
+        return liPays;
+    }
+
+     /**
+     * Retourne une liste des pays triés par nombre de médailles d'Argent.
+     *
+     * @param ensPays L'ensemble des pays à trier.
+     * @return La liste triée des pays par nombre de médailles d'Argent.
+     */    
+    public static List<Pays> classementPaysMedailleArgent(Set<Pays> ensPays){
+        List<Pays> liPays = new ArrayList<>(ensPays);
+        CompareArgent compareArgent = new CompareArgent();
+        Collections.sort(liPays, compareArgent);
+        return liPays;
+    }
+
+     /**
+     * Retourne une liste des pays triés par nombre de médailles de Bronze.
+     *
+     * @param ensPays L'ensemble des pays à trier.
+     * @return La liste triée des pays par nombre de médailles de Bronze.
+     */    
+    public static List<Pays> classementPaysMedailleBronze(Set<Pays> ensPays){
+        List<Pays> liPays = new ArrayList<>(ensPays);
+        CompareBronze compareBronze = new CompareBronze();
+        Collections.sort(liPays, compareBronze);
         return liPays;
     }
 }
