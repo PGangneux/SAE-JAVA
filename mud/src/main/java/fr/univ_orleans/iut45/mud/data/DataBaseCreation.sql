@@ -1,6 +1,5 @@
 create database if not exists SAE;
 use SAE;
-source ./src/main/java/fr/univ_orleans/iut45/mud/data/DataSup.sql;
 
 -- SET default_storage_engine = InnoDB;
 create table PAYS(
