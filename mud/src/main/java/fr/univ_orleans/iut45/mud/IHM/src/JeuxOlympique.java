@@ -54,17 +54,6 @@ public class JeuxOlympique extends Application{
 
 
         
-    public void setCompetClassement1(Label competClassement1) {
-        this.competClassement1 = competClassement1;
-    }
-
-    public void setCompetClassement2(Label competClassement2) {
-        this.competClassement2 = competClassement2;
-    }
-
-    public void setCompetClassement3(Label competClassement3) {
-        this.competClassement3 = competClassement3;
-    }
 
     
 
@@ -304,7 +293,7 @@ public class JeuxOlympique extends Application{
 
     public void themeClair(){
         this.theme = true;
-        setUserAgentStylesheet("themeClair.css");
+        this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
     }
 
 
