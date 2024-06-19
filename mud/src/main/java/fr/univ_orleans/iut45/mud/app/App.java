@@ -40,7 +40,7 @@ public class App {
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
         String server = "192.168.202.208";
-        String baseName = "SAEACCOUNT";
+        String baseName = "SAE";
         String user = roleUser;
         String password = rolePassword;
         this.jeuxConnexion = new Connexion();

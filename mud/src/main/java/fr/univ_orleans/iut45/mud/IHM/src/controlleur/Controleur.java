@@ -1,6 +1,7 @@
 package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.*;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -29,6 +31,12 @@ public class Controleur {
     private App model;
 
     @FXML
+    private TextField identifiant;
+
+    @FXML
+    private PasswordField mdp;
+
+    @FXML
     private void init(){}
 
     public Controleur(JeuxOlympique vue, App model2){
@@ -39,9 +47,22 @@ public class Controleur {
     }
 
     @FXML
-    private void handleConnexion(ActionEvent event) throws IOException{
-        this.vue.getStage().setMaximized(true);
-        this.vue.modeParticipant();
+    private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
+        try {
+            String login = this.identifiant.getText();
+            String password = this.mdp.getText();
+            boolean state = this.model.getConnexion(login, password);
+            if (state) {
+                this.vue.getStage().setMaximized(true);
+                this.vue.modeParticipant();
+            }else {
+                System.out.println("inexistant");
+            }   
+            System.out.println(this.model.getStatusCompte());
+        } catch (IOException e) {
+            throw new IOException();
+        }
+        
         System.out.println("Affichage fenetre Participants");
     }
 
