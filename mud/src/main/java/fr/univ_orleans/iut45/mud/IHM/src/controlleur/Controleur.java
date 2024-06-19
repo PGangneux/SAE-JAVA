@@ -31,6 +31,7 @@ public class Controleur {
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException{
+        this.vue.getStage().setMaximized(true);
         this.vue.modeParticipant();
         System.out.println("Affichage fenetre Participants");
     }

@@ -54,7 +54,9 @@ public class JeuxOlympique extends Application{
 
 
         
-
+    public Stage getStage(){
+        return this.stage;
+    }
     
 
     public ToggleGroup getGroupRadioBCompetHomme() {
@@ -92,8 +94,8 @@ public class JeuxOlympique extends Application{
         loader.setControllerFactory(c -> new Controleur(this,model)); //A mettre a la place de tout les loader.setControler(this.controleur)
         loader.setController(this.controleur);
         VBox root = loader.load();
-        this.stage.setMinWidth(300);
-        this.stage.setMinHeight(400);
+        this.stage.setWidth(300);
+        this.stage.setHeight(400);
         return root;
     }
 
@@ -104,7 +106,6 @@ public class JeuxOlympique extends Application{
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -171,7 +172,6 @@ public class JeuxOlympique extends Application{
         
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -189,7 +189,6 @@ public class JeuxOlympique extends Application{
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -200,7 +199,6 @@ public class JeuxOlympique extends Application{
         BorderPane root = loader.load();
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
@@ -225,7 +223,6 @@ public class JeuxOlympique extends Application{
 
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
-        this.stage.setMaximized(true);
         return root;
     }
 
