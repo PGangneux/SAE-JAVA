@@ -27,6 +27,11 @@ public class JeuxOlympique extends Application{
     private Scene scene;
     private Stage stage;
     private ImportData model;
+
+    /**
+     * Si true le thème est clair sinon le thème est sombre
+     */
+    private boolean theme;
     
 
     
@@ -39,13 +44,15 @@ public class JeuxOlympique extends Application{
     private Label competClassement2;
     private Label competClassement3;
 
+    // private MediaPlayer son;
+
     private GridPane classementPays;
     private GridPane recherchePays;
 
 
 
 
-    
+
         
     public void setCompetClassement1(Label competClassement1) {
         this.competClassement1 = competClassement1;
@@ -71,11 +78,13 @@ public class JeuxOlympique extends Application{
 
     @Override
     public void init() throws IOException{
+        this.theme = true;
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         ImportData data = new ImportData("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         this.model = data;
-        
+        // Ajouter import pour media pour le son et un attribut
+        // this.son = new MediaPlayer(new Media("acces fichier son"));
         
     }
 
@@ -288,6 +297,16 @@ public class JeuxOlympique extends Application{
         this.scene.setRoot(this.pagePays());
     }
 
+    public void themeSombre(){
+        this.theme = false;
+        this.scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
+    }
+
+    public void themeClair(){
+        this.theme = true;
+        setUserAgentStylesheet("themeClair.css");
+    }
+
 
 
 
@@ -303,6 +322,15 @@ public class JeuxOlympique extends Application{
     
     public void modeParamAffichage() throws IOException{
         this.scene.setRoot(this.pageParamAffichage());
+        RadioButton radioClair = (RadioButton)this.scene.lookup("#radioClair");
+        RadioButton radioSombre = (RadioButton)this.scene.lookup("#radioSombre");
+        if (this.theme == true){
+            radioSombre.setSelected(false);
+            radioClair.setSelected(true);
+        } else {
+            radioClair.setSelected(false);
+            radioSombre.setSelected(true);
+        }
     }
 
     public void modeParamAudio() throws IOException{
