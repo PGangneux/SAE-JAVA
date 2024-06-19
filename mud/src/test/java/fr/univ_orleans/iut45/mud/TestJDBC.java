@@ -27,7 +27,7 @@ public class TestJDBC {
         String server = new String("192.168.202.108");
         String baseName = new String("SAE");
         String user = new String("nathan");
-        String password = new String("local");
+        String password = new String("ol");
         donnees = new ImportData(chemin);
         ensSports = donnees.getEnsSports();
         liAthletes = donnees.getListAthletes();
