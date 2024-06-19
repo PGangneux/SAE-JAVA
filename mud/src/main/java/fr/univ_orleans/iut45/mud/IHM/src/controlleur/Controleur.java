@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.*;
+import fr.univ_orleans.iut45.mud.app.App;
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -25,14 +26,14 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
-    private ImportData model;
+    private App model;
 
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue, ImportData model){
+    public Controleur(JeuxOlympique vue, App model2){
         this.vue = vue;
-        this.model = model;
+        this.model = model2;
         System.out.println(this.model);
         
     }
