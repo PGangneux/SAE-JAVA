@@ -16,7 +16,8 @@ create table ACCOUNTPRIVILEGE(
 
 create table USERACCOUNT(
     idAcccount int primary key,
-    hashedPassword varchar(100),
+    username varchar(50) unique not null,
+    hashedPassword varchar(100) not null,
     idPrivilege int references ACCOUNTPRIVILEGE.idPrivilege
 );
 
