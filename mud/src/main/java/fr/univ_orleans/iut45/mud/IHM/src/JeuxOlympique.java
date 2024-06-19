@@ -1,11 +1,15 @@
 package fr.univ_orleans.iut45.mud.IHM.src;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;
 import fr.univ_orleans.iut45.mud.competition.*;
+import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -15,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -50,6 +55,8 @@ public class JeuxOlympique extends Application{
     private GridPane classementPays;
     private GridPane recherchePays;
     private TextField textFieldPays;
+
+    private ScrollPane liEpreuve;
 
 
 
@@ -125,6 +132,7 @@ public class JeuxOlympique extends Application{
         this.leftVboxCompet = (VBox) root.lookup("#leftVboxCompet");
         this.homme = (Button) root.lookup("#homme");
         this.femme = (Button) root.lookup("#femme");
+        this.liEpreuve = (ScrollPane) root.lookup("#liEpreuve");
         this.competClassement1 = (Label) root.lookup("#premier");
         this.competClassement2 = (Label) root.lookup("#deuxieme");
         this.competClassement3 = (Label) root.lookup("#troisieme");
@@ -184,10 +192,41 @@ public class JeuxOlympique extends Application{
     }
 
 
-    public void majCompet(String premier, String seccond, String troisieme){
+    public void majCompet(String premier, String seccond, String troisieme, CompetCoop compet){
         this.competClassement1.setText(premier);
         this.competClassement2.setText(seccond);
         this.competClassement3.setText(troisieme);
+        VBox epreuves = new VBox();
+        if(compet.getLiEpreuves().equals(new ArrayList<>())){
+            Label label = new Label("Il n'y a pas encore d'épreuve");
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        for (EpreuveCoop ep:compet.getLiEpreuves()){
+            Label label = new Label(ep.getNom());
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        
+        
+    }
+
+    public void majCompet(String premier, String seccond, String troisieme, CompetInd compet){
+        this.competClassement1.setText(premier);
+        this.competClassement2.setText(seccond);
+        this.competClassement3.setText(troisieme);
+        VBox epreuves = new VBox();
+        if(compet.getLiEpreuves().equals(new ArrayList<>())){
+            Label label = new Label("Il n'y a pas encore d'épreuve");
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        for (EpreuveInd ep:compet.getLiEpreuves()){
+            Label label = new Label(ep.getNom());
+            epreuves.getChildren().add(label);
+            this.liEpreuve.setContent(epreuves);
+        }
+        
     }
 
     public BorderPane pageCompetitionClassement() throws IOException{
