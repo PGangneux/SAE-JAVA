@@ -21,8 +21,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 public class Controleur {
-    @FXML
-    private GridPane recherchePays;
     
 
     private JeuxOlympique vue;
@@ -136,42 +134,16 @@ public class Controleur {
 
     @FXML
     private void handleTextFieldPays(KeyEvent event){
-        System.out.println(this.model);
-
-        System.out.println(event.getCode());
         if (event.getCode() == KeyCode.ENTER) {
             
-            Set<Pays> ensPays = this.model.getEnsPays();
             TextField textField = (TextField) event.getSource();
             Pays pays = new Pays(textField.getText());
+            
+            Set<Pays> ensPays = this.model.getEnsPays();
             if(ensPays.contains(pays)){
-                System.out.println(pays.getNom()+".png");
-                
-                ImageView imageView = new ImageView(new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/"+pays.getNom()+".png").toExternalForm()));
-                imageView.setFitWidth(50); 
-                imageView.setFitHeight(35); 
-                imageView.setPreserveRatio(true);
-                GridPane.setMargin(imageView, new Insets(0,0,0,10));
-                Label nom = new Label(pays.getNom());
-
-                
-                Label nbMedaille = new Label(String.valueOf(pays.getCompteurMedaille()));
-                Label nbMedailleOr = new Label(String.valueOf(pays.getCompteurMedailleOr()));
-                Label nbMedailleArgent = new Label(String.valueOf(pays.getCompteurMedailleArgent()));
-                Label nbMedailleBronze = new Label(String.valueOf(pays.getCompteurMedailleBronze()));
-                this.recherchePays.add(imageView, 0, 1);
-                this.recherchePays.add(nom, 1, 1);
-                this.recherchePays.add(nbMedaille, 1, 2);
-                this.recherchePays.add(nbMedailleOr, 1, 3);
-                this.recherchePays.add(nbMedailleArgent, 1, 4);
-                this.recherchePays.add(nbMedailleBronze, 1, 5);
-
-                GridPane.setMargin(nbMedaille, new Insets(0,0,50,25));
-                GridPane.setMargin(nbMedailleOr, new Insets(0,0,50,25));
-                GridPane.setMargin(nbMedailleArgent, new Insets(0,0,50,25));
-                GridPane.setMargin(nbMedailleBronze, new Insets(0,0,50,25));
-
+                this.vue.majPays(pays);
             }
+            
         }
     }
 

@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -43,11 +45,9 @@ public class JeuxOlympique extends Application{
     private Label competClassement2;
     private Label competClassement3;
 
-    @FXML
+    
     private GridPane classementPays;
-    @FXML
     private GridPane recherchePays;
-    @FXML
     private TextField textFieldPays;
 
 
@@ -247,6 +247,40 @@ public class JeuxOlympique extends Application{
         this.stage.setMaximized(true);
         return root;
     }
+
+    public void majPays(Pays pays){
+        try{
+            this.modePays();
+        }
+        catch(IOException e){}
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + pays.getNom() + ".png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50); 
+        imageView.setFitHeight(35); 
+        imageView.setPreserveRatio(true);
+        GridPane.setMargin(imageView, new Insets(0,0,0,10));
+        Label nom = new Label(pays.getNom());
+
+                    
+        Label nbMedaille = new Label(String.valueOf(pays.getCompteurMedaille()));
+        Label nbMedailleOr = new Label(String.valueOf(pays.getCompteurMedailleOr()));
+        Label nbMedailleArgent = new Label(String.valueOf(pays.getCompteurMedailleArgent()));
+        Label nbMedailleBronze = new Label(String.valueOf(pays.getCompteurMedailleBronze()));
+        this.recherchePays.add(imageView, 0, 1);
+        this.recherchePays.add(nom, 1, 1);
+        this.recherchePays.add(nbMedaille, 1, 2);
+        this.recherchePays.add(nbMedailleOr, 1, 3);
+        this.recherchePays.add(nbMedailleArgent, 1, 4);
+        this.recherchePays.add(nbMedailleBronze, 1, 5);
+
+        GridPane.setMargin(nbMedaille, new Insets(0,0,50,25));
+        GridPane.setMargin(nbMedailleOr, new Insets(0,0,50,25));
+        GridPane.setMargin(nbMedailleArgent, new Insets(0,0,50,25));
+        GridPane.setMargin(nbMedailleBronze, new Insets(0,0,50,25));
+    }
+            
+            
+
 
     public BorderPane pageParamAffichage() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParamAffichage.fxml"));
