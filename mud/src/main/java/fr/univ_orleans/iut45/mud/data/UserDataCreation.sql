@@ -1,6 +1,5 @@
 create database if not exists SAEACCOUNT;
 use SAEACCOUNT;
-source ./src/main/java/fr/univ_orleans/iut45/mud/data/UserDataSup.sql;
 
 -- ##############################
 -- # Partie comptes utilisateur #
