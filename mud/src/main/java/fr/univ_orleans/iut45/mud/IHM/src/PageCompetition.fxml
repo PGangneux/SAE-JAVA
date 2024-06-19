@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -44,7 +45,7 @@
                   <Insets left="480.0" />
                </VBox.margin>
             </Button>
-            <Label fx:id="liEpreuve" prefHeight="45.0" prefWidth="273.0" text="Liste des Epreuves">
+            <Label prefHeight="45.0" prefWidth="273.0" text="Liste des Epreuves">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" />
                </VBox.margin>
@@ -52,21 +53,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="dernierEp" text="dernière épreuve">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="10.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="prochainEp" text="prochaine épreuve">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="10.0" />
-               </VBox.margin>
-            </Label>
-            <Button fx:id="voirPlus2" mnemonicParsing="false" onAction="#handleCompetitionLiEp" text="voir plus ...">
-               <VBox.margin>
-                  <Insets left="480.0" />
-               </VBox.margin>
-            </Button>
+            <ScrollPane fx:id="liEpreuve" prefHeight="200.0" prefWidth="200.0" />
          </children>
          <BorderPane.margin>
             <Insets />
