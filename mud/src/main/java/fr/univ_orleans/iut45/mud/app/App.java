@@ -32,7 +32,7 @@ public class App {
         String server = "192.168.202.208";
         String baseName = "SAEACCOUNT";
         String user = "applogin";
-        String password = "DoNotShare";
+        String password = "applicationPrivateLoginKey";
         this.loggingConnexion = new Connexion();
         this.loggingConnexion.connecter(server, baseName, user, password);
         this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
