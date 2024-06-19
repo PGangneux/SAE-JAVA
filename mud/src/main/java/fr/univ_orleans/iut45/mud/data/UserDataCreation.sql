@@ -16,7 +16,8 @@ create table ACCOUNTPRIVILEGE(
 
 create table USERACCOUNT(
     idAcccount int primary key,
-    hashedPassword varchar(100),
+    username varchar(50) unique not null,
+    hashedPassword varchar(100) not null,
     idPrivilege int references ACCOUNTPRIVILEGE.idPrivilege
 );
 
@@ -25,4 +26,12 @@ insert into ACCOUNTPRIVILEGE values
     (1,'organisateur'),
     (2,'administrateur');
 
+insert into USERACCOUNT values
+    (0,'admin1',SHA('admin1'),2),
+    (1,'orga1',SHA('orga1'),1),
+    (2,'j1',SHA('j1'),0);
 
+create user 'applogin'@'%' identified by 'applicationPrivateLoginKey';
+create user 'applogin'@'localhost' identified by 'applicationPrivateLoginKey';
+grant select on SAEACCOUNT.* to 'applogin'@'%';
+grant select on SAEACCOUNT.* to 'applogin'@'localhost';

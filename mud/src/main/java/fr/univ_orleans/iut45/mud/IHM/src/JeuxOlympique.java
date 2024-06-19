@@ -1,11 +1,13 @@
 package fr.univ_orleans.iut45.mud.IHM.src;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;
+import fr.univ_orleans.iut45.mud.app.App;
 import fr.univ_orleans.iut45.mud.competition.*;
 import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
@@ -35,7 +37,9 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-    private ImportData model;
+    // private ImportData model;
+    private  App model;
+    private boolean themeClair;
 
     
     
@@ -82,9 +86,11 @@ public class JeuxOlympique extends Application{
     }
 
     @Override
-    public void init() throws IOException{
+    public void init() throws IOException, ClassNotFoundException, SQLException{
+        this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        this.model = data;
+        // this.model = data;
+        this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         
@@ -282,7 +288,9 @@ public class JeuxOlympique extends Application{
         loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         BorderPane root = loader.load();
-        this.classementPays = (GridPane) root.lookup("#classementPays");
+        ScrollPane scrollPane = (ScrollPane)root.lookup("#scrollPays");
+        this.classementPays = (GridPane) scrollPane.getContent().lookup("#classementPays");
+        // this.classementPays = (GridPane) scrollPane.lookup("#classementPays");
         List<Pays> classementTotal = Pays.classementPaysMedaille(this.model.getEnsPays());
         int i = 0;
         for (Pays pays: classementTotal){
@@ -368,6 +376,16 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
+    public void themeSombre(){
+        this.themeClair = false;
+        this.scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
+    }
+
+    public void themeClair(){
+        this.themeClair = true;
+        this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
+    }
+
 
 
 
@@ -411,6 +429,15 @@ public class JeuxOlympique extends Application{
     
     public void modeParamAffichage() throws IOException{
         this.scene.setRoot(this.pageParamAffichage());
+        RadioButton radioClair = (RadioButton)this.scene.lookup("#radioClair");
+        RadioButton radioSombre = (RadioButton)this.scene.lookup("#radioSombre");
+        if (this.themeClair == true){
+            radioSombre.setSelected(false);
+            radioClair.setSelected(true);
+        } else {
+            radioClair.setSelected(false);
+            radioSombre.setSelected(true);
+        }
     }
 
     public void modeParamAudio() throws IOException{

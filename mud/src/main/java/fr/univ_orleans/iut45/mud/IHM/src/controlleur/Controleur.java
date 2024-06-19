@@ -1,12 +1,18 @@
 package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 
+import java.util.List;
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
+
+import java.sql.SQLException;
+import java.util.Set;
+
+import fr.univ_orleans.iut45.mud.IHM.src.*;
+import fr.univ_orleans.iut45.mud.app.App;
+
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -15,6 +21,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -23,13 +30,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 public class Controleur {
     
 
     private JeuxOlympique vue;
-    private ImportData model;
+    private App model;
+
+    @FXML
+    private TextField identifiant;
+
+    @FXML
+    private PasswordField mdp;
 
     @FXML
     private VBox leftVboxCompet;
@@ -37,17 +51,30 @@ public class Controleur {
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue, ImportData model){
+    public Controleur(JeuxOlympique vue, App model2){
         this.vue = vue;
-        this.model = model;
+        this.model = model2;
         System.out.println(this.model);
         
     }
 
     @FXML
-    private void handleConnexion(ActionEvent event) throws IOException{
-        this.vue.getStage().setMaximized(true);
-        this.vue.modeParticipant();
+    private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
+        try {
+            String login = this.identifiant.getText();
+            String password = this.mdp.getText();
+            boolean state = this.model.getConnexion(login, password);
+            if (state) {
+                this.vue.getStage().setMaximized(true);
+                this.vue.modeParticipant();
+            }else {
+                System.out.println("inexistant");
+            }   
+            System.out.println(this.model.getStatusCompte());
+        } catch (IOException e) {
+            throw new IOException();
+        }
+        
         System.out.println("Affichage fenetre Participants");
     }
 
@@ -114,6 +141,32 @@ public class Controleur {
     @FXML
     private void handleParamPref(ActionEvent event) throws IOException{
         this.vue.modeParamPref();
+    }
+
+    @FXML
+    private void handleRetour(ActionEvent event) throws IOException{
+        this.vue.modeParticipant();
+    }
+
+    @FXML
+    private void handleVolume(MouseEvent event) throws IOException{
+        System.out.println("Son modifié");
+    }
+
+    @FXML
+    private void handleTheme(ActionEvent event) throws IOException{
+        System.out.println("Theme modifié");
+        RadioButton boutonTheme = (RadioButton) event.getSource();
+        if (boutonTheme.getText().equals("Sombre")){
+            vue.themeSombre();
+        } else {
+            vue.themeClair();
+        }
+    }
+
+    @FXML
+    private void handleCouleur(ActionEvent event) throws IOException{
+        System.out.println("Couleur bouton modifié");
     }
 
     @FXML
