@@ -4,11 +4,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import fr.univ_orleans.iut45.mud.competition.*;
-import fr.univ_orleans.iut45.mud.items.*;
-import fr.univ_orleans.iut45.mud.epreuve.*;
+import fr.univ_orleans.iut45.mud.competition.CompetCoop;
+import fr.univ_orleans.iut45.mud.competition.CompetInd;
+import fr.univ_orleans.iut45.mud.competition.Competition;
+import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopMasc;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
+import fr.univ_orleans.iut45.mud.items.Athlete;
+import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.Pays;
+import fr.univ_orleans.iut45.mud.items.Sport;
 
 
 public class Requetes {
@@ -295,7 +306,28 @@ public class Requetes {
         }
         return listeAthletes;
     }
+
+    public Set<CompetInd> getEnsembleCompetInd() throws SQLException{
+        Set<CompetInd> ensembleInd= new HashSet<>();
+        st=laConnexion.createStatement();
+        String requete = "select idCompet from COMPETITION where individuelle=1";
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+            ensembleInd.add((CompetInd) this.getCompetition(rs.getInt("idCompet")));
+        }
+        return ensembleInd;
+    }
     
+    public Set<CompetCoop> getEnsembleCompetCoop() throws SQLException{
+        Set<CompetCoop> ensembleCoop= new HashSet<>();
+        st=laConnexion.createStatement();
+        String requete = "select idCompet from COMPETITION where individuelle=0";
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+            ensembleCoop.add((CompetCoop) this.getCompetition(rs.getInt("idCompet")));
+        }
+        return ensembleCoop;
+    }
 
 
 
