@@ -2,7 +2,7 @@ drop table DISPUTE;
 drop table APPARTENIR;
 drop table PARTICIPE;
 drop table EPREUVE;
-drop table EQUIPE
+drop table EQUIPE;
 drop table COMPETITION;
 drop table EQUIPE;
 drop table ATHLETE;
