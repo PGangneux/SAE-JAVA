@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-
+import javafx.scene.input.MouseEvent;
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.items.*;
 public class Controleur {
@@ -82,6 +82,32 @@ public class Controleur {
     @FXML
     private void handleParamPref(ActionEvent event) throws IOException{
         this.vue.modeParamPref();
+    }
+
+    @FXML
+    private void handleRetour(ActionEvent event) throws IOException{
+        this.vue.modeParticipant();
+    }
+
+    @FXML
+    private void handleVolume(MouseEvent event) throws IOException{
+        System.out.println("Son modifié");
+    }
+
+    @FXML
+    private void handleTheme(ActionEvent event) throws IOException{
+        System.out.println("Theme modifié");
+        RadioButton boutonTheme = (RadioButton) event.getSource();
+        if (boutonTheme.getText().equals("Sombre")){
+            vue.themeSombre();
+        } else {
+            vue.themeClair();
+        }
+    }
+
+    @FXML
+    private void handleSelectColor(ActionEvent event) throws IOException{
+        System.out.println("Couleur bouton modifié");
     }
 
     @FXML
