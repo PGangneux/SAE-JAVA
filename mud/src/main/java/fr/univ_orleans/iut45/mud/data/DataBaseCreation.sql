@@ -86,8 +86,8 @@ create table DISPUTE (
 -- flush privileges;
 
 -- creation d'un super user
-create user 'admin'@'%' identified by 'applicationPrivateLoginKey';
-create user 'admin'@'localhost' identified by 'applicationPrivateLoginKey';
+create user 'administrateur'@'%' identified by 'applicationPrivateLoginKey';
+create user 'administrateur'@'localhost' identified by 'applicationPrivateLoginKey';
 grant all on SAE.* to 'administrateur'@'%';
 grant all on SAE.* to 'administrateur'@'localhost';
 flush privileges;
