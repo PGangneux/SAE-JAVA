@@ -31,6 +31,7 @@ public class JeuxOlympique extends Application{
     private Scene scene;
     private Stage stage;
     private ImportData model;
+    private boolean themeClair;
 
     
     
@@ -72,6 +73,7 @@ public class JeuxOlympique extends Application{
 
     @Override
     public void init() throws IOException{
+        this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         this.model = data;
         this.controleur = new Controleur(this,model);
@@ -300,6 +302,16 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
+    public void themeSombre(){
+        this.themeClair = false;
+        this.scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
+    }
+
+    public void themeClair(){
+        this.themeClair = true;
+        this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
+    }
+
 
 
 
@@ -342,6 +354,15 @@ public class JeuxOlympique extends Application{
     
     public void modeParamAffichage() throws IOException{
         this.scene.setRoot(this.pageParamAffichage());
+        RadioButton radioClair = (RadioButton)this.scene.lookup("#radioClair");
+        RadioButton radioSombre = (RadioButton)this.scene.lookup("#radioSombre");
+        if (this.themeClair == true){
+            radioSombre.setSelected(false);
+            radioClair.setSelected(true);
+        } else {
+            radioClair.setSelected(false);
+            radioSombre.setSelected(true);
+        }
     }
 
     public void modeParamAudio() throws IOException{
