@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 public class Controleur {
     
@@ -90,6 +91,32 @@ public class Controleur {
     @FXML
     private void handleParamPref(ActionEvent event) throws IOException{
         this.vue.modeParamPref();
+    }
+
+    @FXML
+    private void handleRetour(ActionEvent event) throws IOException{
+        this.vue.modeParticipant();
+    }
+
+    @FXML
+    private void handleVolume(MouseEvent event) throws IOException{
+        System.out.println("Son modifié");
+    }
+
+    @FXML
+    private void handleTheme(ActionEvent event) throws IOException{
+        System.out.println("Theme modifié");
+        RadioButton boutonTheme = (RadioButton) event.getSource();
+        if (boutonTheme.getText().equals("Sombre")){
+            vue.themeSombre();
+        } else {
+            vue.themeClair();
+        }
+    }
+
+    @FXML
+    private void handleCouleur(ActionEvent event) throws IOException{
+        System.out.println("Couleur bouton modifié");
     }
 
     @FXML
