@@ -24,7 +24,7 @@ public class TestJDBC {
     @BeforeAll
     public static void setUp() throws ClassNotFoundException, SQLException {
         chemin = "./src/test/java/fr/univ_orleans/iut45/mud/data/donnees.csv";
-        String server = new String("localhost");
+        String server = new String("192.168.202.108");
         String baseName = new String("SAE");
         String user = new String("nathan");
         String password = new String("local");
