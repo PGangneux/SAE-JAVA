@@ -10,6 +10,10 @@ import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopMasc;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
 
 
 /**
@@ -122,20 +126,52 @@ public class ImportData{
         Set<CompetCoop> ensCompetitions = new HashSet<>();
         for (Sport sport: ensSport){
             if(sport.getNom().equals("Natation")){
-                ensCompetitions.add(new CompetCoop("Natation relais libre Homme", "M",sport,4));
-                ensCompetitions.add(new CompetCoop("Natation relais libre Femme", "F",sport,4));
+                CompetCoop compet1 = new CompetCoop("Natation relais libre Homme", "M",sport,4);
+                CompetCoop compet2 = new CompetCoop("Natation relais libre Femme", "F",sport,4);
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
             }
             else if(sport.getNom().equals("Volley-Ball")){
-                ensCompetitions.add(new CompetCoop("Volley-Ball Homme", "M", sport,6));
-                ensCompetitions.add(new CompetCoop("Volley-Ball Femme", "F", sport,6));
+                CompetCoop compet1 = new CompetCoop("Volley-Ball Homme", "M", sport,6);
+                CompetCoop compet2 = new CompetCoop("Volley-Ball Femme", "F", sport,6);
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
             }
             else if(sport.getNom().equals("Athlétisme")){
-                ensCompetitions.add(new CompetCoop("Athlétisme relais 400m Homme", "M", sport,4));
-                ensCompetitions.add(new CompetCoop("Athlétisme relais 400m Femme", "F", sport,4));
+                CompetCoop compet1 = new CompetCoop("Athlétisme relais 400m Homme", "M", sport,4);
+                CompetCoop compet2 = new CompetCoop("Athlétisme relais 400m Femme", "F", sport,4);
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
             }
             else if(sport.getNom().equals("Handball")){
-                ensCompetitions.add(new CompetCoop("Handball Homme", "M", sport,7));
-                ensCompetitions.add(new CompetCoop("Handball Femme", "F", sport,7));
+                CompetCoop compet1 = new CompetCoop("Handball Homme", "M", sport,7);
+                CompetCoop compet2 = new CompetCoop("Handball Femme", "F", sport,7);
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveCoopMasc ep = new EpreuveCoopMasc("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
             }
         }
 
@@ -147,18 +183,50 @@ public class ImportData{
         Set<CompetInd> ensCompetitions = new HashSet<>();
         for (Sport sport: ensSport){
             if(sport.getNom().equals("Natation")){
-                ensCompetitions.add(new CompetInd("Natation 100 brasse Homme", "M",sport));
-                ensCompetitions.add(new CompetInd("Natation 100 brasse Femme", "F",sport));
+                CompetInd compet1 = new CompetInd("Natation 100 brasse Homme", "M",sport);
+                CompetInd compet2 = new CompetInd("Natation 100 brasse Femme", "F",sport);
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndMasc ep = new EpreuveIndMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndFem ep = new EpreuveIndFem("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
             }
             else if(sport.getNom().equals("Escrime")){
-                ensCompetitions.add(new CompetInd("Escrime fleuret Homme", "M",sport));
-                ensCompetitions.add(new CompetInd("Escrime fleuret Femme","F",sport));
-                ensCompetitions.add(new CompetInd("Escrime épée Homme", "M",sport));
-                ensCompetitions.add(new CompetInd("Escrime épée Femme","F",sport));
+                CompetInd compet1 = new CompetInd("Escrime fleuret Homme", "M",sport);
+                CompetInd compet2 = new CompetInd("Escrime fleuret Femme","F",sport);
+                CompetInd compet3 = new CompetInd("Escrime épée Homme", "M",sport);
+                CompetInd compet4 = new CompetInd("Escrime épée Femme","F",sport);
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndMasc ep = new EpreuveIndMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndFem ep = new EpreuveIndFem("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndMasc ep = new EpreuveIndMasc("épreuve"+i+" "+compet3.getNom(), compet3);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndFem ep = new EpreuveIndFem("épreuve"+i+" "+compet4.getNom(), compet4);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
+                ensCompetitions.add(compet3);
+                ensCompetitions.add(compet4);
             }
             else if(sport.getNom().equals("Athlétisme")){
-                ensCompetitions.add(new CompetInd("Athlétisme 110 haies Homme", "M", sport));
-                ensCompetitions.add(new CompetInd("Athlétisme 110 haies Femme", "F", sport));
+                CompetInd compet1 = new CompetInd("Athlétisme 110 haies Homme", "M", sport);
+                CompetInd compet2 = new CompetInd("Athlétisme 110 haies Femme", "F", sport);
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndMasc ep = new EpreuveIndMasc("épreuve"+i+" "+compet1.getNom(), compet1);
+                }
+                for(int i = 1; i<5; ++i){
+                    EpreuveIndFem ep = new EpreuveIndFem("épreuve"+i+" "+compet2.getNom(), compet2);
+                }
+                ensCompetitions.add(compet1);
+                ensCompetitions.add(compet2);
             }
         }
 
