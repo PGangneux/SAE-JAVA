@@ -14,7 +14,4 @@ drop user journalist@'%';
 drop user journalist@'localhost';
 drop user organisateur@'%';
 drop user organisateur@'localhost';
-drop role 'administrateur';
-drop role 'journalist';
-drop role 'organisateur';
 drop database SAE;
