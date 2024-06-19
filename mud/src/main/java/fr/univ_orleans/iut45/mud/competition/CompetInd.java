@@ -116,8 +116,8 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
     }
 
     @Override
-    public String classement(){
-        String texte="Place | Athlete" +System.lineSeparator();
+    public List<Athlete> classement(){
+        //String texte="Place | Athlete" +System.lineSeparator();
         Map<Athlete, Integer> dico = new HashMap<>();
         for(Athlete a : this.liAthletes){
             dico.put(a, 0);
@@ -136,12 +136,15 @@ public class CompetInd implements Competition<Athlete , EpreuveInd>{
         }
 
         ComparateurCompetInd comparator = new ComparateurCompetInd(dico);
+        
         Collections.sort(liste , comparator);
+        /*
         for(Athlete e : liste){
             texte += (liste.indexOf(e)+1)+" | "+e.getNom()+System.lineSeparator();
         }
+        */
         
-        return texte;
+        return liste;
     }
 
 

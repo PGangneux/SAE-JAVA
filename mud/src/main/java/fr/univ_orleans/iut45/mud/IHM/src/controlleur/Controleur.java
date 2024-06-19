@@ -2,29 +2,31 @@ package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 
 import java.io.IOException;
 
-import fr.univ_orleans.iut45.mud.IHM.src.JeuxOlympique;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
+import fr.univ_orleans.iut45.mud.IHM.src.*;
+import fr.univ_orleans.iut45.mud.items.*;
 public class Controleur {
     @FXML
     private Button btnCo;
 
     @FXML
     private Button btnAccueil;
-
-    @FXML
-    private RadioButton sport1;
-
     private JeuxOlympique vue;
+    private ImportData model;
 
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue){
+    public Controleur(JeuxOlympique vue, ImportData model){
         this.vue = vue;
+        this.model = model;
     }
 
     @FXML
@@ -36,7 +38,7 @@ public class Controleur {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException{
         this.vue.modeConnexion();
-        System.out.println("Affichage fenete Déconnexion");
+        System.out.println("Affichage fenete Connexion");
     }
 
     
@@ -62,20 +64,65 @@ public class Controleur {
         this.vue.modeCompetitionClassement();
     }
 
-
-    @FXML
-    private void handleHommeEnable(ActionEvent event) throws IOException{
-        if (sport1.isVisible()){
-            sport1.setVisible(false);
-        }
-        else{
-            sport1.setVisible(true);
-        }
-    }
-        
     @FXML
     private void handlePays(ActionEvent event) throws IOException{
         this.vue.modePays();
+    }
+
+    @FXML
+    private void handleParamAffichage(ActionEvent event) throws IOException{
+        this.vue.modeParamAffichage();
+    }
+
+    @FXML
+    private void handleParamAudio(ActionEvent event) throws IOException{
+        this.vue.modeParamAudio();
+    }
+
+    @FXML
+    private void handleParamPref(ActionEvent event) throws IOException{
+        this.vue.modeParamPref();
+    }
+
+    @FXML
+    public void handleRadioBCompet(ActionEvent actionEvent) {
+        Button bouton = (Button) actionEvent.getSource();
+        ToggleGroup toggleGroup1;
+        ToggleGroup toggleGroup2;
+        if(bouton.getText().equals("Femme")){
+            toggleGroup1 = this.vue.getGroupRadioBCompetFemme();
+            toggleGroup2 = this.vue.getGroupRadioBCompetHomme();
+        }
+        else{
+            toggleGroup2 = this.vue.getGroupRadioBCompetFemme();
+            toggleGroup1 = this.vue.getGroupRadioBCompetHomme();
+        }
+
+
+        for (Toggle toggle : toggleGroup1.getToggles()) {
+            RadioButton radioButton = (RadioButton) toggle;
+            if (radioButton.isVisible()){
+                radioButton.setVisible(false);
+            }
+            else{
+                radioButton.setVisible(true);
+            }
+        }
+
+        for (Toggle toggle : toggleGroup2.getToggles()) {
+            RadioButton radioButton = (RadioButton) toggle;
+            if (radioButton.isVisible()){
+                radioButton.setVisible(false);
+            }
+            if (radioButton.isSelected()){
+                radioButton.setSelected(false);
+            }
+        }
+    }
+
+    @FXML
+    private void handleAppliquer(ActionEvent event){
+        System.out.println("Appliqué");
     }
 
 }
