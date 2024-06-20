@@ -14,18 +14,18 @@ public class RequeteLogAPI {
 
     public boolean checkUser(String username, String password) throws SQLException {
         this.st = this.laConnexion.createStatement();
-        ResultSet dataBasePasswordRs = this.st.executeQuery("select hashedPassword from USERACCOUNT where username="+username);
-        ResultSet hashedPasswordRs = this.st.executeQuery("select SHA("+password+")");
-        hashedPasswordRs.next();
+        ResultSet dataBasePasswordRs = this.st.executeQuery("select hashedPassword from USERACCOUNT where username='"+username+"'");
         dataBasePasswordRs.next();
         String sqlPassword = dataBasePasswordRs.getString(1);
+        ResultSet hashedPasswordRs = this.st.executeQuery("select SHA('"+password+"')");
+        hashedPasswordRs.next();
         String hashedPassword = hashedPasswordRs.getString(1);
         return sqlPassword.equals(hashedPassword);
     }
 
     public String getUserPrivilege(String username) throws SQLException {
         this.st = this.laConnexion.createStatement();
-        ResultSet rs = this.st.executeQuery("select privilegeName from ACCOUNTPRIVILEGE natural join USERACCOUNT where username="+username);
+        ResultSet rs = this.st.executeQuery("select privilegeName from ACCOUNTPRIVILEGE natural join USERACCOUNT where username='"+username+"'");
         rs.next();
         return rs.getString(1);
     }
@@ -45,10 +45,10 @@ public class RequeteLogAPI {
         int nextId = this.getNbUser()+1;
         this.st.executeQuery(
             "insert into USERACCOUNT values("
-            +nextId+","
-            +username+","
-            +"SHA("+password+")"+","
-            +privilegeId
+            +"'"+nextId+"',"
+            +"'"+username+"',"
+            +"SHA('"+password+"'')"+","
+            +"'"+privilegeId+"'"
         );
     }
 }
