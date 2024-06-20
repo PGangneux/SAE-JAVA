@@ -79,13 +79,14 @@ public class Controleur {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
         try {
-            if (this.model.closeDBConnection()) {
+            boolean state = this.model.closeDBConnection();
+            if (state) {
                 this.vue.modeConnexion();
                 System.out.println("Affichage fenete Connexion");
             }
-            else throw new IOException("Déconnexion Erreur");
-        } catch (IOException e) {
-            throw new IOException("Erreur");
+            System.out.println("Déconnection echoué");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la déconnexion");
         }
     }
 
