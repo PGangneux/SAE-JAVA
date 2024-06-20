@@ -356,7 +356,6 @@ public class JeuxOlympique extends Application{
         this.popupCompet.getContent().add(root);
         try{
             
-            //this.scene.setRoot(root);
             this.popupCompet.show(stage);
         }
         catch(Exception e){
