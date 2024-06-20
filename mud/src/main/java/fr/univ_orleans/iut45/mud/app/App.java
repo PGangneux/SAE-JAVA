@@ -34,7 +34,7 @@ public class App {
     public final static String ORGANISATEUR = "organisateur";
     
     private void initLoggingConnexion() throws SQLException, ClassNotFoundException {
-        String server = "192.168.62.208";
+        String server = "localhost";
         String baseName = "SAEACCOUNT";
         String user = "applogin";
         String password = "applicationPrivateLoginKey";
@@ -107,7 +107,7 @@ public class App {
     }
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
-        String server = "192.168.62.208";
+        String server = "localhost";
         String baseName = "SAE";
         String user = roleUser;
         String password = rolePassword;
@@ -182,8 +182,9 @@ public class App {
         this.liAthletes = new ArrayList<>();
         this.liEquipes = new ArrayList<>();
         initLoggingConnexion();
-        importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        System.out.println(this.ensPays);
+        // importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        // for(Pays p: this.ensPays) System.out.println(p.getNom());
+        System.out.println(this.ensPays.size());
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
@@ -196,6 +197,7 @@ public class App {
             }
             return false;
         } catch (Exception e ) {
+            System.out.println(e.getMessage());
             throw new SQLException("compte inexistant");
         }      
     }
