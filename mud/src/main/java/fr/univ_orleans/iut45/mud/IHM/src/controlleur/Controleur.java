@@ -18,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -85,8 +87,11 @@ public class Controleur {
                 System.out.println("Affichage fenete Connexion");
             }
             System.out.println("Déconnection echoué");
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la déconnexion");
+        } catch (SQLException e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Compte inexistant");
+            alert.setContentText("Les information de connexion saisi ne correspondent à aucun de nos compte enregistré");
+            alert.showAndWait();     
         }
     }
 
