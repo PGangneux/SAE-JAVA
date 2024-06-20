@@ -1,14 +1,19 @@
 package fr.univ_orleans.iut45.mud.app;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.naming.ldap.HasControls;
 
 import fr.univ_orleans.iut45.mud.JDBC.*;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.ImportData;
 import fr.univ_orleans.iut45.mud.items.Pays;
 import fr.univ_orleans.iut45.mud.items.Sport;
 
@@ -87,6 +92,20 @@ public class App {
         }
     }
 
+    private void initEnsCompetitionsCoop() throws SQLException {
+        Set<CompetCoop> competitions = this.jeuxQueryAPI.getEnsembleCompetCoop();
+        for (CompetCoop compet: competitions) {
+            ensCompetitionsCoop.add(compet);
+        }
+    }
+
+    private void initEnsCompetitionsInd() throws SQLException {
+        Set<CompetInd> competitions = this.jeuxQueryAPI.getEnsembleCompetInd();
+        for (CompetInd compet: competitions) {
+            ensCompetitionsInd.add(compet);
+        }
+    }
+
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
         String server = "192.168.62.208";
         String baseName = "SAE";
@@ -99,16 +118,72 @@ public class App {
     }
 
     public void initModelAttribut() throws SQLException {
-        ensCompetitionsCoop = this.jeuxQueryAPI.getEnsembleCompetCoop();
-        ensCompetitionsInd = this.jeuxQueryAPI.getEnsembleCompetInd();
+        initEnsCompetitionsCoop();
+        initEnsCompetitionsInd();
         initEnsPays();
         initEnsSport();
         initListAthlete();
         initListEquipe();
     }
 
+    public void importCompetCoopFromCSV(Set<CompetCoop> ensCompetCoops) {
+        for (CompetCoop compet: ensCompetCoops) {
+            ensCompetitionsCoop.add(compet);
+        }
+    }
+    
+    public void  importCompetIndFromCSV(Set<CompetInd> ensCompetInd) {
+        for (CompetInd compet: ensCompetInd) {
+            ensCompetitionsInd.add(compet);
+        }
+    }
+    
+    public void  importSportFromCSV(Set<Sport> sports) {
+        for (Sport sp: sports) {
+            this.ensSport.add(sp);
+        }
+    }
+    
+    public void  importPaysFromCSV(Set<Pays> lesPays) {
+        for (Pays pays: lesPays) {
+            this.ensPays.add(pays);
+        }
+    }
+    
+    public void  importAthleteFromCSV(List<Athlete> lesAthletes) {
+        for (Athlete ath: lesAthletes) {
+            this.liAthletes.add(ath);
+        }
+    }
+    
+    public void  importEquipeFromCSV(List<Equipe> lesEquipes) {
+        for (Equipe equipe: lesEquipes) {
+            this.liEquipes.add(equipe);
+        }
+    }
+
+    public void importDataFromCSV(String path) {
+        // path = "./src/main/java/fr/univ_orleans/iut45/mud/donnees.csv";
+        ImportData data = new ImportData(path);
+        this.importCompetCoopFromCSV(data.getEnsCompetitionsCoop());
+        this.importCompetIndFromCSV(data.getEnsCompetitionsInd());
+        this.importSportFromCSV(data.getEnsSports());
+        this.importPaysFromCSV(data.getEnsPays());
+        this.importAthleteFromCSV(data.getListAthletes());
+        this.importEquipeFromCSV(data.getListEquipes());
+        //Partie ou il faut ajouter les données dans la BD
+    } 
+
     public App() throws ClassNotFoundException, SQLException  {
+        ensCompetitionsCoop = new HashSet<>();
+        ensCompetitionsInd = new HashSet<>();
+        this.ensPays = new HashSet<>();
+        this.ensSport = new HashSet<>();
+        this.liAthletes = new ArrayList<>();
+        this.liEquipes = new ArrayList<>();
         initLoggingConnexion();
+        importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        System.out.println(this.ensPays);
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
