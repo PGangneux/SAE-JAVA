@@ -29,7 +29,7 @@ public class App {
     public final static String ORGANISATEUR = "organisateur";
     
     private void initLoggingConnexion() throws SQLException, ClassNotFoundException {
-        String server = "192.168.202.208";
+        String server = "192.168.62.208";
         String baseName = "SAEACCOUNT";
         String user = "applogin";
         String password = "applicationPrivateLoginKey";
@@ -39,7 +39,7 @@ public class App {
     }
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
-        String server = "192.168.202.208";
+        String server = "192.168.62.208";
         String baseName = "SAE";
         String user = roleUser;
         String password = rolePassword;
@@ -71,14 +71,6 @@ public class App {
         return false;
     }
     
-    public boolean closeDBConnection() throws SQLException {
-        if (this.jeuxConnexion.isConnecte()) {
-            this.jeuxConnexion.close();
-            return this.jeuxConnexion.isConnecte();
-        }
-        return false;
-    }
-
     public boolean closeDBConnection() throws SQLException {
         if (this.jeuxConnexion.isConnecte()) {
             this.jeuxConnexion.close();
