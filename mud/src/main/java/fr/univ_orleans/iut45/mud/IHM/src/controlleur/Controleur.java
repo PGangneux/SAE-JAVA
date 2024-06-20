@@ -37,8 +37,8 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
-    //private App model;
-    private ImportData model;
+    private App model;
+    //private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -52,7 +52,7 @@ public class Controleur {
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue,  ImportData model2){
+    public Controleur(JeuxOlympique vue,  App model2){
         this.vue = vue;
         this.model = model2;
         System.out.println(this.model);
@@ -62,7 +62,7 @@ public class Controleur {
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
         
-        /*try {
+        try {
             String login = this.identifiant.getText();
             String password = this.mdp.getText();
             boolean state = this.model.getConnexion(login, password);
@@ -76,9 +76,9 @@ public class Controleur {
         } catch (IOException e) {
             throw new IOException();
         }
-            */
-        this.vue.getStage().setMaximized(true);
-        this.vue.modeParticipant();
+            
+        //this.vue.getStage().setMaximized(true);
+        //this.vue.modeParticipant();
         System.out.println("Affichage fenetre Participants");
     }
 
