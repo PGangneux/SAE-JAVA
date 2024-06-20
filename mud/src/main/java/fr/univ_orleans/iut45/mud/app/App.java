@@ -46,6 +46,7 @@ public class App {
         this.jeuxConnexion = new Connexion();
         this.jeuxConnexion.connecter(server, baseName, user, password);
         this.jeuxQueryAPI = new Requetes(jeuxConnexion);
+        initModelAttribut();
     }
 
     public void initModelAttribut() {
@@ -62,13 +63,17 @@ public class App {
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
-        if (this.logQueryAPI.checkUser(username, password)) {
-            String appProvilege = this.logQueryAPI.getUserPrivilege(username);
-            this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
-            this.statusCompte = appProvilege;
-            return true;
-        }
-        return false;
+        try {
+            if (this.logQueryAPI.checkUser(username, password)) {
+                String appProvilege = this.logQueryAPI.getUserPrivilege(username);
+                this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
+                this.statusCompte = appProvilege;
+                return true;
+            }
+            return false;
+        } catch (Exception e ) {
+            throw new SQLException("compte inexistant");
+        }      
     }
     
     public boolean closeDBConnection() throws SQLException {
