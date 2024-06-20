@@ -312,6 +312,21 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
+    public void majParticipantAthlete(Athlete a){
+        try{
+            this.modeParticipant();
+        }
+        catch(IOException e){}
+        Label nom = new Label(a.getNom());
+        Label prenom = new Label(a.getPrenom());
+        Label sexe = new Label(a.getSexe());
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays() + ".png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50); 
+        imageView.setFitHeight(35); 
+        imageView.setPreserveRatio(true);
+    }
+
     public void majPays(Pays pays){
         try{
             this.modePays();
