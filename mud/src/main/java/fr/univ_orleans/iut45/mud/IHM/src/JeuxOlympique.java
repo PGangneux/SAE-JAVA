@@ -23,6 +23,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -37,6 +38,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;;
 
@@ -62,6 +64,7 @@ public class JeuxOlympique extends Application{
     private GridPane recherchePays;
     private TextField textFieldPays;
     private ScrollPane liEpreuve;
+    private Color
 
     public VBox getLeftVboxCompet() {
         return leftVboxCompet;
@@ -536,6 +539,16 @@ public class JeuxOlympique extends Application{
         this.scene.getStylesheets().remove("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css"); 
     }
 
+    public void changeCouleur(String hex){
+        // switch (this.scene.getRoot()) {
+        //     case value:
+                
+        //         break;
+        
+        //     default:
+        //         break;
+        // }
+    }
 
 
 
