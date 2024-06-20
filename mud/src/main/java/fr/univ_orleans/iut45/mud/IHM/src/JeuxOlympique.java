@@ -10,7 +10,9 @@ import fr.univ_orleans.iut45.mud.items.*;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -131,7 +133,7 @@ public class JeuxOlympique extends Application{
             gridEquipe.addRow(i+1, new Label(equipe.getNom()), new Label(equipe.getSexe()), new Label(equipe.getPays().getNom()));
         }
         this.stage.setMinWidth(890);
-        this.stage.setMinHeight(500);
+        this.stage.setMinHeight(550);
         return root;
     }
 
@@ -266,9 +268,12 @@ public class JeuxOlympique extends Application{
         }
         catch(IOException e){}
         Label nomprenom = new Label(a.getPrenom()+ " " + a.getNom());
+        nomprenom.setWrapText(true);
         Label sexe = new Label(a.getSexe());
+        sexe.setWrapText(true);
         Label sport = new Label(a.getSport().getNom());
-        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays() + ".png").toExternalForm());
+        sport.setWrapText(true);
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays().getNom() + ".png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(50); 
         imageView.setFitHeight(35); 
@@ -276,13 +281,17 @@ public class JeuxOlympique extends Application{
         GridPane infoAthlete = new GridPane();
         VBox infoParticipant = (VBox)this.scene.lookup("#infoParticipant");
         infoParticipant.getChildren().add(infoAthlete);
-        infoAthlete.add(new Label("Athlète"), 0, 0,2,1);
+        Label athlete = new Label("Athlète");
+        GridPane.setValignment(athlete, VPos.CENTER);
+        GridPane.setHalignment(athlete, HPos.CENTER);
+        infoAthlete.add(athlete, 0, 0,2,1);
         infoAthlete.add(nomprenom, 0, 1);
         infoAthlete.add(imageView, 1, 1);
         infoAthlete.add(new Label("Sexe : "), 0, 2);
-        infoAthlete.add(sexe, 0, 2);
-        infoAthlete.add(new Label("Sport pratiqué"), 0, 3);
+        infoAthlete.add(sexe, 1, 2);
+        infoAthlete.add(new Label("Sport pratiqué : "), 0, 3);
         infoAthlete.add(sport, 1, 3);
+        infoAthlete.setVgap(4);
     }
 
     public void majEquipe(Equipe e){
@@ -291,9 +300,12 @@ public class JeuxOlympique extends Application{
         }
         catch(IOException ex){}
         Label nom = new Label(e.getNom());
+        nom.setWrapText(true);
         Label sexe = new Label(e.getSexe());
+        sexe.setWrapText(true);
         Label sport = new Label(e.getSport().getNom());
-        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + e.getPays() + ".png").toExternalForm());
+        sport.setWrapText(true);
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + e.getPays().getNom() + ".png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(50); 
         imageView.setFitHeight(35); 
@@ -301,17 +313,23 @@ public class JeuxOlympique extends Application{
         GridPane infoEquipe = new GridPane();
         VBox infoParticipant = (VBox)this.scene.lookup("#infoParticipant");
         infoParticipant.getChildren().add(infoEquipe);
-        infoEquipe.add(new Label("Equipe"), 0, 0,2,1);
+        Label equipe = new Label("Equipe");
+        GridPane.setValignment(equipe, VPos.CENTER);
+        GridPane.setHalignment(equipe, HPos.CENTER);
+        infoEquipe.add(equipe, 0, 0,2,1);
         infoEquipe.add(nom, 0, 1);
         infoEquipe.add(imageView, 1, 1);
         infoEquipe.add(new Label("Sexe : "), 0, 2);
-        infoEquipe.add(sexe, 0, 2);
-        infoEquipe.add(new Label("Sport pratiqué"), 0, 3);
+        infoEquipe.add(sexe, 1, 2);
+        infoEquipe.add(new Label("Sport pratiqué : "), 0, 3);
         infoEquipe.add(sport, 1, 3);
-        infoEquipe.add(new Label("Les athlètes"), 0, 4);
+        Label textLesAthlete = new Label("Les athlètes");
+        textLesAthlete.setUnderline(true);
+        infoEquipe.add(textLesAthlete, 0, 4);
         for (int i = 0; i<e.getLiAthlete().size();++i){
             infoEquipe.add(new Label(e.getLiAthlete().get(i).getPrenom() + " " + e.getLiAthlete().get(i).getNom()), 0, i+5);
         }
+        infoEquipe.setVgap(4);
     }
 
     public void majPays(Pays pays){

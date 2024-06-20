@@ -72,7 +72,7 @@
                   </HBox>
                </content>
             </ScrollPane>
-            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" prefHeight="40.0" prefWidth="200.0">
+            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" prefHeight="120.0">
               <buttons>
                   <Button fx:id="btnAjouterA" mnemonicParsing="false" onAction="#handleAddAthlete" text="Ajouter un athlète" />
                 <Button fx:id="btnAjouterEq" mnemonicParsing="false" onAction="#handleAddEquipe" text="Ajouter une équipe" />
