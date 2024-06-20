@@ -85,6 +85,13 @@ public interface Competition<T, E> {
     public void ajoutEpreuve(E epreuve);
 
     /**
+     * Supprime une épreuve à la liste des épreuves de la compétition.
+     *
+     * @param epreuve L'épreuve à supprimer.
+     */
+    public void suppEpreuve(E epreuve);
+
+    /**
      * Retourne la liste des épreuves de la compétition.
      *
      * @return La liste des épreuves.
