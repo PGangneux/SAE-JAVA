@@ -21,8 +21,8 @@ public class App {
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
     private List<Athlete> liAthletes;
-    private Set<CompetCoop> ensCompetitionsCoop;
-    private Set<CompetInd> ensCompetitionsInd;
+    private static Set<CompetCoop> ensCompetitionsCoop;
+    private static Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
     public final static String ADMINISTRATEUR = "administrateur";
     public final static String JOURNALIST = "journalist";
@@ -38,6 +38,55 @@ public class App {
         this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
     }
 
+    // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
+    // this.liEquipes = this.jeuxQueryAPI. //ajouter méthode correspondante
+    private void initEnsSport() {
+        for (CompetInd compet: ensCompetitionsInd) {
+            this.ensSport.add(compet.getSport());
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                this.ensSport.add(equipe.getSport());
+            }
+        }
+    }
+
+    private void initEnsPays() {
+        for (CompetInd compet: ensCompetitionsInd) {
+            for (Athlete ath: compet.getParticipant()) {
+                this.ensPays.add(ath.getPays());
+            }
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                this.ensPays.add(equipe.getPays());
+            }
+        }
+    }
+
+    private void initListAthlete() {
+        for (CompetInd compet: ensCompetitionsInd) {
+            for (Athlete ath: compet.getParticipant()) {
+                this.liAthletes.add(ath);
+            }
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                for (Athlete ath: equipe.getLiAthlete()) {
+                    this.liAthletes.add(ath);
+                }
+            }
+        }
+    }
+
+    private void initListEquipe() {
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                this.liEquipes.add(equipe);
+            }
+        }
+    }
+
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
         String server = "192.168.62.208";
         String baseName = "SAE";
@@ -49,13 +98,13 @@ public class App {
         initModelAttribut();
     }
 
-    public void initModelAttribut() {
-        this.ensCompetitionsCoop = this.jeuxQueryAPI. //ajouter méthode correspondante
-        this.ensCompetitionsInd = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensSport = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensPays = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.liEquipes = this.jeuxQueryAPI. //ajouter méthode correspondante
+    public void initModelAttribut() throws SQLException {
+        ensCompetitionsCoop = this.jeuxQueryAPI.getEnsembleCompetCoop();
+        ensCompetitionsInd = this.jeuxQueryAPI.getEnsembleCompetInd();
+        initEnsPays();
+        initEnsSport();
+        initListAthlete();
+        initListEquipe();
     }
 
     public App() throws ClassNotFoundException, SQLException  {
@@ -128,7 +177,7 @@ public class App {
      * @return un ensemble de CompetCoop.
      */
     public Set<CompetCoop> getEnsCompetitionsCoop() {
-        return this.ensCompetitionsCoop;
+        return ensCompetitionsCoop;
     }
 
     /**
@@ -137,7 +186,7 @@ public class App {
      * @return un ensemble de CompetInd.
      */
     public Set<CompetInd> getEnsCompetitionsInd() {
-        return this.ensCompetitionsInd;
+        return ensCompetitionsInd;
     }
 
     /**
