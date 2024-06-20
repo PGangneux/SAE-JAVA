@@ -10,15 +10,18 @@ import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import java.sql.SQLException;
 import java.util.Set;
 
+import javax.swing.Action;
+
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.app.App;
-
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -73,19 +76,35 @@ public class Controleur {
                 System.out.println("inexistant");
             }   
             System.out.println(this.model.getStatusCompte());
-        } catch (IOException e) {
+        }catch (SQLException e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Compte inexistant");
+            alert.setContentText("Les information de connexion saisi ne correspondent à aucun de nos compte enregistré");
+            alert.showAndWait();              
+        } 
+        catch (IOException e) {
             throw new IOException();
         }
+
             
         //this.vue.getStage().setMaximized(true);
         //this.vue.modeParticipant();
+
         System.out.println("Affichage fenetre Participants");
     }
 
     @FXML
-    private void handleDeconnexion(ActionEvent event) throws IOException{
-        this.vue.modeConnexion();
-        System.out.println("Affichage fenete Connexion");
+    private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
+        try {
+            boolean state = this.model.closeDBConnection();
+            if (state) {
+                this.vue.modeConnexion();
+                System.out.println("Affichage fenete Connexion");
+            }
+            System.out.println("Déconnection echoué");
+        } catch (Exception e) {
+               System.out.println("a check");
+        } 
     }
 
     
@@ -227,6 +246,26 @@ public class Controleur {
             }
             
         }
+    }
+
+    @FXML
+    private void handleRechercheE(KeyEvent event){
+        System.out.println(event.getCode());
+    }
+
+    @FXML
+    private void handleRechercheA(KeyEvent event){
+        System.out.println(event.getCode());
+    }
+
+    @FXML
+    private void handleAddAthlete(ActionEvent event){
+        System.out.println(event.getSource());
+    }
+
+    @FXML
+    private void handleAddEquipe(ActionEvent event){
+        System.out.println(event.getSource());
     }
 
 }

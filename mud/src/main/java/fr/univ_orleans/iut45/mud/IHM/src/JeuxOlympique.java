@@ -318,6 +318,28 @@ public class JeuxOlympique extends Application{
         return root;
     }
 
+    public void majAthlete(Athlete a){
+        try{
+            this.modeParticipant();
+        }
+        catch(IOException e){}
+        Label nomprenom = new Label(a.getPrenom()+a.getNom());
+        Label sexe = new Label(a.getSexe());
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays() + ".png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50); 
+        imageView.setFitHeight(35); 
+        imageView.setPreserveRatio(true);
+        GridPane infoAthlete = new GridPane();
+        VBox infoParticipant = (VBox)this.scene.lookup("#infoParticipant");
+        infoParticipant.getChildren().add(infoAthlete);
+        infoAthlete.add(new Label("Athlète"), 0, 0,2,1);
+        infoAthlete.add(nomprenom, 0, 1);
+        infoAthlete.add(imageView, 1, 1);
+        infoAthlete.add(new Label("Sport pratiqué"), 0, 2);
+        infoAthlete.add(new Label(a.getSport().getNom()), 1, 2);
+    }
+
     public void majPays(Pays pays){
         try{
             this.modePays();
