@@ -10,6 +10,8 @@ import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import java.sql.SQLException;
 import java.util.Set;
 
+import javax.swing.Action;
+
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.app.App;
 import fr.univ_orleans.iut45.mud.items.*;
@@ -229,6 +231,26 @@ public class Controleur {
             }
             
         }
+    }
+
+    @FXML
+    private void handleRechercheE(KeyEvent event){
+        System.out.println(event.getCode());
+    }
+
+    @FXML
+    private void handleRechercheA(KeyEvent event){
+        System.out.println(event.getCode());
+    }
+
+    @FXML
+    private void handleAddAthlete(ActionEvent event){
+        System.out.println(event.getSource());
+    }
+
+    @FXML
+    private void handleAddEquipe(ActionEvent event){
+        System.out.println(event.getSource());
     }
 
 }
