@@ -10,10 +10,12 @@ import fr.univ_orleans.iut45.mud.competition.Competition;
 import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
 import fr.univ_orleans.iut45.mud.items.ImportData;
 import fr.univ_orleans.iut45.mud.items.Participant;
+import fr.univ_orleans.iut45.mud.items.Sport;
 
 import java.util.List;
 
@@ -51,10 +53,9 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
         VBox leftVboxCompet = this.vue.getLeftVboxCompet();
         
         RadioButton radioButton = new RadioButton();
-        System.out.println("0");
-        Competition competition = new CompetCoop(null, null, null, indice);
+        Competition competition = new CompetCoop("", "", new Sport(" "), 0);
         
-        System.out.println("1");
+
         //récupération du radio bouton séléctioné
         boolean estVrai = true;
         int i = 0;
@@ -70,7 +71,6 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
             }
         }
 
-        System.out.println("2");
         // récupéartion de la compétitions séléctionné
         Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
         for(CompetCoop compet:ensCompetitionsCoop){
@@ -86,7 +86,6 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
             }
         }
 
-        System.out.println("3");
         //Supréssion de l'épreuve
         if (competition instanceof CompetCoop){
             CompetCoop competCoop = (CompetCoop) competition;
@@ -94,11 +93,13 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
             ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
             GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
             Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*2);
+            EpreuveCoop epreuveSup = liEpreuves.get(0);
             for (EpreuveCoop epreuve : liEpreuves){
                 if (epreuve.getNom().equals(labelEpreuve.getText())){
-                    competCoop.suppEpreuve(epreuve);
+                    epreuveSup = epreuve;
                 }
             }
+            competCoop.suppEpreuve(epreuveSup);
             this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competCoop);
         }
         else{
@@ -107,15 +108,18 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
             ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
             GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
             Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*2);
+            EpreuveInd epreuveSup = liEpreuves.get(0);
             for (EpreuveInd epreuve : liEpreuves){
                 if (epreuve.getNom().equals(labelEpreuve.getText())){
-                    competInd.suppEpreuve(epreuve);
+                    epreuveSup = epreuve;
+                    
                 }
             }
+            competInd.suppEpreuve(epreuveSup);
             this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competInd);
         }
-
-        
+    
+        ////update databases
 
     }
 }
