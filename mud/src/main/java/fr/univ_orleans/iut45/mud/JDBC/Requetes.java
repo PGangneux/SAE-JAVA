@@ -26,6 +26,7 @@ public class Requetes {
 
     Connexion laConnexion;
 	Statement st;
+    private List<Pays> listePays;
 
     public Requetes(Connexion laConnexion){
         this.laConnexion=laConnexion;
@@ -40,7 +41,7 @@ public class Requetes {
     }
 
 
-    public int getIdPays(Pays pays) throws  SQLException{
+    public int getIdPays(Pays pays) throws SQLException{
         int nb =0;
         st=laConnexion.createStatement();
         String requete = "select idPays from PAYS where nomPays='"+pays.getNom()+"'";
@@ -195,8 +196,14 @@ public class Requetes {
         String requete = "select nomPays from Pays where idPays="+pays;
         ResultSet rs = st.executeQuery(requete);
         Pays p = null;
-        while (rs.next()) {
+        while (rs.next()){
             p = new Pays(rs.getString("nomPays"));            
+        }
+        if(this.listePays.contains(p)){
+            return this.listePays.get(this.listePays.indexOf(p));
+        }
+        else{
+            this.listePays.add(p);
         }
         return p;
     }
