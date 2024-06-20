@@ -18,13 +18,17 @@ import fr.univ_orleans.iut45.mud.items.Participant;
 import fr.univ_orleans.iut45.mud.items.Sport;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -49,77 +53,80 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        
-        VBox leftVboxCompet = this.vue.getLeftVboxCompet();
-        
-        RadioButton radioButton = new RadioButton();
-        Competition competition = new CompetCoop("", "", new Sport(" "), 0);
-        
+        //pop up de confirmation
+        boolean result = this.vue.alertSuppressionEpreuve();
+        if (result) {
+            VBox leftVboxCompet = this.vue.getLeftVboxCompet();
+            
+            RadioButton radioButton = new RadioButton();
+            Competition competition = new CompetCoop("", "", new Sport(" "), 0);
+            
 
-        //récupération du radio bouton séléctioné
-        boolean estVrai = true;
-        int i = 0;
-        while (estVrai) {
-            Node node = leftVboxCompet.getChildren().get(i);
-            i++;
-            if (node instanceof RadioButton){
-                RadioButton UnRadioButton = (RadioButton) node;
-                if (UnRadioButton.isSelected()){
-                    radioButton = UnRadioButton;
-                    estVrai = false;
+            //récupération du radio bouton séléctioné
+            boolean estVrai = true;
+            int i = 0;
+            while (estVrai) {
+                Node node = leftVboxCompet.getChildren().get(i);
+                i++;
+                if (node instanceof RadioButton){
+                    RadioButton UnRadioButton = (RadioButton) node;
+                    if (UnRadioButton.isSelected()){
+                        radioButton = UnRadioButton;
+                        estVrai = false;
+                    }
                 }
             }
-        }
 
-        // récupéartion de la compétitions séléctionné
-        Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
-        for(CompetCoop compet:ensCompetitionsCoop){
-            if(compet.getNom().equals(radioButton.getText())){
-                competition = compet;
+            // récupéartion de la compétitions séléctionné
+            Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
+            for(CompetCoop compet:ensCompetitionsCoop){
+                if(compet.getNom().equals(radioButton.getText())){
+                    competition = compet;
+                }
             }
-        }
+            
+            Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
+            for(CompetInd compet:ensCompetitionsInd){
+                if(compet.getNom().equals(radioButton.getText())){
+                    competition = compet;
+                }
+            }
+
+            //Supréssion de l'épreuve
+            if (competition instanceof CompetCoop){
+                CompetCoop competCoop = (CompetCoop) competition;
+                List<EpreuveCoop> liEpreuves = competCoop.getLiEpreuves();
+                ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
+                GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
+                Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*2);
+                EpreuveCoop epreuveSup = liEpreuves.get(0);
+                for (EpreuveCoop epreuve : liEpreuves){
+                    if (epreuve.getNom().equals(labelEpreuve.getText())){
+                        epreuveSup = epreuve;
+                    }
+                }
+                competCoop.suppEpreuve(epreuveSup);
+                this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competCoop);
+            }
+            else{
+                CompetInd competInd = (CompetInd) competition;
+                List<EpreuveInd> liEpreuves = competInd.getLiEpreuves();
+                ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
+                GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
+                Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*2);
+                EpreuveInd epreuveSup = liEpreuves.get(0);
+                for (EpreuveInd epreuve : liEpreuves){
+                    if (epreuve.getNom().equals(labelEpreuve.getText())){
+                        epreuveSup = epreuve;
+                        
+                    }
+                }
+                competInd.suppEpreuve(epreuveSup);
+                this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competInd);
+            }
         
-        Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
-        for(CompetInd compet:ensCompetitionsInd){
-            if(compet.getNom().equals(radioButton.getText())){
-                  competition = compet;
-            }
+            ////update databases
         }
-
-        //Supréssion de l'épreuve
-        if (competition instanceof CompetCoop){
-            CompetCoop competCoop = (CompetCoop) competition;
-            List<EpreuveCoop> liEpreuves = competCoop.getLiEpreuves();
-            ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
-            GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
-            Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*2);
-            EpreuveCoop epreuveSup = liEpreuves.get(0);
-            for (EpreuveCoop epreuve : liEpreuves){
-                if (epreuve.getNom().equals(labelEpreuve.getText())){
-                    epreuveSup = epreuve;
-                }
-            }
-            competCoop.suppEpreuve(epreuveSup);
-            this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competCoop);
-        }
-        else{
-            CompetInd competInd = (CompetInd) competition;
-            List<EpreuveInd> liEpreuves = competInd.getLiEpreuves();
-            ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
-            GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
-            Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*2);
-            EpreuveInd epreuveSup = liEpreuves.get(0);
-            for (EpreuveInd epreuve : liEpreuves){
-                if (epreuve.getNom().equals(labelEpreuve.getText())){
-                    epreuveSup = epreuve;
-                    
-                }
-            }
-            competInd.suppEpreuve(epreuveSup);
-            this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competInd);
-        }
-    
-        ////update databases
 
     }
 }
