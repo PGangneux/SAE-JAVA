@@ -29,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;;
@@ -38,8 +39,8 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-    //private ImportData model;
-    private  App model;
+    private ImportData model;
+    //private  App model;
     private boolean themeClair;
 
     
@@ -72,6 +73,18 @@ public class JeuxOlympique extends Application{
     
         
 
+    public VBox getLeftVboxCompet() {
+        return leftVboxCompet;
+    }
+
+
+
+    public ScrollPane getLiEpreuve() {
+        return liEpreuve;
+    }
+
+
+
     public Stage getStage(){
         return this.stage;
     }
@@ -90,8 +103,8 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException, ClassNotFoundException, SQLException{
         this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        //this.model = data;
-        this.model = new App();
+        this.model = data;
+        //this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         
@@ -105,6 +118,7 @@ public class JeuxOlympique extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+        
         this.stage.setScene(this.scene);
         this.stage.setTitle("Jeux Olympique");
         this.modeConnexion();
@@ -114,7 +128,6 @@ public class JeuxOlympique extends Application{
 
     public VBox pageConnexion() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageConnexion.fxml"));
-        System.out.println(this.model);
         loader.setControllerFactory(c -> new Controleur(this,this.model)); //A mettre a la place de tout les loader.setControler(this.controleur)
         loader.setController(this.controleur);
         VBox root = loader.load();
@@ -192,8 +205,8 @@ public class JeuxOlympique extends Application{
             }
         }
 
-
-        this.leftVboxCompet.getChildren().add(new Button("Gestion Compétition"));
+        Button gestionCompet  = new Button("Gestion Compétition");
+        this.leftVboxCompet.getChildren().add(gestionCompet);
         
 
         
@@ -209,17 +222,24 @@ public class JeuxOlympique extends Application{
         this.competClassement1.setText(premier);
         this.competClassement2.setText(seccond);
         this.competClassement3.setText(troisieme);
-        VBox epreuves = new VBox();
+        GridPane epreuves = new GridPane();
         if(compet.getLiEpreuves().equals(new ArrayList<>())){
             Label label = new Label("Il n'y a pas encore d'épreuve");
-            epreuves.getChildren().add(label);
+            epreuves.add(label, 0,0);
             this.liEpreuve.setContent(epreuves);
         }
+        int i  = 0;
         for (EpreuveCoop ep:compet.getLiEpreuves()){
             Label label = new Label(ep.getNom());
-            epreuves.getChildren().add(label);
+            epreuves.add(label, 0, i);
+            Button supEp = new Button("Suprimer l'épreuve");
+            supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
+            epreuves.add(supEp,1,i);
+
             this.liEpreuve.setContent(epreuves);
+            i++;
         }
+        Button ajouterEp = new Button("Ajouter une épreuve");
         
         
     }
@@ -228,16 +248,21 @@ public class JeuxOlympique extends Application{
         this.competClassement1.setText(premier);
         this.competClassement2.setText(seccond);
         this.competClassement3.setText(troisieme);
-        VBox epreuves = new VBox();
+        GridPane epreuves = new GridPane();
         if(compet.getLiEpreuves().equals(new ArrayList<>())){
             Label label = new Label("Il n'y a pas encore d'épreuve");
-            epreuves.getChildren().add(label);
+            epreuves.add(label,0,0);
             this.liEpreuve.setContent(epreuves);
         }
+        int i  = 0;
         for (EpreuveInd ep:compet.getLiEpreuves()){
             Label label = new Label(ep.getNom());
-            epreuves.getChildren().add(label);
+            epreuves.add(label,0,i);
+            Button supEp = new Button("Suprimer l'épreuve");
+            supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
+            epreuves.add(supEp,1,i);
             this.liEpreuve.setContent(epreuves);
+            i++;
         }
         
         

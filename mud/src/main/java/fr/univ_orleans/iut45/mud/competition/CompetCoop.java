@@ -246,6 +246,11 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
         this.liEpreuve.add(epreuve);
     }
 
+    @Override 
+    public void suppEpreuve(EpreuveCoop epreuve){
+        this.liEpreuve.remove(epreuve);
+    }
+
 
     /**
      * Attribue les médailles aux équipes gagnantes de la compétition.
