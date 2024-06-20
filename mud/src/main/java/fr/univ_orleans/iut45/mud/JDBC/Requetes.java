@@ -194,7 +194,7 @@ public class Requetes {
 
     public Pays getPays(int pays) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomPays from Pays where idPays="+pays;
+        String requete = "select nomPays from PAYS where idPays="+pays;
         ResultSet rs = st.executeQuery(requete);
         Pays p = null;
         while (rs.next()){
