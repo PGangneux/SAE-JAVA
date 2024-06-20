@@ -71,6 +71,14 @@ public class App {
         return false;
     }
 
+    public boolean closeDBConnection() throws SQLException {
+        if (this.jeuxConnexion.isConnecte()) {
+            this.jeuxConnexion.close();
+            return this.jeuxConnexion.isConnecte();
+        }
+        return false;
+    }
+
     public void setStatusCompte(String status) {
         this.statusCompte = status;
     }
