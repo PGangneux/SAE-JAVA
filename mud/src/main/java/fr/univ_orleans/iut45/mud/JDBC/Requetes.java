@@ -4,10 +4,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
+import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import fr.univ_orleans.iut45.mud.competition.Competition;
+import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopMasc;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
 import fr.univ_orleans.iut45.mud.items.Pays;
@@ -18,9 +26,11 @@ public class Requetes {
 
     Connexion laConnexion;
 	Statement st;
+    private List<Pays> listePays;
 
     public Requetes(Connexion laConnexion){
         this.laConnexion=laConnexion;
+        this.listePays=new ArrayList<>();
     }
 
     void ajouterAthlete(Athlete a) throws  SQLException{
@@ -32,7 +42,7 @@ public class Requetes {
     }
 
 
-    public int getIdPays(Pays pays) throws  SQLException{
+    public int getIdPays(Pays pays) throws SQLException{
         int nb =0;
         st=laConnexion.createStatement();
         String requete = "select idPays from PAYS where nomPays='"+pays.getNom()+"'";
@@ -187,8 +197,14 @@ public class Requetes {
         String requete = "select nomPays from Pays where idPays="+pays;
         ResultSet rs = st.executeQuery(requete);
         Pays p = null;
-        while (rs.next()) {
+        while (rs.next()){
             p = new Pays(rs.getString("nomPays"));            
+        }
+        if(this.listePays.contains(p)){
+            return this.listePays.get(this.listePays.indexOf(p));
+        }
+        else{
+            this.listePays.add(p);
         }
         return p;
     }
@@ -206,7 +222,120 @@ public class Requetes {
         }
         return listeAthlete;
     }
+
+    public List<Epreuve> getEpreuvesCompetition(int compet, Competition c) throws SQLException{
+        List<Epreuve> listeEpreuves = new ArrayList<>();
+        st=laConnexion.createStatement();
+        String requete = "select idEpreuve from EPREUVE where idCompet="+compet;
+        ResultSet rs = st.executeQuery(requete);
+        while (rs.next()) {
+            listeEpreuves.add(this.getEpreuve(rs.getInt("idEpreuve"),c));
+        }
+        return listeEpreuves;
+    }
+
+    public Epreuve getEpreuve(int epreuve, Competition c) throws SQLException{
+        st=laConnexion.createStatement();
+        String requete = "select nomEpruve from EPREUVE where idEpreuve="+epreuve;
+        ResultSet rs = st.executeQuery(requete);
+        Epreuve e = null;
+        while(rs.next()){
+            if(c instanceof CompetCoop){
+                CompetCoop compet = (CompetCoop) c;
+                if(c.getSexe().equals("M")){
+                    e = new EpreuveCoopMasc(rs.getString("nomEpreuve"),  compet);
+                }
+                else{
+                    e = new EpreuveCoopFem(rs.getString("nomEpreuve"), compet);
+                }
+            }
+            else{
+                CompetInd compet = (CompetInd) c;
+                if(c.getSexe().equals("M")){
+                    e = new EpreuveIndMasc(rs.getString("nomEpreuve"), compet);
+                }
+                else{
+                    e = new EpreuveIndFem(rs.getString("nomEpreuve"), compet);
+                }
+            }
+        }
+        return e;
+    }
+
+    public Competition getCompetition(int compet) throws SQLException{
+        st=laConnexion.createStatement();
+        String requete = "select nomCompet, sexeCompet, individuelle, idSport from COMPETITION where idCompet="+compet;
+        ResultSet rs = st.executeQuery(requete);
+        Competition c = null;
+        while(rs.next()){
+             if (rs.getInt("individuelle") == 0){
+                Sport sport = this.getSport(rs.getInt("idSport"));
+                if(sport.getNom().equals("Natation")){
+                    c =(new CompetCoop(rs.getString("nomCompet"),rs.getString("sexeCompet"),sport,4));
+                }
+                else if(sport.getNom().equals("Volley-Ball")){
+                    c=(new CompetCoop(rs.getString("nomCompet"),rs.getString("sexeCompet"), sport,6));
+                }
+                else if(sport.getNom().equals("Athlétisme")){
+                    c=(new CompetCoop(rs.getString("nomCompet"),rs.getString("sexeCompet"), sport,4));
+                }
+                else if(sport.getNom().equals("Handball")){
+                    c=(new CompetCoop(rs.getString("nomCompet"),rs.getString("sexeCompet"), sport,7));
+                }
+                for(Equipe e : this.getListeEquipe(compet)){
+                    c.participer(e);
+                }
+                for(Epreuve epreuve : this.getEpreuvesCompetition(compet, c)){
+                    c.ajoutEpreuve(epreuve);
+                }
+
+             }
+             else {
+                Sport sport = this.getSport(rs.getInt("idSport"));
+                c = new CompetInd(rs.getString("nomCompet"),rs.getString("sexeCompet"), sport);
+                for(Athlete a : this.getListeAthletes(compet)){
+                    c.participer(a);
+                }
+                for(Epreuve epreuve : this.getEpreuvesCompetition(compet, c)){
+                    c.ajoutEpreuve(epreuve);
+                }
+            }
+        }
+        return c;
+    }
+
+    public List<Athlete> getListeAthletes(int compet) throws SQLException{
+        List<Athlete> listeAthletes = new ArrayList<>();
+        st=laConnexion.createStatement();
+        String requete = "select idAthlete from PARTICIPE where idCompet="+compet;
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+            listeAthletes.add(getAthlete(rs.getInt("idAthlete")));
+        }
+        return listeAthletes;
+    }
+
+    public Set<CompetInd> getEnsembleCompetInd() throws SQLException{
+        Set<CompetInd> ensembleInd= new HashSet<>();
+        st=laConnexion.createStatement();
+        String requete = "select idCompet from COMPETITION where individuelle=1";
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+            ensembleInd.add((CompetInd) this.getCompetition(rs.getInt("idCompet")));
+        }
+        return ensembleInd;
+    }
     
+    public Set<CompetCoop> getEnsembleCompetCoop() throws SQLException{
+        Set<CompetCoop> ensembleCoop= new HashSet<>();
+        st=laConnexion.createStatement();
+        String requete = "select idCompet from COMPETITION where individuelle=0";
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+            ensembleCoop.add((CompetCoop) this.getCompetition(rs.getInt("idCompet")));
+        }
+        return ensembleCoop;
+    }
 
 
 
