@@ -72,11 +72,14 @@
                   </HBox>
                </content>
             </ScrollPane>
-            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" prefHeight="120.0">
+            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R">
               <buttons>
                   <Button fx:id="btnAjouterA" mnemonicParsing="false" onAction="#handleAddAthlete" text="Ajouter un athlète" />
                 <Button fx:id="btnAjouterEq" mnemonicParsing="false" onAction="#handleAddEquipe" text="Ajouter une équipe" />
               </buttons>
+               <VBox.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </VBox.margin>
             </ButtonBar>
          </children>
       </VBox>
@@ -138,7 +141,7 @@
       </VBox>
    </top>
    <left>
-      <HBox prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hbParti" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox fx:id="infoParticipant" prefHeight="350.0" prefWidth="215.0">
                <HBox.margin>

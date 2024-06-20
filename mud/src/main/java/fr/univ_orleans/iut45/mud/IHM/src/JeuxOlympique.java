@@ -7,6 +7,7 @@ import java.util.Set;
 import fr.univ_orleans.iut45.mud.IHM.src.controlleur.*;
 import fr.univ_orleans.iut45.mud.competition.*;
 import fr.univ_orleans.iut45.mud.items.*;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;;
+import javafx.stage.Stage;
+import javafx.util.Duration;;
 
 
 public class JeuxOlympique extends Application{
@@ -267,6 +269,13 @@ public class JeuxOlympique extends Application{
             this.modeParticipant();
         }
         catch(IOException e){}
+        HBox hbParti = (HBox)this.scene.lookup("#hbParti");
+        TranslateTransition transition = new TranslateTransition(new Duration(700));
+        transition.setNode(hbParti);
+        transition.setFromX(0);
+        transition.setToX(-200f);
+        transition.setCycleCount(2);
+        transition.setAutoReverse(true);
         Label nomprenom = new Label(a.getPrenom()+ " " + a.getNom());
         nomprenom.setWrapText(true);
         Label sexe = new Label(a.getSexe());
@@ -291,7 +300,21 @@ public class JeuxOlympique extends Application{
         infoAthlete.add(sexe, 1, 2);
         infoAthlete.add(new Label("Sport pratiqué : "), 0, 3);
         infoAthlete.add(sport, 1, 3);
+        Label labelCompetParticipe = new Label("Compétition participé : ");
+        labelCompetParticipe.setWrapText(true);
+        labelCompetParticipe.setUnderline(true);
+        infoAthlete.add(labelCompetParticipe, 0, 4);
+        int i =4;
+        for (CompetInd competInd : this.model.getEnsCompetitionsInd()){
+            i++;
+            if (competInd.participantPresent(a)){
+                Label nomCompet = new Label(competInd.getNom());
+                nomCompet.setWrapText(true);
+                infoAthlete.add(nomCompet, 0, i);
+            }
+        }
         infoAthlete.setVgap(4);
+        transition.play();
     }
 
     public void majEquipe(Equipe e){
@@ -299,6 +322,13 @@ public class JeuxOlympique extends Application{
             this.modeParticipant();
         }
         catch(IOException ex){}
+        HBox hbParti = (HBox)this.scene.lookup("#hbParti");
+        TranslateTransition transition = new TranslateTransition(new Duration(700));
+        transition.setNode(hbParti);
+        transition.setFromX(0);
+        transition.setToX(-200f);
+        transition.setCycleCount(2);
+        transition.setAutoReverse(true);
         Label nom = new Label(e.getNom());
         nom.setWrapText(true);
         Label sexe = new Label(e.getSexe());
@@ -326,10 +356,25 @@ public class JeuxOlympique extends Application{
         Label textLesAthlete = new Label("Les athlètes");
         textLesAthlete.setUnderline(true);
         infoEquipe.add(textLesAthlete, 0, 4);
+        int idef = 5;
         for (int i = 0; i<e.getLiAthlete().size();++i){
             infoEquipe.add(new Label(e.getLiAthlete().get(i).getPrenom() + " " + e.getLiAthlete().get(i).getNom()), 0, i+5);
+            idef++;
+        }
+        Label labelCompetParticipe = new Label("Compétition(s) participée(s) : ");
+        labelCompetParticipe.setUnderline(true);
+        labelCompetParticipe.setWrapText(true);
+        infoEquipe.add(labelCompetParticipe,0,idef);
+        for (CompetCoop competCoop : this.model.getEnsCompetitionsCoop()){
+            idef++;
+            if (competCoop.participantPresent(e)){
+                Label nomCompet = new Label(competCoop.getNom());
+                nomCompet.setWrapText(true);
+                infoEquipe.add(nomCompet, 0, idef);
+            }
         }
         infoEquipe.setVgap(4);
+        transition.play();
     }
 
     public void majPays(Pays pays){
