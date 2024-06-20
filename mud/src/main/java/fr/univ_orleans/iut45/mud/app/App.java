@@ -50,16 +50,16 @@ public class App {
     }
 
     public void initModelAttribut() {
+        this.ensCompetitionsCoop = this.jeuxQueryAPI. //ajouter méthode correspondante
+        this.ensCompetitionsInd = this.jeuxQueryAPI. //ajouter méthode correspondante
         // this.ensSport = this.jeuxQueryAPI. //ajouter méthode correspondante
         // this.ensPays = this.jeuxQueryAPI. //ajouter méthode correspondante
         // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensCompetitionsCoop = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensCompetitionsInd = this.jeuxQueryAPI. //ajouter méthode correspondante
         // this.liEquipes = this.jeuxQueryAPI. //ajouter méthode correspondante
     }
 
     public App() throws ClassNotFoundException, SQLException  {
-        //initLoggingConnexion();
+        initLoggingConnexion();
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
