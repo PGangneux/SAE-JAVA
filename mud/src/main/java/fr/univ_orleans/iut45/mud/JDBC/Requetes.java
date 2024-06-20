@@ -337,6 +337,49 @@ public class Requetes {
         return ensembleCoop;
     }
 
+    public void supprimerEpreuve(Epreuve e, Competition c) throws SQLException{
+        st=laConnexion.createStatement();
+        String requete = "delete from EPREUVE where idEpreuve="+this.getIdEpreuve(e, c);
+        st.executeUpdate(requete);
+    }
+
+    public int getIdEpreuve(Epreuve e, Competition c) throws SQLException{
+        int nb = 0;
+        st=laConnexion.createStatement();
+        String requete = "select idEpreuve from EPREUVE where nomEpreuve='"+e.getNom()+"' and idCompet="+this.getIdCompet(c);
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+			nb=rs.getInt("idPays");			// récupération du nombre
+		}
+        return nb;
+    }
+
+    public int getIdCompet(Competition c) throws SQLException{
+        int indi = 1 , nb = 0;
+        st=laConnexion.createStatement();
+        if(c instanceof CompetCoop){
+            indi = 0;
+        }
+        String requete = "select idCompet from COMPETITION where nomCompet='"+c.getNom()+"' and individuelle="+indi+" and sexeCompet='"+c.getSexe()+"' and idSport="+this.getIdSport(c.getSport());
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+			nb=rs.getInt("idPays");			// récupération du nombre
+		}
+        return nb;
+    }
+
+    public int getIdSport(Sport s) throws SQLException{
+        int nb = 0;
+        st=laConnexion.createStatement();
+        String requete = "select idSport from SPORT where nomSport='"+s.getNom()+"'";
+        ResultSet rs = st.executeQuery(requete);
+        while(rs.next()){
+			nb=rs.getInt("idPays");			// récupération du nombre
+		}
+        return nb;
+    }
+
+
 
 
 }
