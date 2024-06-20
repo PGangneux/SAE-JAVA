@@ -85,10 +85,8 @@ public class Controleur {
             }
             else throw new IOException("Déconnexion Erreur");
         } catch (IOException e) {
-            throw new IOException();
+            throw new IOException("Erreur");
         }
-        
-        
     }
 
     
