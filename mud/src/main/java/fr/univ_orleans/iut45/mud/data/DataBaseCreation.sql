@@ -20,7 +20,8 @@ create table ATHLETE(
     forceAth int,
     enduranceAth int,
     agiliteAth int,
-    idPays int
+    idPays int,
+    idEquipe int references EQUIPE.idEquipe
 );
 
 create table COMPETITION (
@@ -42,7 +43,9 @@ create table EQUIPE (
 create table EPREUVE(
     idEpreuve int primary key,
     nomEpreuve varchar(50),
-    idCompet int references COMPETITION.idCompet
+    idCompet int references COMPETITION.idCompet,
+    idPays int references PAYS.idPays,
+    idSport int references SPORT.idSport
 );
 
 create table PARTICIPE (
