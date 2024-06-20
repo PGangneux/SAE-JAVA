@@ -41,6 +41,7 @@ public class Controleur {
 
     private JeuxOlympique vue;
     private App model;
+    //private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -54,7 +55,7 @@ public class Controleur {
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue, App model2){
+    public Controleur(JeuxOlympique vue,  App model2){
         this.vue = vue;
         this.model = model2;
         System.out.println(this.model);

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -28,7 +28,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="classementCompet" prefHeight="280.0" prefWidth="860.0">
+            <ScrollPane fx:id="classementCompet" prefHeight="280.0" prefWidth="860.0" VBox.vgrow="ALWAYS">
                <content>
                   <GridPane prefHeight="117.0" prefWidth="843.0">
                     <columnConstraints>
@@ -57,9 +57,9 @@
                   <Insets bottom="30.0" left="20.0" right="10.0" top="10.0" />
                </VBox.margin>
             </ScrollPane>
-            <Button fx:id="moins" mnemonicParsing="false" onAction="#handleCompetition" prefHeight="24.0" prefWidth="72.0" text="moins">
+            <Button fx:id="moins" mnemonicParsing="false" onAction="#handleCompetition" prefHeight="24.0" prefWidth="72.0" text="retour">
                <VBox.margin>
-                  <Insets left="800.0" />
+                  <Insets bottom="10.0" left="800.0" />
                </VBox.margin>
             </Button>
          </children>
@@ -86,7 +86,7 @@
                         </Button>
                     </buttons>
                   </ButtonBar>
-                  <ButtonBar>
+                  <ButtonBar HBox.hgrow="SOMETIMES">
                     <buttons>
                       <Button fx:id="btnCompetitions" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: darkkhaki;" text="Compétitions" />
                         <Button fx:id="btnClassement" mnemonicParsing="false" onAction="#handlePays" prefHeight="50.0" text="Classement des pays" textAlignment="CENTER" wrapText="true" />
@@ -114,6 +114,9 @@
                            </graphic>
                         </Button>
                     </buttons>
+                     <HBox.margin>
+                        <Insets left="25.0" right="50.0" />
+                     </HBox.margin>
                   </ButtonBar>
                </children>
             </HBox>
