@@ -3,6 +3,7 @@ package fr.univ_orleans.iut45.mud.IHM.src.controlleur;
 import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.JeuxOlympique;
+import fr.univ_orleans.iut45.mud.app.App;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import fr.univ_orleans.iut45.mud.competition.Competition;
@@ -21,6 +22,7 @@ import javafx.scene.control.RadioButton;
 
 public class ControlleurRadioButtonCompetition implements EventHandler<ActionEvent> {
     private JeuxOlympique vue;
+    //private App model;
     private ImportData model;
 
     public ControlleurRadioButtonCompetition(JeuxOlympique vue, ImportData model){
