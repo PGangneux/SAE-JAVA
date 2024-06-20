@@ -62,14 +62,20 @@ public class Controleur {
         } catch (IOException e) {
             throw new IOException();
         }
-        
         System.out.println("Affichage fenetre Participants");
     }
 
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException{
-        this.vue.modeConnexion();
-        System.out.println("Affichage fenete Connexion");
+        try {
+            this.model.closeDBConnection();
+            this.vue.modeConnexion();
+            System.out.println("Affichage fenete Connexion");
+        } catch (IOException e) {
+            throw new IOException();
+        }
+        
+        
     }
 
     
