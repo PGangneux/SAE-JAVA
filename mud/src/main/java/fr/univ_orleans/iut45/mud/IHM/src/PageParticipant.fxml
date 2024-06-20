@@ -22,12 +22,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="44.0" VBox.vgrow="NEVER">
                <children>
-                  <TextField fx:id="rechercheAthlete" onKeyReleased="#handleRechercheA" prefHeight="24.0" promptText="Rechercher athlète" HBox.hgrow="SOMETIMES">
+                  <TextField fx:id="rechercheAthlete" onKeyReleased="#handleRechercheA" prefHeight="24.0" promptText="Rechercher athlète" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                        <Insets bottom="10.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField fx:id="rechercheEquipe" onKeyReleased="#handleRechercheE" prefHeight="24.0" promptText="Recherche équipe" HBox.hgrow="SOMETIMES">
+                  <TextField fx:id="rechercheEquipe" onKeyReleased="#handleRechercheE" prefHeight="24.0" promptText="Recherche équipe" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                      </HBox.margin>
@@ -36,50 +36,50 @@
             </HBox>
             <ScrollPane fx:id="scrollParticipant" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                <content>
-                  <HBox prefHeight="80.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <GridPane fx:id="gridAthlete" alignment="CENTER" gridLinesVisible="true" HBox.hgrow="ALWAYS">
+                        <GridPane fx:id="gridAthlete" alignment="TOP_CENTER" gridLinesVisible="true" HBox.hgrow="ALWAYS">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
-                            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="153.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="61.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="138.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Athlètes" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label text="Sexe de athlète" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
-                              <Label text="Pays de l'athlète" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label text="Athlète" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label text="Sexe" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label text="Pays" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
-                        <GridPane fx:id="gridEquipe" alignment="CENTER" gridLinesVisible="true" HBox.hgrow="ALWAYS">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
-                              <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+                        <GridPane fx:id="gridEquipe" alignment="TOP_CENTER" gridLinesVisible="true" HBox.hgrow="ALWAYS">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="153.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="61.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="138.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <Label text="Equipes" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label text="Sexe de l'équipe" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <Label text="Pays de l'équipe" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label text="Equipe" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label text="Sexe" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label text="Pays" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                            </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
                         </GridPane>
                      </children>
                   </HBox>
                </content>
             </ScrollPane>
-            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R" prefHeight="40.0" prefWidth="200.0">
+            <ButtonBar buttonOrder="U+L_HE+FBIX_NCYOA_R">
               <buttons>
                   <Button fx:id="btnAjouterA" mnemonicParsing="false" onAction="#handleAddAthlete" text="Ajouter un athlète" />
                 <Button fx:id="btnAjouterEq" mnemonicParsing="false" onAction="#handleAddEquipe" text="Ajouter une équipe" />
               </buttons>
+               <VBox.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </VBox.margin>
             </ButtonBar>
          </children>
       </VBox>
@@ -141,7 +141,7 @@
       </VBox>
    </top>
    <left>
-      <HBox prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hbParti" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox fx:id="infoParticipant" prefHeight="350.0" prefWidth="215.0">
                <HBox.margin>
