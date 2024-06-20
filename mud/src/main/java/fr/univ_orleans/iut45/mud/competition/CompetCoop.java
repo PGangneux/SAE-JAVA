@@ -157,19 +157,16 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
         for(Equipe e : this.liEquipe){
             dico.put(e, 0);
         }
-
         for(EpreuveCoop epreuve : this.liEpreuve){
             Map<Integer,Equipe> donnees = epreuve.getDonneesClassement();
             for(Integer i : donnees.keySet()){
                 dico.put(donnees.get(i), (dico.get((donnees.get(i)))+i));
             }
         }
-
         List<Equipe> liste = new ArrayList<>();
         for(Equipe e : this.liEquipe){
             liste.add(e);
         }
-
         ComparateurCompetCoop comparator = new ComparateurCompetCoop(dico);
         Collections.sort(liste , comparator);
         /*
@@ -177,7 +174,6 @@ public class CompetCoop implements Competition<Equipe, EpreuveCoop>{
             texte += (liste.indexOf(e)+1)+" | "+e.getNom()+System.lineSeparator();
         }
         */
-        
         return liste;
     }
 
