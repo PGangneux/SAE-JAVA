@@ -10,6 +10,8 @@ import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import java.sql.SQLException;
 import java.util.Set;
 
+import javax.swing.Action;
+
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.app.App;
 import fr.univ_orleans.iut45.mud.items.*;
@@ -18,6 +20,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -37,6 +41,7 @@ public class Controleur {
 
     private JeuxOlympique vue;
     private App model;
+    //private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -50,7 +55,7 @@ public class Controleur {
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue, App model2){
+    public Controleur(JeuxOlympique vue,  App model2){
         this.vue = vue;
         this.model = model2;
         System.out.println(this.model);
@@ -59,21 +64,31 @@ public class Controleur {
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
+        String login;
+        String password;
         try {
-            String login = this.identifiant.getText();
-            String password = this.mdp.getText();
+            login = this.identifiant.getText();
+            password = this.mdp.getText();
             boolean state = this.model.getConnexion(login, password);
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
             }else {
-                System.out.println("inexistant");
+                throw new SQLException();
             }   
             System.out.println(this.model.getStatusCompte());
-        } catch (IOException e) {
+        }catch (SQLException e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Compte inexistant");
+            alert.setHeaderText("Identifiant ou mot de passe incorrect");
+            alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
+            alert.showAndWait();
+            this.mdp.setText("");      
+        } 
+        catch (IOException e) {
             throw new IOException();
         }
-        System.out.println("Affichage fenetre Participants");
+        System.out.println("bof");
     }
 
     @FXML
@@ -86,8 +101,8 @@ public class Controleur {
             }
             System.out.println("Déconnection echoué");
         } catch (Exception e) {
-            System.out.println("Erreur lors de la déconnexion");
-        }
+               System.out.println("a check");
+        } 
     }
 
     
@@ -229,6 +244,26 @@ public class Controleur {
             }
             
         }
+    }
+
+    @FXML
+    private void handleRechercheE(KeyEvent event){
+        System.out.println(event.getCode());
+    }
+
+    @FXML
+    private void handleRechercheA(KeyEvent event){
+        System.out.println(event.getCode());
+    }
+
+    @FXML
+    private void handleAddAthlete(ActionEvent event){
+        System.out.println(event.getSource());
+    }
+
+    @FXML
+    private void handleAddEquipe(ActionEvent event){
+        System.out.println(event.getSource());
     }
 
 }
