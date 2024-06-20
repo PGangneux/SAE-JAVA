@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -37,8 +38,8 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-    // private ImportData model;
-    private  App model;
+    private ImportData model;
+    //private  App model;
     private boolean themeClair;
 
     
@@ -89,8 +90,8 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException, ClassNotFoundException, SQLException{
         this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        // this.model = data;
-        this.model = new App();
+        this.model = data;
+        //this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         
@@ -190,7 +191,11 @@ public class JeuxOlympique extends Application{
                 this.leftVboxCompet.getChildren().add(r);
             }
         }
+
+
+        this.leftVboxCompet.getChildren().add(new Button("Gestion Compétition"));
         
+
         
 
         
@@ -234,6 +239,7 @@ public class JeuxOlympique extends Application{
             epreuves.getChildren().add(label);
             this.liEpreuve.setContent(epreuves);
         }
+        Alert al = new Alert(Alert.INFORMATION);
         
     }
 
