@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -139,8 +141,21 @@ public class JeuxOlympique extends Application{
     public BorderPane pageParticipant() throws IOException{
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageParticipant.fxml"));
         loader.setControllerFactory(c -> new Controleur(this,this.model));
-        loader.setController(this.controleur);
+        loader.setController(this.controleur);  
         BorderPane root = loader.load();
+        ScrollPane scrollpane = (ScrollPane)root.lookup("#scrollParticipant");
+        TableView<Athlete> tableA = (TableView<Athlete>)scrollpane.lookup("#tableA");sss
+        for (TableColumn<Athlete, ?> colomn : tableA.getColumns()){
+            colomn.setResizable(false);
+        }
+        tableA.setEditable(false);
+        List<Athlete> liAthletes = this.model.getListAthletes();
+        for (int i = 1; i < liAthletes.size(); ++i){
+            Athlete athlete = liAthletes.get(i);
+            // tableAthlete.addRow(i, new Label(athlete.getPrenom() + " " + athlete.getNom()), new Label(athlete.getSexe()), new Label(athlete.getPays().getNom()));
+            
+            
+        }
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
         return root;
@@ -342,6 +357,8 @@ public class JeuxOlympique extends Application{
         this.stage.setMinHeight(500);
         return root;
     }
+
+    
 
     public void majAthlete(Athlete a){
         try{

@@ -1,14 +1,19 @@
 package fr.univ_orleans.iut45.mud.app;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.naming.ldap.HasControls;
 
 import fr.univ_orleans.iut45.mud.JDBC.*;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.ImportData;
 import fr.univ_orleans.iut45.mud.items.Pays;
 import fr.univ_orleans.iut45.mud.items.Sport;
 
@@ -21,8 +26,8 @@ public class App {
     private Set<Sport> ensSport;
     private Set<Pays> ensPays;
     private List<Athlete> liAthletes;
-    private Set<CompetCoop> ensCompetitionsCoop;
-    private Set<CompetInd> ensCompetitionsInd;
+    private static Set<CompetCoop> ensCompetitionsCoop;
+    private static Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
     public final static String ADMINISTRATEUR = "administrateur";
     public final static String JOURNALIST = "journalist";
@@ -38,6 +43,69 @@ public class App {
         this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
     }
 
+    // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
+    // this.liEquipes = this.jeuxQueryAPI. //ajouter méthode correspondante
+    private void initEnsSport() {
+        for (CompetInd compet: ensCompetitionsInd) {
+            this.ensSport.add(compet.getSport());
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                this.ensSport.add(equipe.getSport());
+            }
+        }
+    }
+
+    private void initEnsPays() {
+        for (CompetInd compet: ensCompetitionsInd) {
+            for (Athlete ath: compet.getParticipant()) {
+                this.ensPays.add(ath.getPays());
+            }
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                this.ensPays.add(equipe.getPays());
+            }
+        }
+    }
+
+    private void initListAthlete() {
+        for (CompetInd compet: ensCompetitionsInd) {
+            for (Athlete ath: compet.getParticipant()) {
+                this.liAthletes.add(ath);
+            }
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                for (Athlete ath: equipe.getLiAthlete()) {
+                    this.liAthletes.add(ath);
+                }
+            }
+        }
+    }
+
+    private void initListEquipe() {
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            for (Equipe equipe: compet.getParticipant()) {
+                this.liEquipes.add(equipe);
+            }
+        }
+    }
+
+    private void initEnsCompetitionsCoop() throws SQLException {
+        Set<CompetCoop> competitions = this.jeuxQueryAPI.getEnsembleCompetCoop();
+        for (CompetCoop compet: competitions) {
+            ensCompetitionsCoop.add(compet);
+        }
+    }
+
+    private void initEnsCompetitionsInd() throws SQLException {
+        Set<CompetInd> competitions = this.jeuxQueryAPI.getEnsembleCompetInd();
+        for (CompetInd compet: competitions) {
+            ensCompetitionsInd.add(compet);
+        }
+    }
+
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
         String server = "192.168.62.208";
         String baseName = "SAE";
@@ -49,17 +117,73 @@ public class App {
         initModelAttribut();
     }
 
-    public void initModelAttribut() {
-        // this.ensSport = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensPays = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensCompetitionsCoop = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.ensCompetitionsInd = this.jeuxQueryAPI. //ajouter méthode correspondante
-        // this.liEquipes = this.jeuxQueryAPI. //ajouter méthode correspondante
+    public void initModelAttribut() throws SQLException {
+        initEnsCompetitionsCoop();
+        initEnsCompetitionsInd();
+        initEnsPays();
+        initEnsSport();
+        initListAthlete();
+        initListEquipe();
     }
 
+    public void importCompetCoopFromCSV(Set<CompetCoop> ensCompetCoops) {
+        for (CompetCoop compet: ensCompetCoops) {
+            ensCompetitionsCoop.add(compet);
+        }
+    }
+    
+    public void  importCompetIndFromCSV(Set<CompetInd> ensCompetInd) {
+        for (CompetInd compet: ensCompetInd) {
+            ensCompetitionsInd.add(compet);
+        }
+    }
+    
+    public void  importSportFromCSV(Set<Sport> sports) {
+        for (Sport sp: sports) {
+            this.ensSport.add(sp);
+        }
+    }
+    
+    public void  importPaysFromCSV(Set<Pays> lesPays) {
+        for (Pays pays: lesPays) {
+            this.ensPays.add(pays);
+        }
+    }
+    
+    public void  importAthleteFromCSV(List<Athlete> lesAthletes) {
+        for (Athlete ath: lesAthletes) {
+            this.liAthletes.add(ath);
+        }
+    }
+    
+    public void  importEquipeFromCSV(List<Equipe> lesEquipes) {
+        for (Equipe equipe: lesEquipes) {
+            this.liEquipes.add(equipe);
+        }
+    }
+
+    public void importDataFromCSV(String path) {
+        // path = "./src/main/java/fr/univ_orleans/iut45/mud/donnees.csv";
+        ImportData data = new ImportData(path);
+        this.importCompetCoopFromCSV(data.getEnsCompetitionsCoop());
+        this.importCompetIndFromCSV(data.getEnsCompetitionsInd());
+        this.importSportFromCSV(data.getEnsSports());
+        this.importPaysFromCSV(data.getEnsPays());
+        this.importAthleteFromCSV(data.getListAthletes());
+        this.importEquipeFromCSV(data.getListEquipes());
+        //Partie ou il faut ajouter les données dans la BD
+    } 
+
     public App() throws ClassNotFoundException, SQLException  {
-        //initLoggingConnexion();
+        ensCompetitionsCoop = new HashSet<>();
+        ensCompetitionsInd = new HashSet<>();
+        this.ensPays = new HashSet<>();
+        this.ensSport = new HashSet<>();
+        this.liAthletes = new ArrayList<>();
+        this.liEquipes = new ArrayList<>();
+        initLoggingConnexion();
+        importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        System.out.println(this.ensPays);
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
@@ -128,7 +252,7 @@ public class App {
      * @return un ensemble de CompetCoop.
      */
     public Set<CompetCoop> getEnsCompetitionsCoop() {
-        return this.ensCompetitionsCoop;
+        return ensCompetitionsCoop;
     }
 
     /**
@@ -137,7 +261,7 @@ public class App {
      * @return un ensemble de CompetInd.
      */
     public Set<CompetInd> getEnsCompetitionsInd() {
-        return this.ensCompetitionsInd;
+        return ensCompetitionsInd;
     }
 
     /**

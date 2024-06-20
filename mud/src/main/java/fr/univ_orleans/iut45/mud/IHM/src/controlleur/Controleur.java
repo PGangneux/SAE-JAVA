@@ -64,32 +64,43 @@ public class Controleur {
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
+
         /*
+
+        String login;
+        String password;
+
         try {
-            String login = this.identifiant.getText();
-            String password = this.mdp.getText();
+            login = this.identifiant.getText();
+            password = this.mdp.getText();
             boolean state = this.model.getConnexion(login, password);
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
             }else {
-                System.out.println("inexistant");
+                throw new SQLException();
             }   
             System.out.println(this.model.getStatusCompte());
         }catch (SQLException e) {
-            Alert alert = new Alert(AlertType.INFORMATION);
+            Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Compte inexistant");
-            alert.setContentText("Les information de connexion saisi ne correspondent à aucun de nos compte enregistré");
-            alert.showAndWait();              
+            alert.setHeaderText("Identifiant ou mot de passe incorrect");
+            alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
+            alert.showAndWait();
+            this.mdp.setText("");      
         } 
         catch (IOException e) {
             throw new IOException();
         }
+
         */
         this.vue.getStage().setMaximized(true);
         this.vue.modeParticipant();
 
         System.out.println("Affichage fenetre Participants");
+
+        System.out.println("bof");
+
     }
 
     @FXML
