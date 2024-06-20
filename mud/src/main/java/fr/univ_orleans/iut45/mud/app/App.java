@@ -70,7 +70,7 @@ public class App {
         }
         return false;
     }
-
+    
     public boolean closeDBConnection() throws SQLException {
         if (this.jeuxConnexion.isConnecte()) {
             this.jeuxConnexion.close();
