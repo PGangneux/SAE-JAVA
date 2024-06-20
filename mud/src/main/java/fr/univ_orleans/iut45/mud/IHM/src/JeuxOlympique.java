@@ -144,17 +144,18 @@ public class JeuxOlympique extends Application{
         loader.setController(this.controleur);  
         BorderPane root = loader.load();
         ScrollPane scrollpane = (ScrollPane)root.lookup("#scrollParticipant");
-        TableView<Athlete> tableA = (TableView<Athlete>)scrollpane.lookup("#tableA");sss
-        for (TableColumn<Athlete, ?> colomn : tableA.getColumns()){
-            colomn.setResizable(false);
-        }
-        tableA.setEditable(false);
+        HBox hboxGrid = (HBox)scrollpane.getContent();
+        GridPane gridAthlete = (GridPane)hboxGrid.getChildren().get(0);
+        GridPane gridEquipe = (GridPane)hboxGrid.getChildren().get(1);
         List<Athlete> liAthletes = this.model.getListAthletes();
-        for (int i = 1; i < liAthletes.size(); ++i){
+        List<Equipe> liEquipes = this.model.getListEquipes();
+        for (int i = 0; i < liAthletes.size(); ++i){
             Athlete athlete = liAthletes.get(i);
-            // tableAthlete.addRow(i, new Label(athlete.getPrenom() + " " + athlete.getNom()), new Label(athlete.getSexe()), new Label(athlete.getPays().getNom()));
-            
-            
+            gridAthlete.addRow(i+1, new Label(athlete.getPrenom() + " " + athlete.getNom()), new Label(athlete.getSexe()), new Label(athlete.getPays().getNom()));
+        }
+        for (int i = 0; i < liEquipes.size(); ++i){
+            Equipe equipe = liEquipes.get(i);
+            gridEquipe.addRow(i+1, new Label(equipe.getNom()), new Label(equipe.getSexe()), new Label(equipe.getPays().getNom()));
         }
         this.stage.setMinWidth(890);
         this.stage.setMinHeight(500);
@@ -365,8 +366,9 @@ public class JeuxOlympique extends Application{
             this.modeParticipant();
         }
         catch(IOException e){}
-        Label nomprenom = new Label(a.getPrenom()+a.getNom());
+        Label nomprenom = new Label(a.getPrenom()+ " " + a.getNom());
         Label sexe = new Label(a.getSexe());
+        Label sport = new Label(a.getSport().getNom());
         Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays() + ".png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(50); 
@@ -378,8 +380,39 @@ public class JeuxOlympique extends Application{
         infoAthlete.add(new Label("Athlète"), 0, 0,2,1);
         infoAthlete.add(nomprenom, 0, 1);
         infoAthlete.add(imageView, 1, 1);
-        infoAthlete.add(new Label("Sport pratiqué"), 0, 2);
-        infoAthlete.add(new Label(a.getSport().getNom()), 1, 2);
+        infoAthlete.add(new Label("Sexe : "), 0, 2);
+        infoAthlete.add(sexe, 0, 2);
+        infoAthlete.add(new Label("Sport pratiqué"), 0, 3);
+        infoAthlete.add(sport, 1, 3);
+    }
+
+    public void majEquipe(Equipe e){
+        try{
+            this.modeParticipant();
+        }
+        catch(IOException ex){}
+        Label nom = new Label(e.getNom());
+        Label sexe = new Label(e.getSexe());
+        Label sport = new Label(e.getSport().getNom());
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + e.getPays() + ".png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50); 
+        imageView.setFitHeight(35); 
+        imageView.setPreserveRatio(true);
+        GridPane infoEquipe = new GridPane();
+        VBox infoParticipant = (VBox)this.scene.lookup("#infoParticipant");
+        infoParticipant.getChildren().add(infoEquipe);
+        infoEquipe.add(new Label("Equipe"), 0, 0,2,1);
+        infoEquipe.add(nom, 0, 1);
+        infoEquipe.add(imageView, 1, 1);
+        infoEquipe.add(new Label("Sexe : "), 0, 2);
+        infoEquipe.add(sexe, 0, 2);
+        infoEquipe.add(new Label("Sport pratiqué"), 0, 3);
+        infoEquipe.add(sport, 1, 3);
+        infoEquipe.add(new Label("Les athlètes"), 0, 4);
+        for (int i = 0; i<e.getLiAthlete().size();++i){
+            infoEquipe.add(new Label(e.getLiAthlete().get(i).getPrenom() + " " + e.getLiAthlete().get(i).getNom()), 0, i+5);
+        }
     }
 
     public void majPays(Pays pays){
