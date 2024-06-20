@@ -172,10 +172,10 @@ public class Requetes {
     public Athlete getAthlete(int athlete) throws SQLException{
         Athlete a = null;
         st=laConnexion.createStatement();
-        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, force, endurance, agilite from ATHLETE where idAthlete="+athlete;
+        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, forceAth, enduranceAth, agiliteAth from ATHLETE where idAthlete="+athlete;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
-            a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("force"), rs.getInt("agilite"), rs.getInt("endurance"));
+            a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("forceAth"), rs.getInt("agiliteAth"), rs.getInt("enduranceAth"));
         }
         return a;
         
@@ -194,7 +194,7 @@ public class Requetes {
 
     public Pays getPays(int pays) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomPays from Pays where idPays="+pays;
+        String requete = "select nomPays from PAYS where idPays="+pays;
         ResultSet rs = st.executeQuery(requete);
         Pays p = null;
         while (rs.next()){

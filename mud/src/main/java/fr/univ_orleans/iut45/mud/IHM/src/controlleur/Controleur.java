@@ -43,8 +43,8 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
-    //private App model;
-    private ImportData model;
+    private App model;
+    // private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -58,7 +58,9 @@ public class Controleur {
     @FXML
     private void init(){}
 
+
     public Controleur(JeuxOlympique vue, ImportData model2 ){
+
         this.vue = vue;
         this.model = model2;
     }
@@ -66,12 +68,8 @@ public class Controleur {
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
-
-        /*
-
         String login;
         String password;
-
         try {
             login = this.identifiant.getText();
             password = this.mdp.getText();
@@ -94,14 +92,12 @@ public class Controleur {
         catch (IOException e) {
             throw new IOException();
         }
+        // this.vue.getStage().setMaximized(true);
+        // this.vue.modeParticipant();
 
-        */
-        this.vue.getStage().setMaximized(true);
-        this.vue.modeParticipant();
+        // System.out.println("Affichage fenetre Participants");
 
-        System.out.println("Affichage fenetre Participants");
-
-        System.out.println("bof");
+        // System.out.println("bof");
 
     }
 
@@ -287,12 +283,36 @@ public class Controleur {
 
     @FXML
     private void handleRechercheE(KeyEvent event){
-        System.out.println(event.getCode());
+        if (event.getCode() == KeyCode.ENTER){
+            for (Equipe e : this.model.getListEquipes()){
+                String nom = e.getNom().toUpperCase();
+                System.out.println(nom);
+                TextField textField = (TextField) event.getSource();
+                String contenuTF = textField.getText().toUpperCase();
+                System.out.println(contenuTF);
+                if (contenuTF.equals(nom)){
+                    this.vue.majEquipe(e);
+                }    
+            }
+            System.out.println("Equipe affiché");
+        }
     }
 
     @FXML
     private void handleRechercheA(KeyEvent event){
-        System.out.println(event.getCode());
+        if (event.getCode() == KeyCode.ENTER){
+            for (Athlete a : this.model.getListAthletes()){
+                String nom = a.getPrenom().toUpperCase() + " " + a.getNom().toUpperCase();
+                System.out.println(nom);
+                TextField textField = (TextField) event.getSource();
+                String contenuTF = textField.getText().toUpperCase();
+                System.out.println(contenuTF);
+                if (contenuTF.equals(nom)){
+                    this.vue.majAthlete(a);
+                }
+            }
+            System.out.println("Athlete affiché");
+        }
     }
 
     @FXML

@@ -14,10 +14,13 @@ import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
 import fr.univ_orleans.iut45.mud.items.*;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -39,20 +42,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;;
+import javafx.util.Duration;;
+
 
 
 public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-    private ImportData model;
-    //private  App model;
+    // private ImportData model;
+    private  App model;
     private boolean themeClair;
     private Popup popup;
     
-    
 
-    
     private VBox leftVboxCompet;
     private Button femme;
     private Button homme;
@@ -61,26 +64,13 @@ public class JeuxOlympique extends Application{
     private Label competClassement1;
     private Label competClassement2;
     private Label competClassement3;
-
     private ScrollPane classementCompetScrollPane;
     private GridPane classementCompet;
-
-    
     private GridPane classementPays;
     private GridPane recherchePays;
     private TextField textFieldPays;
-
     private ScrollPane liEpreuve;
 
-  
-    
-
-
-
-
-
-    
-        
 
     public VBox getLeftVboxCompet() {
         return leftVboxCompet;
@@ -112,8 +102,8 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException, ClassNotFoundException, SQLException{
         this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        this.model = data;
-        //this.model = new App();
+        // this.model = data;
+        this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         this.popup = new Popup(); 
@@ -146,20 +136,25 @@ public class JeuxOlympique extends Application{
         loader.setController(this.controleur);  
         BorderPane root = loader.load();
         ScrollPane scrollpane = (ScrollPane)root.lookup("#scrollParticipant");
-        /*TableView<Athlete> tableA = (TableView<Athlete>)scrollpane.lookup("#tableA");
-        for (TableColumn<Athlete, ?> colomn : tableA.getColumns()){
-            colomn.setResizable(false);
-        }
-        tableA.setEditable(false);
+
+
+        HBox hboxGrid = (HBox)scrollpane.getContent();
+        GridPane gridAthlete = (GridPane)hboxGrid.getChildren().get(0);
+        GridPane gridEquipe = (GridPane)hboxGrid.getChildren().get(1);
         List<Athlete> liAthletes = this.model.getListAthletes();
-        for (int i = 1; i < liAthletes.size(); ++i){
+        List<Equipe> liEquipes = this.model.getListEquipes();
+        for (int i = 0; i < liAthletes.size(); ++i){
             Athlete athlete = liAthletes.get(i);
-            // tableAthlete.addRow(i, new Label(athlete.getPrenom() + " " + athlete.getNom()), new Label(athlete.getSexe()), new Label(athlete.getPays().getNom()));
-            
-        } 
-        */
+
+
+            gridAthlete.addRow(i+1, new Label(athlete.getPrenom() + " " + athlete.getNom()), new Label(athlete.getSexe()), new Label(athlete.getPays().getNom()));
+        }
+        for (int i = 0; i < liEquipes.size(); ++i){
+            Equipe equipe = liEquipes.get(i);
+            gridEquipe.addRow(i+1, new Label(equipe.getNom()), new Label(equipe.getSexe()), new Label(equipe.getPays().getNom()));
+        }
         this.stage.setMinWidth(890);
-        this.stage.setMinHeight(500);
+        this.stage.setMinHeight(550);
         return root;
     }
 
@@ -405,9 +400,20 @@ public class JeuxOlympique extends Application{
             this.modeParticipant();
         }
         catch(IOException e){}
-        Label nomprenom = new Label(a.getPrenom()+a.getNom());
+        HBox hbParti = (HBox)this.scene.lookup("#hbParti");
+        TranslateTransition transition = new TranslateTransition(new Duration(700));
+        transition.setNode(hbParti);
+        transition.setFromX(0);
+        transition.setToX(-200f);
+        transition.setCycleCount(2);
+        transition.setAutoReverse(true);
+        Label nomprenom = new Label(a.getPrenom()+ " " + a.getNom());
+        nomprenom.setWrapText(true);
         Label sexe = new Label(a.getSexe());
-        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays() + ".png").toExternalForm());
+        sexe.setWrapText(true);
+        Label sport = new Label(a.getSport().getNom());
+        sport.setWrapText(true);
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + a.getPays().getNom() + ".png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(50); 
         imageView.setFitHeight(35); 
@@ -415,11 +421,91 @@ public class JeuxOlympique extends Application{
         GridPane infoAthlete = new GridPane();
         VBox infoParticipant = (VBox)this.scene.lookup("#infoParticipant");
         infoParticipant.getChildren().add(infoAthlete);
-        infoAthlete.add(new Label("Athlète"), 0, 0,2,1);
+        Label athlete = new Label("Athlète");
+        GridPane.setValignment(athlete, VPos.CENTER);
+        GridPane.setHalignment(athlete, HPos.CENTER);
+        infoAthlete.add(athlete, 0, 0,2,1);
         infoAthlete.add(nomprenom, 0, 1);
         infoAthlete.add(imageView, 1, 1);
-        infoAthlete.add(new Label("Sport pratiqué"), 0, 2);
-        infoAthlete.add(new Label(a.getSport().getNom()), 1, 2);
+        infoAthlete.add(new Label("Sexe : "), 0, 2);
+        infoAthlete.add(sexe, 1, 2);
+        infoAthlete.add(new Label("Sport pratiqué : "), 0, 3);
+        infoAthlete.add(sport, 1, 3);
+        Label labelCompetParticipe = new Label("Compétition participé : ");
+        labelCompetParticipe.setWrapText(true);
+        labelCompetParticipe.setUnderline(true);
+        infoAthlete.add(labelCompetParticipe, 0, 4);
+        int i =4;
+        for (CompetInd competInd : this.model.getEnsCompetitionsInd()){
+            i++;
+            if (competInd.participantPresent(a)){
+                Label nomCompet = new Label(competInd.getNom());
+                nomCompet.setWrapText(true);
+                infoAthlete.add(nomCompet, 0, i);
+            }
+        }
+        infoAthlete.setVgap(4);
+        transition.play();
+    }
+
+    public void majEquipe(Equipe e){
+        try{
+            this.modeParticipant();
+        }
+        catch(IOException ex){}
+        HBox hbParti = (HBox)this.scene.lookup("#hbParti");
+        TranslateTransition transition = new TranslateTransition(new Duration(700));
+        transition.setNode(hbParti);
+        transition.setFromX(0);
+        transition.setToX(-200f);
+        transition.setCycleCount(2);
+        transition.setAutoReverse(true);
+        Label nom = new Label(e.getNom());
+        nom.setWrapText(true);
+        Label sexe = new Label(e.getSexe());
+        sexe.setWrapText(true);
+        Label sport = new Label(e.getSport().getNom());
+        sport.setWrapText(true);
+        Image image = new Image(getClass().getResource("/fr/univ_orleans/iut45/mud/IHM/img/flags/" + e.getPays().getNom() + ".png").toExternalForm());
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(50); 
+        imageView.setFitHeight(35); 
+        imageView.setPreserveRatio(true);
+        GridPane infoEquipe = new GridPane();
+        VBox infoParticipant = (VBox)this.scene.lookup("#infoParticipant");
+        infoParticipant.getChildren().add(infoEquipe);
+        Label equipe = new Label("Equipe");
+        GridPane.setValignment(equipe, VPos.CENTER);
+        GridPane.setHalignment(equipe, HPos.CENTER);
+        infoEquipe.add(equipe, 0, 0,2,1);
+        infoEquipe.add(nom, 0, 1);
+        infoEquipe.add(imageView, 1, 1);
+        infoEquipe.add(new Label("Sexe : "), 0, 2);
+        infoEquipe.add(sexe, 1, 2);
+        infoEquipe.add(new Label("Sport pratiqué : "), 0, 3);
+        infoEquipe.add(sport, 1, 3);
+        Label textLesAthlete = new Label("Les athlètes");
+        textLesAthlete.setUnderline(true);
+        infoEquipe.add(textLesAthlete, 0, 4);
+        int idef = 5;
+        for (int i = 0; i<e.getLiAthlete().size();++i){
+            infoEquipe.add(new Label(e.getLiAthlete().get(i).getPrenom() + " " + e.getLiAthlete().get(i).getNom()), 0, i+5);
+            idef++;
+        }
+        Label labelCompetParticipe = new Label("Compétition(s) participée(s) : ");
+        labelCompetParticipe.setUnderline(true);
+        labelCompetParticipe.setWrapText(true);
+        infoEquipe.add(labelCompetParticipe,0,idef);
+        for (CompetCoop competCoop : this.model.getEnsCompetitionsCoop()){
+            idef++;
+            if (competCoop.participantPresent(e)){
+                Label nomCompet = new Label(competCoop.getNom());
+                nomCompet.setWrapText(true);
+                infoEquipe.add(nomCompet, 0, idef);
+            }
+        }
+        infoEquipe.setVgap(4);
+        transition.play();
     }
 
     public void majPays(Pays pays){
