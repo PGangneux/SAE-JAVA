@@ -4,7 +4,10 @@ use SAE;
 -- SET default_storage_engine = InnoDB;
 create table PAYS(
     idPays int primary key,
-    nomPays varchar(50) unique  
+    nomPays varchar(50) unique,
+    nbMedailleOr int,
+    nbMedailleBr int,
+    nbMedailleAr int
 );
 
 create table SPORT(
@@ -14,13 +17,14 @@ create table SPORT(
 
 create table ATHLETE(
     idAthlete int primary key,
-    nom varchar(50),
-    prenom varchar(50),
-    sexe varchar(1),
+    nomAth varchar(50),
+    prenomAth varchar(50),
+    sexeAth varchar(1),
     forceAth int,
     enduranceAth int,
     agiliteAth int,
-    idPays int
+    idPays int,
+    idSport int
 );
 
 create table COMPETITION (
