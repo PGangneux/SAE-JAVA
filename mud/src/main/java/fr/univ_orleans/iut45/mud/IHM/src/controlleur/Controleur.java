@@ -18,8 +18,10 @@ import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -36,6 +38,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+
 public class Controleur {
     
 
@@ -55,12 +58,13 @@ public class Controleur {
     @FXML
     private void init(){}
 
-    public Controleur(JeuxOlympique vue,  App model2){
+
+    public Controleur(JeuxOlympique vue, ImportData model2 ){
+
         this.vue = vue;
         this.model = model2;
-        System.out.println(this.model);
-        
     }
+
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
@@ -100,11 +104,11 @@ public class Controleur {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
         try {
-            boolean state = this.model.closeDBConnection();
-            if (state) {
-                this.vue.modeConnexion();
-                System.out.println("Affichage fenete Connexion");
-            }
+            //boolean state = this.model.closeDBConnection();
+            //if (state) {
+            //    this.vue.modeConnexion();
+            //    System.out.println("Affichage fenete Connexion");
+           // }
             System.out.println("Déconnection echoué");
         } catch (Exception e) {
                System.out.println("a check");
@@ -146,6 +150,31 @@ public class Controleur {
                 }
             }
         }
+    }
+
+    @FXML
+    public void handleAjoutEpreuve(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
+        for (Node node: this.leftVboxCompet.getChildren()){
+            if (node instanceof RadioButton){
+                RadioButton radioButton = (RadioButton) node;
+                if(radioButton.isSelected()){
+                    Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
+                    for(CompetCoop compet:ensCompetitionsCoop){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            this.vue.PageAjoutEpreuve(compet); 
+                        }
+                    }
+                    Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
+                    for(CompetInd compet:ensCompetitionsInd){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            this.vue.PageAjoutEpreuve(compet);
+                        }
+                    }
+                }
+            }
+        }
+        
+        
         
         
     }
@@ -295,5 +324,7 @@ public class Controleur {
     private void handleAddEquipe(ActionEvent event){
         System.out.println(event.getSource());
     }
+
+    
 
 }
