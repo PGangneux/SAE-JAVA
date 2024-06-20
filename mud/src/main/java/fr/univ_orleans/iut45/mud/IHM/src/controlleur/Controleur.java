@@ -41,7 +41,7 @@ public class Controleur {
 
     private JeuxOlympique vue;
     private App model;
-    //private ImportData model;
+    // private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -88,7 +88,13 @@ public class Controleur {
         catch (IOException e) {
             throw new IOException();
         }
-        System.out.println("bof");
+        // this.vue.getStage().setMaximized(true);
+        // this.vue.modeParticipant();
+
+        // System.out.println("Affichage fenetre Participants");
+
+        // System.out.println("bof");
+
     }
 
     @FXML
@@ -248,12 +254,32 @@ public class Controleur {
 
     @FXML
     private void handleRechercheE(KeyEvent event){
-        System.out.println(event.getCode());
+        if (event.getCode() == KeyCode.ENTER){
+            for (Equipe e : this.model.getListEquipes()){
+                String nom = e.getNom().toUpperCase();
+                TextField textField = (TextField) event.getSource();
+                String contenuTF = textField.getText();
+                if (contenuTF.equals(nom)){
+                    this.vue.majEquipe(e);
+                }    
+            }
+        }
+        System.out.println("Equipe affiché");
     }
 
     @FXML
     private void handleRechercheA(KeyEvent event){
-        System.out.println(event.getCode());
+        if (event.getCode() == KeyCode.ENTER){
+            for (Athlete a : this.model.getListAthletes()){
+                String nom = a.getNom().toUpperCase();
+                TextField textField = (TextField) event.getSource();
+                String contenuTF = textField.getText();
+                if (contenuTF.equals(nom)){
+                    this.vue.majAthlete(a);
+                }    
+            }
+        }
+        System.out.println("Athlete affiché");
     }
 
     @FXML
