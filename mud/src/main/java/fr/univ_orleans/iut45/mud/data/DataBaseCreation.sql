@@ -86,20 +86,20 @@ create table DISPUTE (
 -- flush privileges;
 
 -- creation d'un super user
-create user 'admin'@'%' identified by 'admin';
-create user 'admin'@'localhost' identified by 'admin';
-grant all on SAE.* to 'admin'@'%';
-grant all on SAE.* to 'admin'@'localhost';
+create user 'administrateur'@'%' identified by 'applicationPrivateLoginKey';
+create user 'administrateur'@'localhost' identified by 'applicationPrivateLoginKey';
+grant all on SAE.* to 'administrateur'@'%';
+grant all on SAE.* to 'administrateur'@'localhost';
 flush privileges;
 
-create user 'journalist'@'%' identified by 'journ';
-create user 'journalist'@'localhost' identified by 'journ';
+create user 'journalist'@'%' identified by 'applicationPrivateLoginKey';
+create user 'journalist'@'localhost' identified by 'applicationPrivateLoginKey';
 grant select on SAE.* to 'journalist'@'%';
 grant select on SAE.* to 'journalist'@'localhost';
 flush privileges;
 
-create user 'organisateur'@'%' identified by 'orga';
-create user 'organisateur'@'localhost' identified by 'orga';
+create user 'organisateur'@'%' identified by 'applicationPrivateLoginKey';
+create user 'organisateur'@'localhost' identified by 'applicationPrivateLoginKey';
 grant select,update,insert on SAE.* to 'organisateur'@'%';
 grant select,update,insert on SAE.* to 'organisateur'@'localhost';
 flush privileges;
