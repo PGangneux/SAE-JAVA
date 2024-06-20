@@ -59,7 +59,7 @@ public class App {
     }
 
     public App() throws ClassNotFoundException, SQLException  {
-        initLoggingConnexion();
+        //initLoggingConnexion();
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
