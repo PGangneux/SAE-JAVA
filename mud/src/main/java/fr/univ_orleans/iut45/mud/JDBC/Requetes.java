@@ -30,6 +30,7 @@ public class Requetes {
 
     public Requetes(Connexion laConnexion){
         this.laConnexion=laConnexion;
+        this.listePays=new ArrayList<>();
     }
 
     void ajouterAthlete(Athlete a) throws  SQLException{
