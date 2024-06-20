@@ -27,6 +27,7 @@ create table COMPETITION (
     idCompet int primary key,
     idSport int references SPORT.idSport,
     nomCompet varchar(50),
+    sexeCompet varchar(1) not null constraint sexe_chk check (sexeCompet in ("M","F")),
     individuelle int not null
     constraint chk_ind CHECK (individuelle in (0,1))
 );
