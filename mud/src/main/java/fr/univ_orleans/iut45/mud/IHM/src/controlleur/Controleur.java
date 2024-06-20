@@ -72,7 +72,13 @@ public class Controleur {
                 System.out.println("inexistant");
             }   
             System.out.println(this.model.getStatusCompte());
-        } catch (IOException e) {
+        }catch (SQLException e) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Compte inexistant");
+            alert.setContentText("Les information de connexion saisi ne correspondent à aucun de nos compte enregistré");
+            alert.showAndWait();              
+        } 
+        catch (IOException e) {
             throw new IOException();
         }
         System.out.println("Affichage fenetre Participants");
@@ -87,12 +93,9 @@ public class Controleur {
                 System.out.println("Affichage fenete Connexion");
             }
             System.out.println("Déconnection echoué");
-        } catch (SQLException e) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Compte inexistant");
-            alert.setContentText("Les information de connexion saisi ne correspondent à aucun de nos compte enregistré");
-            alert.showAndWait();     
-        }
+        } catch (Exception e) {
+               System.out.println("a check");
+        } 
     }
 
     
