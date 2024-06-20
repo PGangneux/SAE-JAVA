@@ -12,7 +12,6 @@ import java.util.Set;
 
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.app.App;
-
 import fr.univ_orleans.iut45.mud.items.*;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -74,14 +73,20 @@ public class Controleur {
         } catch (IOException e) {
             throw new IOException();
         }
-        
         System.out.println("Affichage fenetre Participants");
     }
 
     @FXML
-    private void handleDeconnexion(ActionEvent event) throws IOException{
-        this.vue.modeConnexion();
-        System.out.println("Affichage fenete Connexion");
+    private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
+        try {
+            if (this.model.closeDBConnection()) {
+                this.vue.modeConnexion();
+                System.out.println("Affichage fenete Connexion");
+            }
+            else throw new IOException("Déconnexion Erreur");
+        } catch (IOException e) {
+            throw new IOException("Erreur");
+        }
     }
 
     
