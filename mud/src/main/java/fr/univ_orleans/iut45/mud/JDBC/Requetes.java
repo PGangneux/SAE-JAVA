@@ -184,7 +184,7 @@ public class Requetes {
     public Athlete getAthlete(int athlete) throws SQLException{
         Athlete a = null;
         st=laConnexion.createStatement();
-        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, forceAth, enduranceAth, agiliteAth from ATHLETE where idAth="+athlete;
+        String requete = "select idAth,nomAth, prenomAth, sexeAth, idSport, idPays, forceAth, enduranceAth, agiliteAth from ATHLETE where idAth="+athlete;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
             a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("forceAth"), rs.getInt("agiliteAth"), rs.getInt("enduranceAth"));
@@ -225,11 +225,11 @@ public class Requetes {
     public List<Athlete> getAthleteEquipe(int equipe) throws SQLException{
         List<Athlete> listeAthlete = new ArrayList<>();
         st=laConnexion.createStatement();
-        String requete = "select idAth from ATHLETE where idEquipe="+equipe;
+        String requete = "select idAthlete from APPARTENIR where idEquipe="+equipe;
         ResultSet rs = st.executeQuery(requete);
         while (rs.next()) {
             
-            listeAthlete.add(this.getAthlete(rs.getInt("idAth")));
+            listeAthlete.add(this.getAthlete(rs.getInt("idAthlete")));
 
         }
         return listeAthlete;
@@ -248,7 +248,7 @@ public class Requetes {
 
     public Epreuve getEpreuve(int epreuve, Competition c) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomEpruve from EPREUVE where idEpreuve="+epreuve;
+        String requete = "select nomEpreuve from EPREUVE where idEpreuve="+epreuve;
         ResultSet rs = st.executeQuery(requete);
         Epreuve e = null;
         while(rs.next()){
@@ -319,10 +319,10 @@ public class Requetes {
     public List<Athlete> getListeAthletes(int compet) throws SQLException{
         List<Athlete> listeAthletes = new ArrayList<>();
         st=laConnexion.createStatement();
-        String requete = "select idAth from PARTICIPE where idCompet="+compet;
+        String requete = "select idAthlete from PARTICIPE where idCompet="+compet;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
-            listeAthletes.add(getAthlete(rs.getInt("idAth")));
+            listeAthletes.add(getAthlete(rs.getInt("idAthlete")));
         }
         return listeAthletes;
     }

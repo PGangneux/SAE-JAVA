@@ -305,7 +305,7 @@ public class JeuxOlympique extends Application{
             Label label = new Label(ep.getNom());
             epreuves.add(label, 0, i);
             Button editEp = new Button("éditer le résultat de l'épreuve");
-            Button supEp = new Button("Suprimer l'épreuve");
+            Button supEp = new Button("Supprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
             editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
             if(this.model.getStatusCompte().equals(App.JOURNALIST)){
@@ -343,7 +343,7 @@ public class JeuxOlympique extends Application{
             Label label = new Label(ep.getNom());
             epreuves.add(label,0,i);
             Button editEp = new Button("éditer le résultat de l'épreuve");
-            Button supEp = new Button("Suprimer l'épreuve");
+            Button supEp = new Button("Supprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
             editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
             if(this.model.getStatusCompte().equals(App.JOURNALIST)){

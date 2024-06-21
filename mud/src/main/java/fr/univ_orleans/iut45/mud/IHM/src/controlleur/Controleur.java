@@ -71,6 +71,7 @@ public class Controleur {
     private ScrollPane ScrolEditEp;
 
     private boolean themeClair;
+    private boolean firstInitDB;
 
     @FXML
     private void init(){}
@@ -80,6 +81,7 @@ public class Controleur {
         this.vue = vue;
         this.model = model2;
         App.alwaysConnectTrue = false; //a modifier pour se connecter quand on veut
+        this.firstInitDB =  false;
         this.themeClair = true;
         System.out.println(this.model);    
     }
@@ -101,7 +103,7 @@ public class Controleur {
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
-                // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
+                if (firstInitDB) this.model.dataBaseInit();
             }else {
                 throw new SQLException();
             }   
@@ -116,6 +118,7 @@ public class Controleur {
             this.mdp.setText("");      
         } 
         catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new IOException();
         }
         // this.vue.getStage().setMaximized(true);
