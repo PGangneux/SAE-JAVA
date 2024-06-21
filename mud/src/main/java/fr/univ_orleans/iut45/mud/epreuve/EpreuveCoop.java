@@ -67,9 +67,8 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
      */
     @Override
     public void setScore(Equipe equipe, Integer valeur){
-        if( this.scores.keySet().contains(equipe)){
             this.scores.put(equipe, valeur);
-        }
+        
     }
 
 

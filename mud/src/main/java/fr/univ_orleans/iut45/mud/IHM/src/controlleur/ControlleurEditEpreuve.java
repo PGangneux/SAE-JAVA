@@ -17,11 +17,14 @@ import fr.univ_orleans.iut45.mud.items.ImportData;
 import fr.univ_orleans.iut45.mud.items.Participant;
 import fr.univ_orleans.iut45.mud.items.Sport;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -32,17 +35,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
+public class ControlleurEditEpreuve implements EventHandler<ActionEvent> {
     private JeuxOlympique vue;
-    private App model;
-    // private ImportData model;
+    //private App model;
+    private ImportData model;
     private int indice;
     private String classementCompet1PLace;
     private String classementCompet2PLace;
     private String classementCompet3PLace;
 
 
-    public ControlleurSupprimerEpreuve(JeuxOlympique vue, App model, int indice,String classementCompet1PLace, String classementCompet2PLace, String classementCompet3PLace){
+    public ControlleurEditEpreuve(JeuxOlympique vue, ImportData model, int indice,String classementCompet1PLace, String classementCompet2PLace, String classementCompet3PLace){
         this.vue = vue;
         this.model = model;
         this.indice = indice;
@@ -52,11 +55,8 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
     }
 
     @Override
-    public void handle(ActionEvent actionEvent) {
-        //pop up de confirmation
-        boolean result = this.vue.alertSuppressionEpreuve();
-        if (result) {
-            VBox leftVboxCompet = this.vue.getLeftVboxCompet();
+    public void handle(ActionEvent event){
+        VBox leftVboxCompet = this.vue.getLeftVboxCompet();
             
             RadioButton radioButton = new RadioButton();
             Competition competition = new CompetCoop("", "", new Sport(" "), 0);
@@ -91,21 +91,29 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
                     competition = compet;
                 }
             }
-            //Supréssion de l'épreuve
+            //recuperation de l'épreuve
             if (competition instanceof CompetCoop){
                 CompetCoop competCoop = (CompetCoop) competition;
                 List<EpreuveCoop> liEpreuves = competCoop.getLiEpreuves();
                 ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
                 GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
                 Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*3);
-                EpreuveCoop epreuveSup = liEpreuves.get(0);
+                EpreuveCoop epreuveEdit = liEpreuves.get(0);
                 for (EpreuveCoop epreuve : liEpreuves){
                     if (epreuve.getNom().equals(labelEpreuve.getText())){
-                        epreuveSup = epreuve;
+                        epreuveEdit = epreuve;
                     }
                 }
-                competCoop.suppEpreuve(epreuveSup);
-                this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competCoop);
+                try {
+                    this.vue.PageEditEp(epreuveEdit, competCoop);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } 
+                //this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competCoop);
             }
             else{
                 CompetInd competInd = (CompetInd) competition;
@@ -113,19 +121,64 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
                 ScrollPane scrollLiEpreuve = this.vue.getLiEpreuve();
                 GridPane gridLiEpreuve =  (GridPane) scrollLiEpreuve.getContent();
                 Label labelEpreuve = (Label) gridLiEpreuve.getChildren().get(indice*3);
-                EpreuveInd epreuveSup = liEpreuves.get(0);
+                EpreuveInd epreuveEdit = liEpreuves.get(0);
                 for (EpreuveInd epreuve : liEpreuves){
                     if (epreuve.getNom().equals(labelEpreuve.getText())){
-                        epreuveSup = epreuve;
+                        epreuveEdit = epreuve;
                         
                     }
                 }
-                competInd.suppEpreuve(epreuveSup);
-                this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competInd);
+                try {
+                    this.vue.PageEditEp(epreuveEdit, competInd);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } 
+                //this.vue.majCompet(this.classementCompet1PLace, this.classementCompet2PLace, this.classementCompet3PLace, competInd);
             }
-        
-            ////update databases
-        }
 
+
+        
     }
+
+    public CompetCoop recupCompetCoop(){
+        for (Node node: this.vue.getLeftVboxCompet().getChildren()){
+            if (node instanceof RadioButton){
+                RadioButton radioButton = (RadioButton) node;
+                if(radioButton.isSelected()){
+                    Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
+                    for(CompetCoop compet:ensCompetitionsCoop){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            return compet; 
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public CompetInd recupCompetInd(){
+        for (Node node: this.vue.getLeftVboxCompet().getChildren()){
+            if (node instanceof RadioButton){
+                RadioButton radioButton = (RadioButton) node;
+                if(radioButton.isSelected()){
+                    Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
+                    for(CompetInd compet:ensCompetitionsInd){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            return compet;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
 }
+
+

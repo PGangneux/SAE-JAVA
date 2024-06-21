@@ -67,9 +67,7 @@ public abstract class EpreuveInd implements Epreuve<Athlete>{
      */
     @Override
     public void setScore(Athlete athlete, Integer valeur){
-        if(this.scores.keySet().contains(athlete)){
             this.scores.put(athlete, valeur);
-        }
     }
 
 
