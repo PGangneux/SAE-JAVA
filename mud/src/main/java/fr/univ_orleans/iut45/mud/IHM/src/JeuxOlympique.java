@@ -260,7 +260,11 @@ public class JeuxOlympique extends Application{
             }
         }
 
+        
         Button gestionCompet  = new Button("Gestion Compétition");
+        if(this.model.getStatusCompte().equals(App.ORGANISATEUR) || this.model.getStatusCompte().equals(App.JOURNALIST)){
+            gestionCompet.setVisible(false);
+        }
         this.leftVboxCompet.getChildren().add(gestionCompet);
         
 
@@ -292,6 +296,13 @@ public class JeuxOlympique extends Application{
             Button supEp = new Button("Suprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
             editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
+            if(this.model.getStatusCompte().equals(App.JOURNALIST)){
+                editEp.setVisible(false);
+                supEp.setVisible(false);
+            }
+            else if(this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+                editEp.setVisible(false);
+            }
             epreuves.add(supEp,1,i);
             epreuves.add(editEp,2,i);
 
@@ -299,7 +310,9 @@ public class JeuxOlympique extends Application{
             i++;
         }
         Button ajouterEp = new Button("Ajouter une épreuve");
-        
+        if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+            ajouterEp.setVisible(false);
+        }
         
     }
 
