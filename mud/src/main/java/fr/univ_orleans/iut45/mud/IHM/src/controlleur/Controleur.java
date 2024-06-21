@@ -101,7 +101,7 @@ public class Controleur {
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
-                this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
+                // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
             }else {
                 throw new SQLException();
             }   
