@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -41,6 +42,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;;
 
@@ -75,9 +77,17 @@ public class JeuxOlympique extends Application{
     private ScrollPane ScrolEditEp;
     private EpreuveInd epreuveInd;
     private EpreuveCoop epreuveCoop;
+    private Color couleur;
 
 
-    
+
+    public void setCouleur(Color couleur){
+        this.couleur = couleur;
+    }
+
+    public Color getCouleur(){
+        return this.couleur;
+    }
 
     public EpreuveInd getEpreuveInd() {
         return epreuveInd;
@@ -119,7 +129,7 @@ public class JeuxOlympique extends Application{
     public Popup getPopupEditEp(){
         return this.popupEditEp;
     }
-
+    
     public VBox getLeftVboxCompet() {
         return leftVboxCompet;
     }
@@ -695,6 +705,16 @@ public class JeuxOlympique extends Application{
         return false;
     }
 
+    public void changeCouleur(String hex){
+        // switch (this.) {
+        //     case value:
+                
+        //         break;
+        
+        //     default:
+        //         break;
+        // }
+    }
 
 
 

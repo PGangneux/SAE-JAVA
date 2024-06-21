@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -46,6 +47,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import javafx.scene.paint.Color;
 public class Controleur {
     
 
@@ -68,6 +70,8 @@ public class Controleur {
     @FXML
     private ScrollPane ScrolEditEp;
 
+    private boolean themeClair;
+
     @FXML
     private void init(){}
 
@@ -76,6 +80,9 @@ public class Controleur {
         this.vue = vue;
         this.model = model2;
         App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
+        this.themeClair = true;
+        System.out.println(this.model);
+        
     }
 
 
@@ -347,15 +354,18 @@ public class Controleur {
         System.out.println("Theme modifié");
         RadioButton boutonTheme = (RadioButton) event.getSource();
         if (boutonTheme.getText().equals("Sombre")){
-            vue.themeSombre();
+            this.themeClair = false;
+            // vue.themeSombre();
         } else {
-            vue.themeClair();
+            this.themeClair = true;
+            // vue.themeClair();
         }
     }
 
     @FXML
     private void handleCouleur(ActionEvent event) throws IOException{
-        System.out.println("Couleur bouton modifié");
+        ColorPicker colorPicker = (ColorPicker)event.getSource();
+        this.vue.setCouleur(colorPicker.getValue());
     }
 
     @FXML
@@ -396,7 +406,17 @@ public class Controleur {
 
     @FXML
     private void handleAppliquer(ActionEvent event){
-        System.out.println("Appliqué");
+        if (this.themeClair){
+            this.vue.themeClair();
+        } else {
+            this.vue.themeSombre();
+        }
+        try {
+            String hex = Integer.toHexString(this.vue.getCouleur().hashCode());
+        } catch (Exception e) {
+            System.err.println("Couleur pas sélectionné");
+        }
+        
     }
 
     @FXML
