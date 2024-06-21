@@ -52,8 +52,10 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
-    //private App model;
+
     private App model;
+    //private ImportData model;
+
 
     @FXML
     private TextField identifiant;
@@ -97,12 +99,16 @@ public class Controleur {
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
+
+
                 // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
+
             }else {
                 throw new SQLException();
             }   
             System.out.println(this.model.getStatusCompte());
         }catch (SQLException e) {
+
             System.out.println(e.getMessage());
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Compte inexistant");
@@ -114,8 +120,10 @@ public class Controleur {
         catch (IOException e) {
             throw new IOException();
         }
+
         // this.vue.getStage().setMaximized(true);
         // this.vue.modeParticipant();
+
 
         // System.out.println("Affichage fenetre Participants");
 
