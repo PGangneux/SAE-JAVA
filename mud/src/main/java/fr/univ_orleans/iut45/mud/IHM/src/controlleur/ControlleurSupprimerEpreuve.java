@@ -35,7 +35,9 @@ import javafx.scene.layout.VBox;
 public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
     private JeuxOlympique vue;
     private App model;
+
     //private ImportData model;
+
     private int indice;
     private String classementCompet1PLace;
     private String classementCompet2PLace;

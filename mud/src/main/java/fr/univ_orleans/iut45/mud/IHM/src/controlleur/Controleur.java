@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -46,12 +47,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import javafx.scene.paint.Color;
 public class Controleur {
     
 
     private JeuxOlympique vue;
+
     private App model;
     //private ImportData model;
+
 
     @FXML
     private TextField identifiant;
@@ -68,14 +72,19 @@ public class Controleur {
     @FXML
     private ScrollPane ScrolEditEp;
 
+    private boolean themeClair;
+
     @FXML
     private void init(){}
 
 
     public Controleur(JeuxOlympique vue, App model2 ){
-
         this.vue = vue;
         this.model = model2;
+        App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
+        this.themeClair = true;
+        System.out.println(this.model);
+        
     }
 
 
@@ -90,11 +99,17 @@ public class Controleur {
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
+
+
+                // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
+
             }else {
                 throw new SQLException();
             }   
             System.out.println(this.model.getStatusCompte());
         }catch (SQLException e) {
+
+            System.out.println(e.getMessage());
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Compte inexistant");
             alert.setHeaderText("Identifiant ou mot de passe incorrect");
@@ -105,8 +120,10 @@ public class Controleur {
         catch (IOException e) {
             throw new IOException();
         }
-        //this.vue.getStage().setMaximized(true);
-        //this.vue.modeParticipant();
+
+        // this.vue.getStage().setMaximized(true);
+        // this.vue.modeParticipant();
+
 
         // System.out.println("Affichage fenetre Participants");
 
@@ -116,6 +133,8 @@ public class Controleur {
 
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
+        if (App.alwaysConnectTrue) this.vue.modeConnexion();
+
         try {
             boolean state = this.model.closeDBConnection();
             if (state) {
@@ -343,15 +362,18 @@ public class Controleur {
         System.out.println("Theme modifié");
         RadioButton boutonTheme = (RadioButton) event.getSource();
         if (boutonTheme.getText().equals("Sombre")){
-            vue.themeSombre();
+            this.themeClair = false;
+            // vue.themeSombre();
         } else {
-            vue.themeClair();
+            this.themeClair = true;
+            // vue.themeClair();
         }
     }
 
     @FXML
     private void handleCouleur(ActionEvent event) throws IOException{
-        System.out.println("Couleur bouton modifié");
+        ColorPicker colorPicker = (ColorPicker)event.getSource();
+        this.vue.setCouleur(colorPicker.getValue());
     }
 
     @FXML
@@ -392,7 +414,17 @@ public class Controleur {
 
     @FXML
     private void handleAppliquer(ActionEvent event){
-        System.out.println("Appliqué");
+        if (this.themeClair){
+            this.vue.themeClair();
+        } else {
+            this.vue.themeSombre();
+        }
+        try {
+            String hex = Integer.toHexString(this.vue.getCouleur().hashCode());
+        } catch (Exception e) {
+            System.err.println("Couleur pas sélectionné");
+        }
+        
     }
 
     @FXML
