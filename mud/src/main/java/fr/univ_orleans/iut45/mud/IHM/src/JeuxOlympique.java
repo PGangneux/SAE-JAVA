@@ -50,11 +50,12 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-    // private ImportData model;
-    private  App model;
+    private App model;
+    //private  App model;
     private boolean themeClair;
-    private Popup popup;
-    
+    private Popup popupCompet;
+    private CompetCoop competCoop;
+    private CompetInd competInd;
 
     private VBox leftVboxCompet;
     private Button femme;
@@ -71,6 +72,27 @@ public class JeuxOlympique extends Application{
     private TextField textFieldPays;
     private ScrollPane liEpreuve;
 
+
+    public void setCompetCoop(CompetCoop competCoop) {
+        this.competCoop = competCoop;
+    }
+
+    public CompetCoop getCompetCoop() {
+        return competCoop;
+    }
+
+    public CompetInd getCompetInd() {
+        return competInd;
+    }
+
+    public void setCompetInd(CompetInd competInd) {
+        this.competInd = competInd;
+    }
+
+    public Popup getPopupCompet(){
+        
+        return this.popupCompet;
+    }
 
     public VBox getLeftVboxCompet() {
         return leftVboxCompet;
@@ -106,7 +128,7 @@ public class JeuxOlympique extends Application{
         this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
-        this.popup = new Popup(); 
+        this.popupCompet = new Popup(); 
     }
 
     @Override
@@ -231,6 +253,7 @@ public class JeuxOlympique extends Application{
 
 
     public void majCompet(String premier, String seccond, String troisieme, CompetCoop compet){
+        
         this.competClassement1.setText(premier);
         this.competClassement2.setText(seccond);
         this.competClassement3.setText(troisieme);
@@ -324,18 +347,16 @@ public class JeuxOlympique extends Application{
     }
 
 
-    public void PageAjoutEpreuve(CompetCoop compet) throws IOException, ClassNotFoundException, SQLException{
+    public void PageAjoutEpreuve() throws IOException, ClassNotFoundException, SQLException{
         
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageAjoutEpreuve.fxml"));
         loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
         VBox root = loader.load();
-        this.scene = new Scene(root, 400, 300); 
-        this.popup.getContent().add(root);
+        this.popupCompet.getContent().add(root);
         try{
             
-            //this.scene.setRoot(root);
-            this.popup.show(stage);
+            this.popupCompet.show(stage);
         }
         catch(Exception e){
             System.out.println(e);
@@ -345,22 +366,8 @@ public class JeuxOlympique extends Application{
 
     
 
-    public void PageAjoutEpreuve(CompetInd compet) throws IOException, ClassNotFoundException, SQLException{
-        this.init();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageAjoutEpreuve.fxml"));
-        loader.setControllerFactory(c -> new Controleur(this,this.model));
-        loader.setController(this.controleur);
-        VBox root = loader.load();
-        Scene scene2 = new Scene(root, 400, 300);
-        this.popup.getContent().add(root);
-        try{
-            
-            this.popup.show(stage);
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        
+    public void hidePopup(Popup popup){
+        popup.hide();
     }
 
     public BorderPane pagePays() throws IOException{

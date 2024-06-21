@@ -32,11 +32,13 @@ public class App {
     private static Set<CompetCoop> ensCompetitionsCoop;
     private static Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
+    public static boolean alwaysConnectTrue; //Permet de passer la phase de connection sans init la BD
     public final static String ADMINISTRATEUR = "administrateur";
     public final static String JOURNALIST = "journalist";
     public final static String ORGANISATEUR = "organisateur";
     
     private void initLoggingConnexion() throws SQLException, ClassNotFoundException {
+        if (alwaysConnectTrue) return ;
         String server = "localhost";
         String baseName = "SAEACCOUNT";
         String user = "applogin";
@@ -228,6 +230,7 @@ public class App {
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
+        if (alwaysConnectTrue) return true;
         try {
             if (this.logQueryAPI.checkUser(username, password)) {
                 String appProvilege = this.logQueryAPI.getUserPrivilege(username);

@@ -91,7 +91,6 @@ public class ControlleurSupprimerEpreuve implements EventHandler<ActionEvent> {
                     competition = compet;
                 }
             }
-
             //Supréssion de l'épreuve
             if (competition instanceof CompetCoop){
                 CompetCoop competCoop = (CompetCoop) competition;

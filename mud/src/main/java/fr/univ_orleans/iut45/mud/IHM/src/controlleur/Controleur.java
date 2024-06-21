@@ -6,6 +6,10 @@ import java.util.List;
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopMasc;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndFem;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
 
 import java.sql.SQLException;
 import java.util.Set;
@@ -43,8 +47,8 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
+    //private App model;
     private App model;
-    // private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -56,13 +60,17 @@ public class Controleur {
     private VBox leftVboxCompet;
 
     @FXML
+    private TextField PopupCompetNom;
+    
+
+    @FXML
     private void init(){}
 
 
     public Controleur(JeuxOlympique vue, App model2 ){
-
         this.vue = vue;
         this.model = model2;
+        App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
     }
 
 
@@ -105,6 +113,8 @@ public class Controleur {
 
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
+        if (App.alwaysConnectTrue) this.vue.modeConnexion();
+
         try {
             boolean state = this.model.closeDBConnection();
             if (state) {
@@ -121,6 +131,7 @@ public class Controleur {
 
     @FXML
     private void handleParticipant(ActionEvent event) throws IOException{
+        System.out.println("pageParticipant");
         this.vue.modeParticipant();
     }
 
@@ -132,62 +143,93 @@ public class Controleur {
 
     @FXML
     private void handleCompetitionClassement(ActionEvent event) throws IOException{
-        for (Node node: this.leftVboxCompet.getChildren()){
-            if (node instanceof RadioButton){
-                RadioButton radioButton = (RadioButton) node;
-                if(radioButton.isSelected()){
-                    Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
-                    for(CompetCoop compet:ensCompetitionsCoop){
-                        if(compet.getNom().equals(radioButton.getText())){
-                            System.out.println(compet.getNom());
-                            this.vue.modeCompetitionClassement(compet);
-                        }
-                    }
-                    Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
-                    for(CompetInd compet:ensCompetitionsInd){
-                        if(compet.getNom().equals(radioButton.getText())){
-                            this.vue.modeCompetitionClassement(compet);
-                        }
-                    }
-                }
-            }
+        System.out.println("vplus");
+        CompetCoop competCoop = this.recupCompetCoop();
+        CompetInd competInd = this.recupCompetInd();
+        if (competCoop == null){
+            System.out.println("1");
+            this.vue.modeCompetitionClassement(competInd);
+        }
+        else{
+            System.out.println("2");
+            this.vue.modeCompetitionClassement(competCoop);
         }
     }
 
     @FXML
     public void handleAjoutEpreuve(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
-        for (Node node: this.leftVboxCompet.getChildren()){
-            if (node instanceof RadioButton){
-                RadioButton radioButton = (RadioButton) node;
-                if(radioButton.isSelected()){
-                    Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
-                    for(CompetCoop compet:ensCompetitionsCoop){
-                        if(compet.getNom().equals(radioButton.getText())){
-                            this.vue.PageAjoutEpreuve(compet); 
-                        }
-                    }
-                    Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
-                    for(CompetInd compet:ensCompetitionsInd){
-                        if(compet.getNom().equals(radioButton.getText())){
-                            this.vue.PageAjoutEpreuve(compet);
-                        }
-                    }
-                }
-            }
-        }
-        
-        
+        CompetCoop competCoop = this.recupCompetCoop();
+        CompetInd competInd = this.recupCompetInd();
+        this.vue.setCompetCoop(competCoop);
+        this.vue.setCompetInd(competInd);  
+        this.vue.PageAjoutEpreuve();
         
         
     }
 
     @FXML
+    public void handlePopupRetourAjouteEpreuve(ActionEvent event){
+        this.vue.hidePopup(this.vue.getPopupCompet());
+    }
+
+    @FXML
+    public void handlePopupAjouterEpreuve(ActionEvent event){
+        String nom = this.PopupCompetNom.getText();
+        if (this.vue.getCompetCoop() == null){
+            String sexe = this.vue.getCompetInd().getSexe();
+            if(sexe.equals("F")){
+                new EpreuveIndFem(nom, this.vue.getCompetInd());
+            }
+            else{
+                new EpreuveIndMasc(nom, this.vue.getCompetInd());
+            }
+            List<Athlete> lAthletes = this.vue.getCompetInd().classement();
+            String premier ="1er";
+            String deuxième ="2nd";
+            String troisieme ="3ème";
+            try{
+                premier += lAthletes.get(0).getNom() + " " + lAthletes.get(0).getPrenom();
+                deuxième += lAthletes.get(1).getNom()+ " " + lAthletes.get(1).getPrenom();
+                troisieme += lAthletes.get(2).getNom()+ " " + lAthletes.get(2).getPrenom();
+            }
+            catch(IndexOutOfBoundsException e){}
+            this.vue.hidePopup(this.vue.getPopupCompet());
+            this.vue.majCompet(premier, deuxième, troisieme, this.vue.getCompetInd());
+        }
+        else{
+            String sexe = this.vue.getCompetCoop().getSexe();
+            if(sexe.equals("F")){
+                new EpreuveCoopFem(nom, this.vue.getCompetCoop());
+            }
+            else{
+                new EpreuveCoopMasc(nom, this.vue.getCompetCoop());
+            }
+            List<Equipe> lEquipes = this.vue.getCompetCoop().classement();
+            String premier ="1er";
+            String deuxième ="2nd";
+            String troisieme ="3ème";
+            try{
+                premier += lEquipes.get(0).getPays().getNom();
+                deuxième += lEquipes.get(1).getPays().getNom();
+                troisieme += lEquipes.get(2).getPays().getNom();
+            }
+            catch(IndexOutOfBoundsException e){}
+            this.vue.hidePopup(this.vue.getPopupCompet());
+            this.vue.majCompet(premier, deuxième, troisieme, this.vue.getCompetCoop());
+        }
+        ;
+
+    }
+
+    @FXML
     private void handlePays(ActionEvent event) throws IOException{
+        System.out.println("pagePays");
         this.vue.modePays();
     }
 
     @FXML
     private void handleParamAffichage(ActionEvent event) throws IOException{
+        System.out.println("pageParam ");
         this.vue.modeParamAffichage();
     }
 
@@ -327,6 +369,39 @@ public class Controleur {
         System.out.println(event.getSource());
     }
 
+    public CompetCoop recupCompetCoop(){
+        for (Node node: this.leftVboxCompet.getChildren()){
+            if (node instanceof RadioButton){
+                RadioButton radioButton = (RadioButton) node;
+                if(radioButton.isSelected()){
+                    Set<CompetCoop> ensCompetitionsCoop = this.model.getEnsCompetitionsCoop();
+                    for(CompetCoop compet:ensCompetitionsCoop){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            return compet; 
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public CompetInd recupCompetInd(){
+        for (Node node: this.leftVboxCompet.getChildren()){
+            if (node instanceof RadioButton){
+                RadioButton radioButton = (RadioButton) node;
+                if(radioButton.isSelected()){
+                    Set<CompetInd> ensCompetitionsInd= this.model.getEnsCompetitionsInd();
+                    for(CompetInd compet:ensCompetitionsInd){
+                        if(compet.getNom().equals(radioButton.getText())){
+                            return compet;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
     
 
 }

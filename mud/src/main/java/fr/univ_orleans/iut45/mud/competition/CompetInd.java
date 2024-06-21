@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import fr.univ_orleans.iut45.mud.comparator.ComparateurCompetInd;
-import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Sport;

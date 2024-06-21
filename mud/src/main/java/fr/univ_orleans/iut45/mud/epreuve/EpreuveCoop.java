@@ -169,6 +169,7 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         for(Equipe e : this.scores.keySet()){
             liste.add(e);
         }
+        
         ComparateurEquipeTheorique comparateur = new ComparateurEquipeTheorique(this);
         Collections.sort(liste, comparateur);
         Map<Integer,Equipe> dico = new HashMap<>();
