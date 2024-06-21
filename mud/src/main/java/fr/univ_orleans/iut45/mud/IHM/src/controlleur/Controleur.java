@@ -50,8 +50,8 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
-    //private App model;
-    private ImportData model;
+    private App model;
+    //private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -72,7 +72,7 @@ public class Controleur {
     private void init(){}
 
 
-    public Controleur(JeuxOlympique vue, ImportData model2 ){
+    public Controleur(JeuxOlympique vue, App model2 ){
 
         this.vue = vue;
         this.model = model2;
@@ -81,32 +81,32 @@ public class Controleur {
 
     @FXML
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
-        // String login;
-        // String password;
-        // try {
-        //     login = this.identifiant.getText();
-        //     password = this.mdp.getText();
-        //     boolean state = this.model.getConnexion(login, password);
-        //     if (state) {
-        //         this.vue.getStage().setMaximized(true);
-        //         this.vue.modeParticipant();
-        //     }else {
-        //         throw new SQLException();
-        //     }   
-        //     System.out.println(this.model.getStatusCompte());
-        // }catch (SQLException e) {
-        //     Alert alert = new Alert(AlertType.ERROR);
-        //     alert.setTitle("Compte inexistant");
-        //     alert.setHeaderText("Identifiant ou mot de passe incorrect");
-        //     alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
-        //     alert.showAndWait();
-        //     this.mdp.setText("");      
-        // } 
-        // catch (IOException e) {
-        //     throw new IOException();
-        // }
-        this.vue.getStage().setMaximized(true);
-        this.vue.modeParticipant();
+        String login;
+        String password;
+        try {
+            login = this.identifiant.getText();
+            password = this.mdp.getText();
+            boolean state = this.model.getConnexion(login, password);
+            if (state) {
+                this.vue.getStage().setMaximized(true);
+                this.vue.modeParticipant();
+            }else {
+                throw new SQLException();
+            }   
+            System.out.println(this.model.getStatusCompte());
+        }catch (SQLException e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Compte inexistant");
+            alert.setHeaderText("Identifiant ou mot de passe incorrect");
+            alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
+            alert.showAndWait();
+            this.mdp.setText("");      
+        } 
+        catch (IOException e) {
+            throw new IOException();
+        }
+        //this.vue.getStage().setMaximized(true);
+        //this.vue.modeParticipant();
 
         // System.out.println("Affichage fenetre Participants");
 
@@ -117,11 +117,11 @@ public class Controleur {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
         try {
-            //boolean state = this.model.closeDBConnection();
-            //if (state) {
-            //    this.vue.modeConnexion();
-            //    System.out.println("Affichage fenete Connexion");
-           // }
+            boolean state = this.model.closeDBConnection();
+            if (state) {
+               this.vue.modeConnexion();
+               System.out.println("Affichage fenete Connexion");
+           }
             System.out.println("Déconnection echoué");
         } catch (Exception e) {
                System.out.println("a check");

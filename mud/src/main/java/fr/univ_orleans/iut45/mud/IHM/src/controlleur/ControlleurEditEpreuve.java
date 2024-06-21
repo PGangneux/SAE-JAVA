@@ -37,15 +37,15 @@ import javafx.scene.layout.VBox;
 
 public class ControlleurEditEpreuve implements EventHandler<ActionEvent> {
     private JeuxOlympique vue;
-    //private App model;
-    private ImportData model;
+    private App model;
+    //private ImportData model;
     private int indice;
     private String classementCompet1PLace;
     private String classementCompet2PLace;
     private String classementCompet3PLace;
 
 
-    public ControlleurEditEpreuve(JeuxOlympique vue, ImportData model, int indice,String classementCompet1PLace, String classementCompet2PLace, String classementCompet3PLace){
+    public ControlleurEditEpreuve(JeuxOlympique vue, App model, int indice,String classementCompet1PLace, String classementCompet2PLace, String classementCompet3PLace){
         this.vue = vue;
         this.model = model;
         this.indice = indice;
