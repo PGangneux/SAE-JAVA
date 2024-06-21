@@ -241,6 +241,7 @@ public class App {
                     String appProvilege = this.logQueryAPI.getUserPrivilege(username);
                     this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
                     this.statusCompte = appProvilege;
+                    System.out.println(this.statusCompte);
                     return true;
                 }
                 return false;
