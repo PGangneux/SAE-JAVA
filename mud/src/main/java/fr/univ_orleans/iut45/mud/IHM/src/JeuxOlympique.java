@@ -540,7 +540,7 @@ public class JeuxOlympique extends Application{
     }
 
     public void changeCouleur(String hex){
-        // switch (this.scene.getRoot()) {
+        // switch (this.) {
         //     case value:
                 
         //         break;
