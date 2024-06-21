@@ -6,15 +6,17 @@
 `mvn clean` : nétoyage fichiers temporaires (./target) <br>
 note : le ficher pom.xml doit etre à la racine pour executer les commandes
 
+# Ouvrez un terminal linux :
 ## Pour lancher le projet :
 ### Base de données
 ce placer a la racine du projet vous devez y voir le repertoir mud.
 Lancez les commande : 
 Assurez  vous d'avoir creer un utilisateur 'nathan' disposant de tous le droit dans votre base de données distant ou local
-`sh DBinstallServer.sh` pour creer la base de données depuis un utilisateur local
-`sh DBinstallServerOnline.sh` pour creer la base de données depuis un utilisateur distant connecter au reseau local
+`sh DBinstallServer.sh` : pour creer la base de données depuis un utilisateur local <br>
+`sh DBinstallServerOnline.sh` : pour creer la base de données depuis un utilisateur distant connecter au reseau local <br>
 
-### Base de données
-`sh ApplicationSetup.sh`
+### Lancement Application
+lancement de l'application avec la commande
+`sh ApplicationSetup.sh` 
 
 
