@@ -6,8 +6,10 @@ import java.util.List;
 import fr.univ_orleans.iut45.mud.IHM.src.*;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopFem;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoopMasc;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndFem;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
 
@@ -29,9 +31,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -43,12 +47,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import javafx.scene.paint.Color;
 public class Controleur {
     
 
     private JeuxOlympique vue;
-    //private App model;
     private App model;
+    //private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -62,6 +67,10 @@ public class Controleur {
     @FXML
     private TextField PopupCompetNom;
     
+    @FXML
+    private ScrollPane ScrolEditEp;
+
+    private boolean themeClair;
 
     @FXML
     private void init(){}
@@ -70,7 +79,9 @@ public class Controleur {
     public Controleur(JeuxOlympique vue, App model2 ){
         this.vue = vue;
         this.model = model2;
-        App.alwaysConnectTrue = true ; //a modifier pour se connecter quand on veut
+        App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
+        this.themeClair = true;
+        System.out.println(this.model);    
     }
 
 
@@ -162,9 +173,7 @@ public class Controleur {
         CompetInd competInd = this.recupCompetInd();
         this.vue.setCompetCoop(competCoop);
         this.vue.setCompetInd(competInd);  
-        this.vue.PageAjoutEpreuve();
-        
-        
+        this.vue.PageAjoutEpreuve(); 
     }
 
     @FXML
@@ -173,7 +182,14 @@ public class Controleur {
     }
 
     @FXML
+    public void handlePopupRetourEditEp(ActionEvent event){
+        this.vue.hidePopup(this.vue.getPopupEditEp());
+    }
+
+
+    @FXML
     public void handlePopupAjouterEpreuve(ActionEvent event){
+        
         String nom = this.PopupCompetNom.getText();
         if (this.vue.getCompetCoop() == null){
             String sexe = this.vue.getCompetInd().getSexe();
@@ -195,6 +211,7 @@ public class Controleur {
             catch(IndexOutOfBoundsException e){}
             this.vue.hidePopup(this.vue.getPopupCompet());
             this.vue.majCompet(premier, deuxième, troisieme, this.vue.getCompetInd());
+            
         }
         else{
             String sexe = this.vue.getCompetCoop().getSexe();
@@ -205,9 +222,9 @@ public class Controleur {
                 new EpreuveCoopMasc(nom, this.vue.getCompetCoop());
             }
             List<Equipe> lEquipes = this.vue.getCompetCoop().classement();
-            String premier ="1er";
-            String deuxième ="2nd";
-            String troisieme ="3ème";
+            String premier ="1er ";
+            String deuxième ="2nd ";
+            String troisieme ="3ème ";
             try{
                 premier += lEquipes.get(0).getPays().getNom();
                 deuxième += lEquipes.get(1).getPays().getNom();
@@ -217,9 +234,87 @@ public class Controleur {
             this.vue.hidePopup(this.vue.getPopupCompet());
             this.vue.majCompet(premier, deuxième, troisieme, this.vue.getCompetCoop());
         }
-        ;
-
     }
+
+
+    @FXML
+    public void handleAppliquerEdit(ActionEvent event){
+        GridPane gridEdit = (GridPane) this.ScrolEditEp.getContent();
+        EpreuveCoop epreuveCoop = this.vue.getEpreuveCoop();
+        EpreuveInd epreuveInd = this.vue.getEpreuveInd();
+        if (epreuveCoop == null){
+            CompetInd competInd = this.vue.getCompetInd();
+            int i =0;
+            for(Athlete athlete: competInd.getParticipant()){
+                TextField text = (TextField) gridEdit.getChildren().get(i*2+1);
+                int point = 0;
+                try{
+                    point = Integer.valueOf(text.getText());
+                }
+                catch(NumberFormatException e){}
+                if(point!=0){
+                    epreuveInd.setScore(athlete, point);
+                }
+                else{
+                    epreuveInd.setScore(athlete, null);
+                }
+                ++i;
+            }
+            List<Athlete> lAthletes = this.vue.getCompetInd().classement();
+            String premier ="1er ";
+            String deuxième ="2nd ";
+            String troisieme ="3ème ";
+            try{
+                premier += lAthletes.get(0).getNom() + " " + lAthletes.get(0).getPrenom();
+                deuxième += lAthletes.get(1).getNom()+ " " + lAthletes.get(1).getPrenom();
+                troisieme += lAthletes.get(2).getNom()+ " " + lAthletes.get(2).getPrenom();
+            }
+            catch(IndexOutOfBoundsException e){}
+            this.vue.hidePopup(this.vue.getPopupEditEp());
+            this.vue.majCompet(premier, deuxième, troisieme, competInd);
+            this.vue.setCompetInd(null);
+            
+        }
+        else{
+            CompetCoop competCoop = this.vue.getCompetCoop();
+            int i =0;
+            for(Equipe equipe: competCoop.getParticipant()){
+                
+                TextField text = (TextField) gridEdit.getChildren().get(i*2+1);
+                int point = 0;
+                try{
+                    point = Integer.valueOf(text.getText());
+                }
+                catch(NumberFormatException e){}
+                if(point!=0){
+                    epreuveCoop.setScore(equipe, point);
+                }
+                else{
+                    epreuveCoop.setScore(equipe, null);
+                }
+                
+                i++;
+            }
+            List<Equipe> lEquipes = competCoop.classement();
+            
+            String premier ="1er ";
+            String deuxième ="2nd ";
+            String troisieme ="3ème ";
+            try{
+                premier += lEquipes.get(0).getPays().getNom();
+                System.out.println(premier);
+                deuxième += lEquipes.get(1).getPays().getNom();
+                troisieme += lEquipes.get(2).getPays().getNom();
+            }
+            catch(IndexOutOfBoundsException e){}
+            this.vue.hidePopup(this.vue.getPopupEditEp());
+            this.vue.majCompet(premier, deuxième, troisieme, competCoop);
+            this.vue.setEpreuveCoop(null);
+        }
+        
+        
+    }
+
 
     @FXML
     private void handlePays(ActionEvent event) throws IOException{
@@ -258,15 +353,18 @@ public class Controleur {
         System.out.println("Theme modifié");
         RadioButton boutonTheme = (RadioButton) event.getSource();
         if (boutonTheme.getText().equals("Sombre")){
-            vue.themeSombre();
+            this.themeClair = false;
+            // vue.themeSombre();
         } else {
-            vue.themeClair();
+            this.themeClair = true;
+            // vue.themeClair();
         }
     }
 
     @FXML
     private void handleCouleur(ActionEvent event) throws IOException{
-        System.out.println("Couleur bouton modifié");
+        ColorPicker colorPicker = (ColorPicker)event.getSource();
+        this.vue.setCouleur(colorPicker.getValue());
     }
 
     @FXML
@@ -307,7 +405,17 @@ public class Controleur {
 
     @FXML
     private void handleAppliquer(ActionEvent event){
-        System.out.println("Appliqué");
+        if (this.themeClair){
+            this.vue.themeClair();
+        } else {
+            this.vue.themeSombre();
+        }
+        try {
+            String hex = Integer.toHexString(this.vue.getCouleur().hashCode());
+        } catch (Exception e) {
+            System.err.println("Couleur pas sélectionné");
+        }
+        
     }
 
     @FXML

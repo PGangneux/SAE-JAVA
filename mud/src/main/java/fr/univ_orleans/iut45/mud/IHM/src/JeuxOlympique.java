@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -41,6 +42,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;;
 
@@ -50,10 +52,11 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-    private App model;
-    //private  App model;
+    //private ImportData model;
+    private  App model;
     private boolean themeClair;
     private Popup popupCompet;
+    private Popup popupEditEp;
     private CompetCoop competCoop;
     private CompetInd competInd;
 
@@ -71,7 +74,37 @@ public class JeuxOlympique extends Application{
     private GridPane recherchePays;
     private TextField textFieldPays;
     private ScrollPane liEpreuve;
+    private ScrollPane ScrolEditEp;
+    private EpreuveInd epreuveInd;
+    private EpreuveCoop epreuveCoop;
+    private Color couleur;
 
+
+
+    public void setCouleur(Color couleur){
+        this.couleur = couleur;
+    }
+
+    public Color getCouleur(){
+        return this.couleur;
+    }
+
+    public EpreuveInd getEpreuveInd() {
+        return epreuveInd;
+    }
+
+    public EpreuveCoop getEpreuveCoop() {
+        return epreuveCoop;
+    }
+    
+
+    public void setEpreuveInd(EpreuveInd epreuveInd) {
+        this.epreuveInd = epreuveInd;
+    }
+
+    public void setEpreuveCoop(EpreuveCoop epreuveCoop) {
+        this.epreuveCoop = epreuveCoop;
+    }
 
     public void setCompetCoop(CompetCoop competCoop) {
         this.competCoop = competCoop;
@@ -90,21 +123,20 @@ public class JeuxOlympique extends Application{
     }
 
     public Popup getPopupCompet(){
-        
         return this.popupCompet;
     }
 
+    public Popup getPopupEditEp(){
+        return this.popupEditEp;
+    }
+    
     public VBox getLeftVboxCompet() {
         return leftVboxCompet;
     }
 
-
-
     public ScrollPane getLiEpreuve() {
         return liEpreuve;
     }
-
-
 
     public Stage getStage(){
         return this.stage;
@@ -129,12 +161,12 @@ public class JeuxOlympique extends Application{
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         this.popupCompet = new Popup(); 
+        this.popupEditEp = new Popup(); 
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        
         this.stage.setScene(this.scene);
         this.stage.setTitle("Jeux Olympique");
         this.modeConnexion();
@@ -158,8 +190,6 @@ public class JeuxOlympique extends Application{
         loader.setController(this.controleur);  
         BorderPane root = loader.load();
         ScrollPane scrollpane = (ScrollPane)root.lookup("#scrollParticipant");
-
-
         HBox hboxGrid = (HBox)scrollpane.getContent();
         GridPane gridAthlete = (GridPane)hboxGrid.getChildren().get(0);
         GridPane gridEquipe = (GridPane)hboxGrid.getChildren().get(1);
@@ -239,7 +269,11 @@ public class JeuxOlympique extends Application{
             }
         }
 
+        
         Button gestionCompet  = new Button("Gestion Compétition");
+        if(this.model.getStatusCompte().equals(App.ORGANISATEUR) || this.model.getStatusCompte().equals(App.JOURNALIST)){
+            gestionCompet.setVisible(false);
+        }
         this.leftVboxCompet.getChildren().add(gestionCompet);
         
 
@@ -267,15 +301,27 @@ public class JeuxOlympique extends Application{
         for (EpreuveCoop ep:compet.getLiEpreuves()){
             Label label = new Label(ep.getNom());
             epreuves.add(label, 0, i);
+            Button editEp = new Button("éditer le résultat de l'épreuve");
             Button supEp = new Button("Suprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
+            editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
+            if(this.model.getStatusCompte().equals(App.JOURNALIST)){
+                editEp.setVisible(false);
+                supEp.setVisible(false);
+            }
+            else if(this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+                editEp.setVisible(false);
+            }
             epreuves.add(supEp,1,i);
+            epreuves.add(editEp,2,i);
 
             this.liEpreuve.setContent(epreuves);
             i++;
         }
         Button ajouterEp = new Button("Ajouter une épreuve");
-        
+        if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+            ajouterEp.setVisible(false);
+        }
         
     }
 
@@ -293,9 +339,12 @@ public class JeuxOlympique extends Application{
         for (EpreuveInd ep:compet.getLiEpreuves()){
             Label label = new Label(ep.getNom());
             epreuves.add(label,0,i);
+            Button editEp = new Button("éditer le résultat de l'épreuve");
             Button supEp = new Button("Suprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
+            editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
             epreuves.add(supEp,1,i);
+            epreuves.add(editEp,2,i);
             this.liEpreuve.setContent(epreuves);
             i++;
         }
@@ -348,7 +397,6 @@ public class JeuxOlympique extends Application{
 
 
     public void PageAjoutEpreuve() throws IOException, ClassNotFoundException, SQLException{
-        
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageAjoutEpreuve.fxml"));
         loader.setControllerFactory(c -> new Controleur(this,this.model));
         loader.setController(this.controleur);
@@ -362,6 +410,58 @@ public class JeuxOlympique extends Application{
             System.out.println(e);
         }
         
+    }
+
+    public void PageEditEp(EpreuveCoop epreuve, CompetCoop competCoop) throws IOException, ClassNotFoundException, SQLException{
+        this.epreuveCoop = epreuve;
+        this.competCoop = competCoop;
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageEditEp.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
+        loader.setController(this.controleur);
+        VBox root = loader.load();
+        this.ScrolEditEp = (ScrollPane)root.lookup("#ScrolEditEp");
+        this.ScrolEditEp.setContent(new GridPane());
+        GridPane gridEdit = (GridPane)this.ScrolEditEp.getContent();
+        int i = 0;
+        for(Equipe equipe:competCoop.getParticipant()){
+            gridEdit.add(new Label(equipe.getNom()), 0, i);
+            TextField textField = new TextField(String.valueOf(epreuve.getScore(equipe)));
+            gridEdit.add(textField, 1, i);
+            ++i;
+        }
+        this.popupEditEp.getContent().add(root);
+        try{
+            this.popupEditEp.show(stage);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void PageEditEp(EpreuveInd epreuve, CompetInd competInd) throws IOException, ClassNotFoundException, SQLException{
+        this.epreuveInd = epreuve;
+        this.competInd = competInd;
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageEditEp.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
+        loader.setController(this.controleur);
+        VBox root = loader.load();
+        this.ScrolEditEp = (ScrollPane)root.lookup("#ScrolEditEp");
+        this.ScrolEditEp.setContent(new GridPane());
+        GridPane gridEdit = (GridPane)this.ScrolEditEp.getContent();
+        int i = 0;
+        for(Athlete athlete:competInd.getParticipant()){
+            gridEdit.add(new Label(athlete.getNom()+" "+athlete.getPrenom()), 0, i);
+            TextField textField = new TextField(String.valueOf(epreuve.getScore(athlete)));
+            gridEdit.add(textField, 1, i);
+            ++i;
+        }
+        this.popupEditEp.getContent().add(root);
+        try{
+            this.popupEditEp.show(stage);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     
@@ -604,6 +704,16 @@ public class JeuxOlympique extends Application{
         return false;
     }
 
+    public void changeCouleur(String hex){
+        // switch (this.) {
+        //     case value:
+                
+        //         break;
+        
+        //     default:
+        //         break;
+        // }
+    }
 
 
 

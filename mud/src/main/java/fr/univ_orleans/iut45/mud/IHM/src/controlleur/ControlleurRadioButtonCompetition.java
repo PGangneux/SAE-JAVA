@@ -24,7 +24,6 @@ public class ControlleurRadioButtonCompetition implements EventHandler<ActionEve
     private JeuxOlympique vue;
     //private App model;
     private App model;
-
     public ControlleurRadioButtonCompetition(JeuxOlympique vue, App model){
         this.vue = vue;
         this.model = model;

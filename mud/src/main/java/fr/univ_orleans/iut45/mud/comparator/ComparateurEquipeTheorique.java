@@ -41,10 +41,10 @@ public class ComparateurEquipeTheorique implements Comparator<Equipe> {
         if((epreuve.getScore(arg0) == null) ){
             return 1;
         }
-        if((epreuve.getScore(arg0) == null) ){
+        if((epreuve.getScore(arg1) == null) ){
             return -1;
         }
-        return epreuve.getScore(arg0)-epreuve.getScore(arg1);
+        return epreuve.getScore(arg1)-epreuve.getScore(arg0);
     }
 }
 
