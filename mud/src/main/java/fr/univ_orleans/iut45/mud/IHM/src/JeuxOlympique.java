@@ -77,9 +77,17 @@ public class JeuxOlympique extends Application{
     private ScrollPane ScrolEditEp;
     private EpreuveInd epreuveInd;
     private EpreuveCoop epreuveCoop;
+    private Color couleur;
 
 
-    
+
+    public void setCouleur(Color couleur){
+        this.couleur = couleur;
+    }
+
+    public Color getCouleur(){
+        return this.couleur;
+    }
 
     public EpreuveInd getEpreuveInd() {
         return epreuveInd;
@@ -121,8 +129,7 @@ public class JeuxOlympique extends Application{
     public Popup getPopupEditEp(){
         return this.popupEditEp;
     }
-    private Color
-
+    
     public VBox getLeftVboxCompet() {
         return leftVboxCompet;
     }

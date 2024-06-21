@@ -70,7 +70,6 @@ public class Controleur {
     @FXML
     private ScrollPane ScrolEditEp;
 
-    private Color couleur;
     private boolean themeClair;
 
     @FXML
@@ -366,7 +365,7 @@ public class Controleur {
     @FXML
     private void handleCouleur(ActionEvent event) throws IOException{
         ColorPicker colorPicker = (ColorPicker)event.getSource();
-        this.couleur = colorPicker.getValue();
+        this.vue.setCouleur(colorPicker.getValue());
     }
 
     @FXML
@@ -413,7 +412,7 @@ public class Controleur {
             this.vue.themeSombre();
         }
         try {
-            String hex = Integer.toHexString(this.couleur.hashCode());
+            String hex = Integer.toHexString(this.vue.getCouleur().hashCode());
         } catch (Exception e) {
             System.err.println("Couleur pas sélectionné");
         }
