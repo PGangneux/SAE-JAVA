@@ -171,7 +171,6 @@ public class App {
     }
 
     public void importDataFromCSV(String path) {
-        // path = "./src/main/java/fr/univ_orleans/iut45/mud/donnees.csv";
         ImportData data = new ImportData(path);
         this.importCompetCoopFromCSV(data.getEnsCompetitionsCoop());
         this.importCompetIndFromCSV(data.getEnsCompetitionsInd());
@@ -189,30 +188,33 @@ public class App {
         for (Pays pays: this.ensPays) {
             this.jeuxQueryAPI.ajouterPays(pays);
         }
-        for (Athlete ath: this.liAthletes) {
+        for (Athlete ath: new HashSet<>(this.liAthletes)) {
             this.jeuxQueryAPI.ajouterAthlete(ath);
         }
-        // for (CompetInd compet: ensCompetitionsInd) {
-        //     this.jeuxQueryAPI.ajouterCompetition(compet);
-        //     for (Athlete ath: new HashSet<>(compet.getParticipant()) ) {
-        //         this.jeuxQueryAPI.ajouterParticipation(compet,ath);
-        //     }
-        //     for (EpreuveInd ep: compet.getLiEpreuves()) {
-        //         this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
-        //     } 
-        // }
-        // for (CompetCoop compet: ensCompetitionsCoop) {
-        //     this.jeuxQueryAPI.ajouterCompetition(compet);
-        //     for (Equipe eq: compet.getParticipant()) {
-        //         this.jeuxQueryAPI.ajouterEquipe(eq);
-        //         for (Athlete ath: eq.getLiAthlete()) {
-        //             this.jeuxQueryAPI.ajouterLienAthleteEquipe(eq, ath);
-        //         }
-        //     }
-        //     for (EpreuveCoop ep: compet.getLiEpreuves()) {
-        //         this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
-        //     } 
-        // }
+        for (CompetInd compet: ensCompetitionsInd) {
+            this.jeuxQueryAPI.ajouterCompetition(compet);
+            for (Athlete ath: new HashSet<>(compet.getParticipant()) ) {
+                System.out.println(ath.getNom()+" "+ath.getPrenom());
+                this.jeuxQueryAPI.ajouterParticipation(compet,ath);
+            }
+            System.out.println("epreuve mode");
+            for (EpreuveInd ep: compet.getLiEpreuves()) {
+                this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
+            } 
+
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            this.jeuxQueryAPI.ajouterCompetition(compet);
+            for (Equipe eq: compet.getParticipant()) {
+                this.jeuxQueryAPI.ajouterEquipe(eq);
+                for (Athlete ath: eq.getLiAthlete()) {
+                    this.jeuxQueryAPI.ajouterLienAthleteEquipe(eq, ath);
+                }
+            }
+            for (EpreuveCoop ep: compet.getLiEpreuves()) {
+                this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
+            } 
+        }
     }
 
     public void dataBaseInit() throws SQLException {
