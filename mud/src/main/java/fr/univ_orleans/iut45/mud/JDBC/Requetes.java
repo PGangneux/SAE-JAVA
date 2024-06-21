@@ -168,7 +168,7 @@ public class Requetes {
 
     public Equipe getEquipe(int equipe) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomEquipe, sexe, idSport, idPays from Equipe where idEquipe="+equipe;
+        String requete = "select nomEquipe, sexe, idSport, idPays from EQUIPE where idEquipe="+equipe;
         ResultSet rs = st.executeQuery(requete);
         Equipe e = null;
         while(rs.next()){
@@ -184,7 +184,7 @@ public class Requetes {
     public Athlete getAthlete(int athlete) throws SQLException{
         Athlete a = null;
         st=laConnexion.createStatement();
-        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, forceAth, enduranceAth, agiliteAth from ATHLETE where idAth="+athlete;
+        String requete = "select idAth,nomAth, prenomAth, sexeAth, idSport, idPays, forceAth, enduranceAth, agiliteAth from ATHLETE where idAth="+athlete;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
             a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("forceAth"), rs.getInt("agiliteAth"), rs.getInt("enduranceAth"));
@@ -225,11 +225,11 @@ public class Requetes {
     public List<Athlete> getAthleteEquipe(int equipe) throws SQLException{
         List<Athlete> listeAthlete = new ArrayList<>();
         st=laConnexion.createStatement();
-        String requete = "select idAth from ATHLETE where idEquipe="+equipe;
+        String requete = "select idAthlete from APPARTENIR where idEquipe="+equipe;
         ResultSet rs = st.executeQuery(requete);
         while (rs.next()) {
             
-            listeAthlete.add(this.getAthlete(rs.getInt("idAth")));
+            listeAthlete.add(this.getAthlete(rs.getInt("idAthlete")));
 
         }
         return listeAthlete;
@@ -248,7 +248,7 @@ public class Requetes {
 
     public Epreuve getEpreuve(int epreuve, Competition c) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomEpruve from EPREUVE where idEpreuve="+epreuve;
+        String requete = "select nomEpreuve from EPREUVE where idEpreuve="+epreuve;
         ResultSet rs = st.executeQuery(requete);
         Epreuve e = null;
         while(rs.next()){
@@ -319,10 +319,10 @@ public class Requetes {
     public List<Athlete> getListeAthletes(int compet) throws SQLException{
         List<Athlete> listeAthletes = new ArrayList<>();
         st=laConnexion.createStatement();
-        String requete = "select idAth from PARTICIPE where idCompet="+compet;
+        String requete = "select idAthlete from PARTICIPE where idCompet="+compet;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
-            listeAthletes.add(getAthlete(rs.getInt("idAth")));
+            listeAthletes.add(getAthlete(rs.getInt("idAthlete")));
         }
         return listeAthletes;
     }
@@ -395,15 +395,15 @@ public class Requetes {
         // System.out.println(requete);
         // ResultSet rs = this.st.executeQuery(requete);
         int id=0;
-        String sql = "SELECT idAth,nomAth,prenomAth FROM ATHLETE WHERE idPays=? AND idSport=?";
+        String sql = "SELECT idAth,nomAth,prenomAth FROM ATHLETE WHERE idPays=? AND idSport=? and nomAth='"+ath.getNom()+"' and prenomAth='"+ath.getPrenom()+"'";
         PreparedStatement pstmt = laConnexion.prepareStatement(sql);
         pstmt.setInt(1, this.getIdPays(ath.getPays()));
         pstmt.setInt(2, this.getSportId(ath.getSport()));
         ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
-            if (rs.getString("nomAth").equals(ath.getNom()) && rs.getString("prenomAth").equals(ath.getPrenom())) {
+        while(rs.next()) {
+            //if (rs.getString("nomAth").equals(ath.getNom()) && rs.getString("prenomAth").equals(ath.getPrenom())) {
                 id = rs.getInt("idAth");
-            }
+            //}
             System.out.println(id);
         }
         return id;
@@ -434,11 +434,12 @@ public class Requetes {
         String requete = 
             "insert into EQUIPE values ("
             +(this.getPlusGrandIdEquipe()+1)+","
-            +"'"+eq.getNom()+"',"
+            +"'"+eq.getNom()+"','"
+            +eq.getSexe()+"',"
             +this.getIdPays(eq.getPays())+","
             +this.getSportId(eq.getSport())+
             ")";
-        this.st.executeQuery(requete);
+        this.st.executeUpdate(requete);
     }
 
     public void ajouterParticipation(Competition compet, Participant participant) throws SQLException {
@@ -451,7 +452,7 @@ public class Requetes {
             pstmt.executeUpdate();
             System.out.println("2");
         }else if (compet instanceof CompetCoop && participant instanceof Equipe) {
-            String requete = "insert into PARTICIPE values (?,?)";
+            String requete = "insert into DISPUTE values (?,?)";
             PreparedStatement pstmt = laConnexion.prepareStatement(requete);
             pstmt.setInt(1, this.getCompetitionId(compet));
             pstmt.setInt(2, this.getEquipeId( (Equipe) participant));
@@ -465,7 +466,7 @@ public class Requetes {
         String requete = "insert into APPARTENIR values ("
             +this.getEquipeId(eq)+","
             +this.getAthleteId(ath)+")";
-        this.st.executeQuery(requete);
+        this.st.executeUpdate(requete);
     }
 
     public void ajouterEpreuve(Epreuve ep,Competition compet) throws SQLException {
@@ -474,7 +475,7 @@ public class Requetes {
             +(this.getPlusGrandIdEpreuve()+1)+","
             +"'"+ep.getNom()+"',"
             +this.getCompetitionId(compet)+")";
-        this.st.executeQuery(requete);
+        this.st.executeUpdate(requete);
     }
 
 

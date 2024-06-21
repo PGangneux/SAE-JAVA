@@ -38,6 +38,7 @@ create table COMPETITION (
 create table EQUIPE (
     idEquipe int primary key,
     nomEquipe varchar(50),
+    sexe varchar(1) not null,
     idPays int references PAYS.idPays,
     idSport int references SPORT.idSport
 );

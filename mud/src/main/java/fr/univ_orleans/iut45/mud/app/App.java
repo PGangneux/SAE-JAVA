@@ -39,13 +39,15 @@ public class App {
     
     private void initLoggingConnexion() throws SQLException, ClassNotFoundException {
         if (alwaysConnectTrue) return ;
-        String server = "localhost";
-        String baseName = "SAEACCOUNT";
-        String user = "applogin";
-        String password = "applicationPrivateLoginKey";
-        this.loggingConnexion = new Connexion();
-        this.loggingConnexion.connecter(server, baseName, user, password);
-        this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
+        else {
+            String server = "localhost";
+            String baseName = "SAEACCOUNT";
+            String user = "applogin";
+            String password = "applicationPrivateLoginKey";
+            this.loggingConnexion = new Connexion();
+            this.loggingConnexion.connecter(server, baseName, user, password);
+            this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
+        }   
     }
 
     // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
@@ -112,6 +114,7 @@ public class App {
     }
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
+        if (alwaysConnectTrue) return ;
         String server = "localhost";
         String baseName = "SAE";
         String user = roleUser;
@@ -168,7 +171,6 @@ public class App {
     }
 
     public void importDataFromCSV(String path) {
-        // path = "./src/main/java/fr/univ_orleans/iut45/mud/donnees.csv";
         ImportData data = new ImportData(path);
         this.importCompetCoopFromCSV(data.getEnsCompetitionsCoop());
         this.importCompetIndFromCSV(data.getEnsCompetitionsInd());
@@ -186,30 +188,34 @@ public class App {
         for (Pays pays: this.ensPays) {
             this.jeuxQueryAPI.ajouterPays(pays);
         }
-        for (Athlete ath: this.liAthletes) {
+        for (Athlete ath: new HashSet<>(this.liAthletes)) {
             this.jeuxQueryAPI.ajouterAthlete(ath);
         }
-        // for (CompetInd compet: ensCompetitionsInd) {
-        //     this.jeuxQueryAPI.ajouterCompetition(compet);
-        //     for (Athlete ath: new HashSet<>(compet.getParticipant()) ) {
-        //         this.jeuxQueryAPI.ajouterParticipation(compet,ath);
-        //     }
-        //     for (EpreuveInd ep: compet.getLiEpreuves()) {
-        //         this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
-        //     } 
-        // }
-        // for (CompetCoop compet: ensCompetitionsCoop) {
-        //     this.jeuxQueryAPI.ajouterCompetition(compet);
-        //     for (Equipe eq: compet.getParticipant()) {
-        //         this.jeuxQueryAPI.ajouterEquipe(eq);
-        //         for (Athlete ath: eq.getLiAthlete()) {
-        //             this.jeuxQueryAPI.ajouterLienAthleteEquipe(eq, ath);
-        //         }
-        //     }
-        //     for (EpreuveCoop ep: compet.getLiEpreuves()) {
-        //         this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
-        //     } 
-        // }
+        for (CompetInd compet: ensCompetitionsInd) {
+            this.jeuxQueryAPI.ajouterCompetition(compet);
+            for (Athlete ath: new HashSet<>(compet.getParticipant()) ) {
+                System.out.println(ath.getNom()+" "+ath.getPrenom());
+                this.jeuxQueryAPI.ajouterParticipation(compet,ath);
+            }
+            System.out.println("epreuve mode");
+            for (EpreuveInd ep: compet.getLiEpreuves()) {
+                this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
+            } 
+
+        }
+        for (CompetCoop compet: ensCompetitionsCoop) {
+            this.jeuxQueryAPI.ajouterCompetition(compet);
+            for (Equipe eq: compet.getParticipant()) {
+                this.jeuxQueryAPI.ajouterEquipe(eq);
+                this.jeuxQueryAPI.ajouterParticipation(compet, eq);
+                for (Athlete ath: eq.getLiAthlete()) {
+                    this.jeuxQueryAPI.ajouterLienAthleteEquipe(eq, ath);
+                }
+            }
+            for (EpreuveCoop ep: compet.getLiEpreuves()) {
+                this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
+            } 
+        }
     }
 
     public void dataBaseInit() throws SQLException {
@@ -217,6 +223,7 @@ public class App {
     }
 
     public App() throws ClassNotFoundException, SQLException  {
+        if (alwaysConnectTrue) this.statusCompte = ADMINISTRATEUR;
         ensCompetitionsCoop = new HashSet<>();
         ensCompetitionsInd = new HashSet<>();
         this.ensPays = new HashSet<>();
@@ -224,25 +231,28 @@ public class App {
         this.liAthletes = new ArrayList<>();
         this.liEquipes = new ArrayList<>();
         initLoggingConnexion();
-        importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        // importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         // for(Pays p: this.ensPays) System.out.println(p.getNom());
-        System.out.println(this.ensPays.size());
+        // System.out.println(this.ensPays.size());
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
         if (alwaysConnectTrue) return true;
-        try {
-            if (this.logQueryAPI.checkUser(username, password)) {
-                String appProvilege = this.logQueryAPI.getUserPrivilege(username);
-                this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
-                this.statusCompte = appProvilege;
-                return true;
-            }
-            return false;
-        } catch (Exception e ) {
-            System.out.println(e.getMessage());
-            throw new SQLException("compte inexistant");
-        }      
+        else {
+            try {
+                if (this.logQueryAPI.checkUser(username, password)) {
+                    String appProvilege = this.logQueryAPI.getUserPrivilege(username);
+                    this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
+                    this.statusCompte = appProvilege;
+                    System.out.println(this.statusCompte);
+                    return true;
+                }
+                return false;
+            } catch (Exception e ) {
+                System.out.println(e.getMessage());
+                throw new SQLException("compte inexistant");
+            } 
+        }          
     }
     
     public boolean closeDBConnection() throws SQLException {

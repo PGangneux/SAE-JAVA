@@ -52,10 +52,8 @@ public class Controleur {
     
 
     private JeuxOlympique vue;
-
-    // private App model;
-    private ImportData model;
-
+    private App model;
+    //private ImportData model;
 
     @FXML
     private TextField identifiant;
@@ -74,18 +72,19 @@ public class Controleur {
 
     private boolean themeClair;
     private Color couleur;
+    private boolean firstInitDB;
 
     @FXML
     private void init(){}
 
 
-    public Controleur(JeuxOlympique vue, ImportData model2 ){
+    public Controleur(JeuxOlympique vue, App model2 ){
         this.vue = vue;
         this.model = model2;
-        App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
+        App.alwaysConnectTrue = false; //a modifier pour se connecter quand on veut
+        this.firstInitDB =  false;
         this.themeClair = true;
-        System.out.println(this.model);
-        
+        System.out.println(this.model);    
     }
 
 
@@ -93,38 +92,38 @@ public class Controleur {
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
         String login;
         String password;
-        // try {
-        //     login = this.identifiant.getText();
-        //     password = this.mdp.getText();
-        //     // boolean state = this.model.getConnexion(login, password);
-        //     // if (state) {
-        //         this.vue.getStage().setMaximized(true);
-        //         this.vue.modeParticipant();
-
-
-        //         // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
-
-        //     // }else {
-        //     //     throw new SQLException();
-        //     // }   
-        //     // System.out.println(this.model.getStatusCompte());
-        // }catch (SQLException e) {
-
-        //     System.out.println(e.getMessage());
-        //     Alert alert = new Alert(AlertType.ERROR);
-        //     alert.setTitle("Compte inexistant");
-        //     alert.setHeaderText("Identifiant ou mot de passe incorrect");
-        //     alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
-        //     alert.showAndWait();
-        //     this.mdp.setText("");      
-        // } 
-        // catch (IOException e) {
-        //     throw new IOException();
-        // }
-
-        this.vue.getStage().setMaximized(true);
-        this.vue.modeParticipant();
-
+        if (App.alwaysConnectTrue) {
+            this.vue.getStage().setMaximized(true);
+            this.vue.modeParticipant();
+            return;
+        }
+        try {
+            login = this.identifiant.getText();
+            password = this.mdp.getText();
+            boolean state = this.model.getConnexion(login, password);
+            if (state) {
+                this.vue.getStage().setMaximized(true);
+                this.vue.modeParticipant();
+                if (firstInitDB) this.model.dataBaseInit();
+            }else {
+                throw new SQLException();
+            }   
+            System.out.println(this.model.getStatusCompte());
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Compte inexistant");
+            alert.setHeaderText("Identifiant ou mot de passe incorrect");
+            alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
+            alert.showAndWait();
+            this.mdp.setText("");      
+        } 
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new IOException();
+        }
+        // this.vue.getStage().setMaximized(true);
+        // this.vue.modeParticipant();
 
         // System.out.println("Affichage fenetre Participants");
 
