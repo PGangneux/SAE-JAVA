@@ -59,7 +59,7 @@ public class Controleur {
     private void init(){}
 
 
-    public Controleur(JeuxOlympique vue, ImportData model2 ){
+    public Controleur(JeuxOlympique vue, App model2 ){
 
         this.vue = vue;
         this.model = model2;
@@ -77,11 +77,13 @@ public class Controleur {
             if (state) {
                 this.vue.getStage().setMaximized(true);
                 this.vue.modeParticipant();
+                // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
             }else {
                 throw new SQLException();
             }   
             System.out.println(this.model.getStatusCompte());
         }catch (SQLException e) {
+            System.out.println(e.getMessage());
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Compte inexistant");
             alert.setHeaderText("Identifiant ou mot de passe incorrect");
@@ -104,11 +106,11 @@ public class Controleur {
     @FXML
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
         try {
-            //boolean state = this.model.closeDBConnection();
-            //if (state) {
-            //    this.vue.modeConnexion();
-            //    System.out.println("Affichage fenete Connexion");
-           // }
+            boolean state = this.model.closeDBConnection();
+            if (state) {
+               this.vue.modeConnexion();
+               System.out.println("Affichage fenete Connexion");
+           }
             System.out.println("Déconnection echoué");
         } catch (Exception e) {
                System.out.println("a check");
