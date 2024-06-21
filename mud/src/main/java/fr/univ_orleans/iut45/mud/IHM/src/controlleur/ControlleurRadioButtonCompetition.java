@@ -23,9 +23,9 @@ import javafx.scene.control.RadioButton;
 public class ControlleurRadioButtonCompetition implements EventHandler<ActionEvent> {
     private JeuxOlympique vue;
     //private App model;
-    private ImportData model;
+    private App model;
 
-    public ControlleurRadioButtonCompetition(JeuxOlympique vue, ImportData model){
+    public ControlleurRadioButtonCompetition(JeuxOlympique vue, App model){
         this.vue = vue;
         this.model = model;
     }

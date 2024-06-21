@@ -16,7 +16,7 @@ create table SPORT(
 );
 
 create table ATHLETE(
-    idAthlete int primary key,
+    idAth int primary key,
     nomAth varchar(50),
     prenomAth varchar(50),
     sexeAth varchar(1),
@@ -30,10 +30,9 @@ create table ATHLETE(
 create table COMPETITION (
     idCompet int primary key,
     idSport int references SPORT.idSport,
-    nomCompet varchar(50),
+    nomCompet varchar(150),
     sexeCompet varchar(1) not null constraint sexe_chk check (sexeCompet in ("M","F")),
-    individuelle int not null
-    constraint chk_ind CHECK (individuelle in (0,1))
+    individuelle int not null constraint chk_ind CHECK (individuelle in (0,1))
 );
 
 create table EQUIPE (
@@ -65,7 +64,7 @@ create table APPARTENIR (
 create table DISPUTE (
     idCompet int references COMPETITION.idCompet,
     idEquipe int references EQUIPE.idEquipe,
-    primary key (idEquipe,idCompet)
+    primary key (idCompet,idEquipe)
 );
 
 -- ####################################
