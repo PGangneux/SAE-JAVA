@@ -22,8 +22,8 @@ import javafx.scene.control.RadioButton;
 
 public class ControlleurRadioButtonCompetition implements EventHandler<ActionEvent> {
     private JeuxOlympique vue;
+    //private App model;
     private App model;
-    // private ImportData model;
 
     public ControlleurRadioButtonCompetition(JeuxOlympique vue, App model){
         this.vue = vue;
@@ -32,6 +32,7 @@ public class ControlleurRadioButtonCompetition implements EventHandler<ActionEve
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        
         RadioButton radioButton = (RadioButton) actionEvent.getSource();
         String premier = "1er ";
         String second = "2nd ";
@@ -42,9 +43,12 @@ public class ControlleurRadioButtonCompetition implements EventHandler<ActionEve
         for(CompetCoop compet:ensCompetitionsCoop){
             if(compet.getNom().equals(radioButton.getText())){
                 List<Equipe> clasement = compet.classement();
-                premier += clasement.get(0).getPays().getNom();
-                second += clasement.get(1).getPays().getNom();
-                troisieme += clasement.get(2).getPays().getNom(); 
+                try{
+                    premier += clasement.get(0).getPays().getNom();
+                    second += clasement.get(1).getPays().getNom();
+                    troisieme += clasement.get(2).getPays().getNom();
+                }
+                catch(IndexOutOfBoundsException e){}
                 this.vue.majCompet(premier,second,troisieme, compet);
             }
         }
@@ -54,9 +58,12 @@ public class ControlleurRadioButtonCompetition implements EventHandler<ActionEve
         for(CompetInd compet:ensCompetitionsInd){
             if(compet.getNom().equals(radioButton.getText())){
                 List<Athlete> clasement = compet.classement();
-                premier += clasement.get(0).getNom() + " " + clasement.get(0).getPrenom();
-                second += clasement.get(1).getNom()+ " " + clasement.get(1).getPrenom();
-                troisieme += clasement.get(2).getNom()+ " " + clasement.get(2).getPrenom(); 
+                try{
+                    premier += clasement.get(0).getNom() + " " + clasement.get(0).getPrenom();
+                    second += clasement.get(1).getNom()+ " " + clasement.get(1).getPrenom();
+                    troisieme += clasement.get(2).getNom()+ " " + clasement.get(2).getPrenom(); 
+                }
+                catch(IndexOutOfBoundsException e){}
                 this.vue.majCompet(premier,second,troisieme, compet);
             }
         }

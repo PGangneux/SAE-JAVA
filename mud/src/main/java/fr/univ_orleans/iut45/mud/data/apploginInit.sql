@@ -5,3 +5,5 @@ create user 'applogin'@'localhost' identified by 'applicationPrivateLoginKey';
 create user 'applogin'@'%' identified by 'applicationPrivateLoginKey';
 grant select on SAEACCOUNT.* to applogin@'localhost';
 grant select on SAEACCOUNT.* to applogin@'%';
+grant INSERT on SAE.* to applogin@'localhost';
+grant INSERT on SAE.* to applogin@'%';

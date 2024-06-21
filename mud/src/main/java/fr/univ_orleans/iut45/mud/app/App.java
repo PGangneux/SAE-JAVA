@@ -11,6 +11,9 @@ import javax.naming.ldap.HasControls;
 import fr.univ_orleans.iut45.mud.JDBC.*;
 import fr.univ_orleans.iut45.mud.competition.CompetCoop;
 import fr.univ_orleans.iut45.mud.competition.CompetInd;
+import fr.univ_orleans.iut45.mud.epreuve.Epreuve;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveCoop;
+import fr.univ_orleans.iut45.mud.epreuve.EpreuveInd;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
 import fr.univ_orleans.iut45.mud.items.ImportData;
@@ -29,12 +32,14 @@ public class App {
     private static Set<CompetCoop> ensCompetitionsCoop;
     private static Set<CompetInd> ensCompetitionsInd;
     private List<Equipe> liEquipes;
+    public static boolean alwaysConnectTrue; //Permet de passer la phase de connection sans init la BD
     public final static String ADMINISTRATEUR = "administrateur";
     public final static String JOURNALIST = "journalist";
     public final static String ORGANISATEUR = "organisateur";
     
     private void initLoggingConnexion() throws SQLException, ClassNotFoundException {
-        String server = "192.168.62.208";
+        if (alwaysConnectTrue) return ;
+        String server = "localhost";
         String baseName = "SAEACCOUNT";
         String user = "applogin";
         String password = "applicationPrivateLoginKey";
@@ -107,7 +112,7 @@ public class App {
     }
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
-        String server = "192.168.62.208";
+        String server = "localhost";
         String baseName = "SAE";
         String user = roleUser;
         String password = rolePassword;
@@ -172,7 +177,44 @@ public class App {
         this.importAthleteFromCSV(data.getListAthletes());
         this.importEquipeFromCSV(data.getListEquipes());
         //Partie ou il faut ajouter les données dans la BD
-    } 
+    }
+
+    public void insertDataModelToDB() throws SQLException {
+        for (Sport sp: this.ensSport) {
+            this.jeuxQueryAPI.ajouterSport(sp);
+        }
+        for (Pays pays: this.ensPays) {
+            this.jeuxQueryAPI.ajouterPays(pays);
+        }
+        for (Athlete ath: this.liAthletes) {
+            this.jeuxQueryAPI.ajouterAthlete(ath);
+        }
+        // for (CompetInd compet: ensCompetitionsInd) {
+        //     this.jeuxQueryAPI.ajouterCompetition(compet);
+        //     for (Athlete ath: new HashSet<>(compet.getParticipant()) ) {
+        //         this.jeuxQueryAPI.ajouterParticipation(compet,ath);
+        //     }
+        //     for (EpreuveInd ep: compet.getLiEpreuves()) {
+        //         this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
+        //     } 
+        // }
+        // for (CompetCoop compet: ensCompetitionsCoop) {
+        //     this.jeuxQueryAPI.ajouterCompetition(compet);
+        //     for (Equipe eq: compet.getParticipant()) {
+        //         this.jeuxQueryAPI.ajouterEquipe(eq);
+        //         for (Athlete ath: eq.getLiAthlete()) {
+        //             this.jeuxQueryAPI.ajouterLienAthleteEquipe(eq, ath);
+        //         }
+        //     }
+        //     for (EpreuveCoop ep: compet.getLiEpreuves()) {
+        //         this.jeuxQueryAPI.ajouterEpreuve(ep,compet);
+        //     } 
+        // }
+    }
+
+    public void dataBaseInit() throws SQLException {
+        insertDataModelToDB();
+    }
 
     public App() throws ClassNotFoundException, SQLException  {
         ensCompetitionsCoop = new HashSet<>();
@@ -183,10 +225,12 @@ public class App {
         this.liEquipes = new ArrayList<>();
         initLoggingConnexion();
         importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-        System.out.println(this.ensPays);
+        // for(Pays p: this.ensPays) System.out.println(p.getNom());
+        System.out.println(this.ensPays.size());
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
+        if (alwaysConnectTrue) return true;
         try {
             if (this.logQueryAPI.checkUser(username, password)) {
                 String appProvilege = this.logQueryAPI.getUserPrivilege(username);
@@ -196,6 +240,7 @@ public class App {
             }
             return false;
         } catch (Exception e ) {
+            System.out.println(e.getMessage());
             throw new SQLException("compte inexistant");
         }      
     }

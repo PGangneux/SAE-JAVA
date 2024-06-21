@@ -34,8 +34,18 @@ public class ComparateurEquipeTheorique implements Comparator<Equipe> {
      *         zéro s'ils ont le même score, une valeur positive sinon.
      */
     @Override
-    public int compare(Equipe e1, Equipe e2){
-        return this.epreuve.getScore(e1)-this.epreuve.getScore(e2);
+    public int compare(Equipe arg0, Equipe arg1){
+        if((epreuve.getScore(arg0) == null) && (epreuve.getScore(arg1) == null)){
+            return 0;
+        }
+        if((epreuve.getScore(arg0) == null) ){
+            return 1;
+        }
+        if((epreuve.getScore(arg1) == null) ){
+            return -1;
+        }
+        return epreuve.getScore(arg1)-epreuve.getScore(arg0);
     }
-
 }
+
+

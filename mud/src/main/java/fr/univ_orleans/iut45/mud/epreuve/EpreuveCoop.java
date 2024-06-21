@@ -67,9 +67,8 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
      */
     @Override
     public void setScore(Equipe equipe, Integer valeur){
-        if( this.scores.keySet().contains(equipe)){
             this.scores.put(equipe, valeur);
-        }
+        
     }
 
 
@@ -169,6 +168,7 @@ public abstract class EpreuveCoop implements Epreuve<Equipe> {
         for(Equipe e : this.scores.keySet()){
             liste.add(e);
         }
+        
         ComparateurEquipeTheorique comparateur = new ComparateurEquipeTheorique(this);
         Collections.sort(liste, comparateur);
         Map<Integer,Equipe> dico = new HashMap<>();

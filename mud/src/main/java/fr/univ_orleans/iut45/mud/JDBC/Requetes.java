@@ -1,5 +1,6 @@
 package fr.univ_orleans.iut45.mud.JDBC;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +19,7 @@ import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndFem;
 import fr.univ_orleans.iut45.mud.epreuve.EpreuveIndMasc;
 import fr.univ_orleans.iut45.mud.items.Athlete;
 import fr.univ_orleans.iut45.mud.items.Equipe;
+import fr.univ_orleans.iut45.mud.items.Participant;
 import fr.univ_orleans.iut45.mud.items.Pays;
 import fr.univ_orleans.iut45.mud.items.Sport;
 
@@ -33,9 +35,20 @@ public class Requetes {
         this.listePays=new ArrayList<>();
     }
 
-    void ajouterAthlete(Athlete a) throws  SQLException{
+    public void ajouterAthlete(Athlete a) throws  SQLException{
         st=laConnexion.createStatement();
-     	String requete = "insert into ATHLETE values("+this.getPlusGrandIdAthlete()+1+",'"+a.getNom()+"','"+a.getPrenom()+"','"+a.getSexe()+"',"+a.getForce()+", "+a.getEndurance()+", "+a.getAgilite()+", "+this.getIdPays(a.getPays())+ ")";
+     	String requete = "insert into ATHLETE values("
+            +(this.getPlusGrandIdAth()+1)
+            +",'"+a.getNom()
+            +"','"+a.getPrenom()
+            +"','"+a.getSexe()+"',"
+            +a.getForce()+", "
+            +a.getEndurance()+", "
+            +a.getAgilite()+", "
+            +this.getIdPays(a.getPays())+","
+            +this.getSportId(a.getSport())+
+            
+            ")";
 
 		System.out.println(requete);
 		st.executeUpdate(requete);
@@ -65,10 +78,10 @@ public class Requetes {
         
     }
 
-    public int getPlusGrandIdAthlete() throws  SQLException{
+    public int getPlusGrandIdAth() throws  SQLException{
         int nb = 0;
         st=laConnexion.createStatement();
-        String requete = "select max(idAthlete) as nb from ATHLETE";
+        String requete = "select max(idAth) as nb from ATHLETE";
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
 			nb=rs.getInt("nb");			// récupération du nombre
@@ -83,14 +96,15 @@ public class Requetes {
         if(compet instanceof CompetCoop){
             indiv = 0;
         }
-     	String requete = "insert into COMPETITION values("+this.getPlusGrandIdCompetition()+1+",'"+compet.getNom()+"',"+this.idSport(compet.getSport())+","+indiv+")";
-
+     	String requete = "insert into COMPETITION values("
+            +(this.getPlusGrandIdCompetition()+1)+","
+            +this.getSportId(compet.getSport())+",'"
+            +compet.getNom()+"','"
+            +compet.getSexe()+"',"
+            +indiv+")";
 		System.out.println(requete);
 		st.executeUpdate(requete);
-         
-
     }
-
 
     public int getPlusGrandIdCompetition() throws  SQLException{
         int nb = 0;
@@ -116,8 +130,7 @@ public class Requetes {
 
     public void ajouterSport(Sport s) throws SQLException {
         st=laConnexion.createStatement();
-     	String requete = "insert into SPORT values("+this.getPlusGrandIdSport()+1+",'"+s.getNom()+"')";
-
+     	String requete = "insert into SPORT values("+(this.getPlusGrandIdSport()+1)+",'"+s.getNom()+"')";
 		System.out.println(requete);
 		st.executeUpdate(requete);
     }
@@ -135,8 +148,7 @@ public class Requetes {
 
     public void ajouterPays(Pays p) throws SQLException {
         st=laConnexion.createStatement();
-     	String requete = "insert into PAYS values("+this.getPlusGrandIdPays()+1+",'"+p.getNom()+"')";
-
+     	String requete = "insert into PAYS values("+(this.getPlusGrandIdPays()+1)+",'"+p.getNom()+"',"+p.getCompteurMedailleOr()+","+p.getCompteurMedailleBronze()+","+p.getCompteurMedailleArgent()+")";
 		System.out.println(requete);
 		st.executeUpdate(requete);
     }
@@ -172,10 +184,10 @@ public class Requetes {
     public Athlete getAthlete(int athlete) throws SQLException{
         Athlete a = null;
         st=laConnexion.createStatement();
-        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, force, endurance, agilite from ATHLETE where idAthlete="+athlete;
+        String requete = "select nomAth, prenomAth, sexeAth, idSport, idPays, forceAth, enduranceAth, agiliteAth from ATHLETE where idAth="+athlete;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
-            a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("force"), rs.getInt("agilite"), rs.getInt("endurance"));
+            a = new Athlete(rs.getString("nomAth"), rs.getString("prenomAth"), rs.getString("sexeAth"), this.getPays(rs.getInt("idPays")), this.getSport(rs.getInt("idSport")), rs.getInt("forceAth"), rs.getInt("agiliteAth"), rs.getInt("enduranceAth"));
         }
         return a;
         
@@ -194,7 +206,7 @@ public class Requetes {
 
     public Pays getPays(int pays) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomPays from Pays where idPays="+pays;
+        String requete = "select nomPays from PAYS where idPays="+pays;
         ResultSet rs = st.executeQuery(requete);
         Pays p = null;
         while (rs.next()){
@@ -213,11 +225,11 @@ public class Requetes {
     public List<Athlete> getAthleteEquipe(int equipe) throws SQLException{
         List<Athlete> listeAthlete = new ArrayList<>();
         st=laConnexion.createStatement();
-        String requete = "select idAthlete from ATHLETE where idEquipe="+equipe;
+        String requete = "select idAth from ATHLETE where idEquipe="+equipe;
         ResultSet rs = st.executeQuery(requete);
         while (rs.next()) {
             
-            listeAthlete.add(this.getAthlete(rs.getInt("idAthlete")));
+            listeAthlete.add(this.getAthlete(rs.getInt("idAth")));
 
         }
         return listeAthlete;
@@ -307,10 +319,10 @@ public class Requetes {
     public List<Athlete> getListeAthletes(int compet) throws SQLException{
         List<Athlete> listeAthletes = new ArrayList<>();
         st=laConnexion.createStatement();
-        String requete = "select idAthlete from PARTICIPE where idCompet="+compet;
+        String requete = "select idAth from PARTICIPE where idCompet="+compet;
         ResultSet rs = st.executeQuery(requete);
         while(rs.next()){
-            listeAthletes.add(getAthlete(rs.getInt("idAthlete")));
+            listeAthletes.add(getAthlete(rs.getInt("idAth")));
         }
         return listeAthletes;
     }
@@ -336,6 +348,136 @@ public class Requetes {
         }
         return ensembleCoop;
     }
+
+    public int getSportId(Sport sport) throws SQLException {
+        this.st = laConnexion.createStatement();
+        ResultSet rs = this.st.executeQuery("select idSport from SPORT where nomSport='"+sport.getNom()+"'");
+        int id=0;
+        while (rs.next()) {
+            id = rs.getInt("idSport");
+        }
+        return id;
+    }
+
+    public int getEquipeId(Equipe eq) throws SQLException {
+        this.st = laConnexion.createStatement();
+        String requete = "select idEquipe from EQUIPE where idPays="+this.getIdPays(eq.getPays())+" and  nomEquipe='"+eq.getNom()+"' and idSport="+this.getSportId(eq.getSport());
+        ResultSet rs = this.st.executeQuery(requete);
+        int id = 0;
+        while (rs.next()) {
+            id = rs.getInt("idEquipe");
+        }
+        return id; //doit retourner l'ID d'une certaine equipe dans la Base
+    }
+
+    public int getCompetitionId(Competition compet) throws SQLException {
+        int individuelle = 0;
+        int id = 0;
+        if (compet instanceof CompetInd) individuelle = 1; 
+        this.st = laConnexion.createStatement();
+            String requete = 
+            "select idCompet from COMPETITION where nomCompet='"+compet.getNom()
+                +"' and idSport="+this.getSportId(compet.getSport())
+                +" and individuelle="+individuelle
+                +" and sexeCompet='"+compet.getSexe()+"'";
+            // this.st.executeQuery(requete);
+        ResultSet rs = this.st.executeQuery(requete);
+        while (rs.next()) {
+            id = rs.getInt("idCompet");
+        }
+        System.out.println("success");
+        return id; //doit retourner l'Id d'une certaine compet de la base
+    }
+
+    public int getAthleteId(Athlete ath) throws SQLException {
+        // this.st = laConnexion.createStatement();
+        // String requete = "select idAth from ATHLETE where nomAth='"+ath.getNom()+"' and prenomAth='"+ath.getPrenom()+"' and idPays="+this.getIdPays(ath.getPays())+" and idSport="+getSportId(ath.getSport()) ;
+        // System.out.println(requete);
+        // ResultSet rs = this.st.executeQuery(requete);
+        int id=0;
+        String sql = "SELECT idAth,nomAth,prenomAth FROM ATHLETE WHERE idPays=? AND idSport=?";
+        PreparedStatement pstmt = laConnexion.prepareStatement(sql);
+        pstmt.setInt(1, this.getIdPays(ath.getPays()));
+        pstmt.setInt(2, this.getSportId(ath.getSport()));
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            if (rs.getString("nomAth").equals(ath.getNom()) && rs.getString("prenomAth").equals(ath.getPrenom())) {
+                id = rs.getInt("idAth");
+            }
+            System.out.println(id);
+        }
+        return id;
+    }
+
+    public int getPlusGrandIdEquipe() throws SQLException {
+        this.st = laConnexion.createStatement();
+        ResultSet rs =  this.st.executeQuery("select max(idEquipe) nb from EQUIPE");
+        int id=0;
+        while (rs.next()) {
+            id = rs.getInt("nb");
+        }
+        return id;
+    }
+
+    public int getPlusGrandIdEpreuve() throws SQLException {
+        this.st = laConnexion.createStatement();
+        ResultSet rs =  this.st.executeQuery("select max(idEpreuve) nb from EPREUVE");
+        int id=0;
+        while (rs.next()) {
+            id = rs.getInt("nb");
+        }
+        return id;
+    }
+
+    public void ajouterEquipe(Equipe eq) throws SQLException {
+        this.st = laConnexion.createStatement();
+        String requete = 
+            "insert into EQUIPE values ("
+            +(this.getPlusGrandIdEquipe()+1)+","
+            +"'"+eq.getNom()+"',"
+            +this.getIdPays(eq.getPays())+","
+            +this.getSportId(eq.getSport())+
+            ")";
+        this.st.executeQuery(requete);
+    }
+
+    public void ajouterParticipation(Competition compet, Participant participant) throws SQLException {
+        System.out.println("1");
+        if (compet instanceof CompetInd && participant instanceof Athlete ) {
+            String requete = "insert into PARTICIPE values (?,?)";
+            PreparedStatement pstmt = laConnexion.prepareStatement(requete);
+            pstmt.setInt(1, this.getCompetitionId(compet));
+            pstmt.setInt(2, this.getAthleteId( (Athlete) participant));
+            pstmt.executeUpdate();
+            System.out.println("2");
+        }else if (compet instanceof CompetCoop && participant instanceof Equipe) {
+            String requete = "insert into PARTICIPE values (?,?)";
+            PreparedStatement pstmt = laConnexion.prepareStatement(requete);
+            pstmt.setInt(1, this.getCompetitionId(compet));
+            pstmt.setInt(2, this.getEquipeId( (Equipe) participant));
+            pstmt.executeUpdate();
+            // String requete = "insert into DISPUTE values ("+this.getCompetitionId(compet)+","+this.getEquipeId( (Equipe) participant)+")";
+        }
+    }
+
+    public void ajouterLienAthleteEquipe(Equipe eq, Athlete ath) throws SQLException {
+        this.st = laConnexion.createStatement();
+        String requete = "insert into APPARTENIR values ("
+            +this.getEquipeId(eq)+","
+            +this.getAthleteId(ath)+")";
+        this.st.executeQuery(requete);
+    }
+
+    public void ajouterEpreuve(Epreuve ep,Competition compet) throws SQLException {
+        this.st = laConnexion.createStatement();
+        String requete = "insert into EPREUVE values ("
+            +(this.getPlusGrandIdEpreuve()+1)+","
+            +"'"+ep.getNom()+"',"
+            +this.getCompetitionId(compet)+")";
+        this.st.executeQuery(requete);
+    }
+
+
 
 
 
