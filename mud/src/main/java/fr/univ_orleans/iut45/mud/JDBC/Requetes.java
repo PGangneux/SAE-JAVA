@@ -168,7 +168,7 @@ public class Requetes {
 
     public Equipe getEquipe(int equipe) throws SQLException{
         st=laConnexion.createStatement();
-        String requete = "select nomEquipe, sexe, idSport, idPays from Equipe where idEquipe="+equipe;
+        String requete = "select nomEquipe, sexe, idSport, idPays from EQUIPE where idEquipe="+equipe;
         ResultSet rs = st.executeQuery(requete);
         Equipe e = null;
         while(rs.next()){
@@ -434,7 +434,8 @@ public class Requetes {
         String requete = 
             "insert into EQUIPE values ("
             +(this.getPlusGrandIdEquipe()+1)+","
-            +"'"+eq.getNom()+"',"
+            +"'"+eq.getNom()+"','"
+            +eq.getSexe()+"',"
             +this.getIdPays(eq.getPays())+","
             +this.getSportId(eq.getSport())+
             ")";
