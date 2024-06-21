@@ -39,13 +39,15 @@ public class App {
     
     private void initLoggingConnexion() throws SQLException, ClassNotFoundException {
         if (alwaysConnectTrue) return ;
-        String server = "localhost";
-        String baseName = "SAEACCOUNT";
-        String user = "applogin";
-        String password = "applicationPrivateLoginKey";
-        this.loggingConnexion = new Connexion();
-        this.loggingConnexion.connecter(server, baseName, user, password);
-        this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
+        else {
+            String server = "localhost";
+            String baseName = "SAEACCOUNT";
+            String user = "applogin";
+            String password = "applicationPrivateLoginKey";
+            this.loggingConnexion = new Connexion();
+            this.loggingConnexion.connecter(server, baseName, user, password);
+            this.logQueryAPI = new RequeteLogAPI(this.loggingConnexion);
+        }   
     }
 
     // this.liAthletes = this.jeuxQueryAPI. //ajouter méthode correspondante
@@ -112,6 +114,7 @@ public class App {
     }
 
     public void initJeuxDBConnexion(String roleUser, String rolePassword) throws SQLException, ClassNotFoundException {
+        if (alwaysConnectTrue) return ;
         String server = "localhost";
         String baseName = "SAE";
         String user = roleUser;
@@ -217,6 +220,7 @@ public class App {
     }
 
     public App() throws ClassNotFoundException, SQLException  {
+        if (alwaysConnectTrue) this.statusCompte = ADMINISTRATEUR;
         ensCompetitionsCoop = new HashSet<>();
         ensCompetitionsInd = new HashSet<>();
         this.ensPays = new HashSet<>();
@@ -231,18 +235,20 @@ public class App {
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
         if (alwaysConnectTrue) return true;
-        try {
-            if (this.logQueryAPI.checkUser(username, password)) {
-                String appProvilege = this.logQueryAPI.getUserPrivilege(username);
-                this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
-                this.statusCompte = appProvilege;
-                return true;
-            }
-            return false;
-        } catch (Exception e ) {
-            System.out.println(e.getMessage());
-            throw new SQLException("compte inexistant");
-        }      
+        else {
+            try {
+                if (this.logQueryAPI.checkUser(username, password)) {
+                    String appProvilege = this.logQueryAPI.getUserPrivilege(username);
+                    this.initJeuxDBConnexion(appProvilege, "applicationPrivateLoginKey");
+                    this.statusCompte = appProvilege;
+                    return true;
+                }
+                return false;
+            } catch (Exception e ) {
+                System.out.println(e.getMessage());
+                throw new SQLException("compte inexistant");
+            } 
+        }          
     }
     
     public boolean closeDBConnection() throws SQLException {
