@@ -53,12 +53,14 @@ public class JeuxOlympique extends Application{
     private Scene scene;
     private Stage stage;
 
-    //private ImportData model;
-    private  App model;
+    private ImportData model;
+    // private  App model;
 
     private boolean themeClair;
     private Popup popupCompet;
     private Popup popupEditEp;
+    private Popup popupAjoutAthlete;
+    private Popup popupAjoutEquipe;
     private CompetCoop competCoop;
     private CompetInd competInd;
 
@@ -79,17 +81,14 @@ public class JeuxOlympique extends Application{
     private ScrollPane ScrolEditEp;
     private EpreuveInd epreuveInd;
     private EpreuveCoop epreuveCoop;
-    private Color couleur;
+    private String couleur;
 
 
 
-    public void setCouleur(Color couleur){
+    public void setCouleur(String couleur){
         this.couleur = couleur;
     }
 
-    public Color getCouleur(){
-        return this.couleur;
-    }
 
     public EpreuveInd getEpreuveInd() {
         return epreuveInd;
@@ -128,6 +127,14 @@ public class JeuxOlympique extends Application{
         return this.popupCompet;
     }
 
+    public Popup getPopupAddAthlete(){
+        return this.popupAjoutAthlete;
+    }
+
+    public Popup getPopupAddEquipe(){
+        return this.popupAjoutEquipe;
+    }
+
     public Popup getPopupEditEp(){
         return this.popupEditEp;
     }
@@ -159,13 +166,15 @@ public class JeuxOlympique extends Application{
         this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
 
-        //this.model = data;
+        this.model = data;
 
-        this.model = new App();
+        // this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         this.popupCompet = new Popup(); 
-        this.popupEditEp = new Popup(); 
+        this.popupEditEp = new Popup();
+        this.popupAjoutAthlete = new Popup(); 
+        this.popupAjoutEquipe = new Popup(); 
     }
 
     @Override
@@ -275,11 +284,11 @@ public class JeuxOlympique extends Application{
         }
 
         
-        Button gestionCompet  = new Button("Gestion Compétition");
-        if(this.model.getStatusCompte().equals(App.ORGANISATEUR) || this.model.getStatusCompte().equals(App.JOURNALIST)){
-            gestionCompet.setVisible(false);
-        }
-        this.leftVboxCompet.getChildren().add(gestionCompet);
+        // Button gestionCompet  = new Button("Gestion Compétition");
+        // if(this.model.getStatusCompte().equals(App.ORGANISATEUR) || this.model.getStatusCompte().equals(App.JOURNALIST)){
+        //     gestionCompet.setVisible(false);
+        // }
+        // this.leftVboxCompet.getChildren().add(gestionCompet);
         
 
         
@@ -310,13 +319,13 @@ public class JeuxOlympique extends Application{
             Button supEp = new Button("Suprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
             editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
-            if(this.model.getStatusCompte().equals(App.JOURNALIST)){
-                editEp.setVisible(false);
-                supEp.setVisible(false);
-            }
-            else if(this.model.getStatusCompte().equals(App.ORGANISATEUR)){
-                editEp.setVisible(false);
-            }
+            // if(this.model.getStatusCompte().equals(App.JOURNALIST)){
+            //     editEp.setVisible(false);
+            //     supEp.setVisible(false);
+            // }
+            // else if(this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+            //     editEp.setVisible(false);
+            // }
             epreuves.add(supEp,1,i);
             epreuves.add(editEp,2,i);
 
@@ -324,9 +333,9 @@ public class JeuxOlympique extends Application{
             i++;
         }
         Button ajouterEp = new Button("Ajouter une épreuve");
-        if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
-            ajouterEp.setVisible(false);
-        }
+        // if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+        //     ajouterEp.setVisible(false);
+        // }
         
     }
 
@@ -410,6 +419,22 @@ public class JeuxOlympique extends Application{
         try{
             
             this.popupCompet.show(stage);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        
+    }
+
+    public void PageAjoutAthlete() throws IOException, ClassNotFoundException, SQLException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageAjoutAthlete.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
+        loader.setController(this.controleur);
+        VBox root = loader.load();
+        this.popupAjoutAthlete.getContent().add(root);
+        try{
+            
+            this.popupAjoutAthlete.show(stage);
         }
         catch(Exception e){
             System.out.println(e);
@@ -707,17 +732,6 @@ public class JeuxOlympique extends Application{
             return true;
         }
         return false;
-    }
-
-    public void changeCouleur(String hex){
-        // switch (this.) {
-        //     case value:
-                
-        //         break;
-        
-        //     default:
-        //         break;
-        // }
     }
 
 

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="369.0" style="-fx-background-color: lite;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="350.0" style="-fx-border-color: black; -fx-border-width: 3; -fx-background-color: white;">
+         <children>
+            <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ButtonBar>
+                     <buttons>
+                        <Button fx:id="btnAcceuil" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                           <graphic>
+                              <ImageView blendMode="MULTIPLY" fitHeight="95.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/logoJO.jpg" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </buttons>
+                  </ButtonBar>
+                  <Label prefHeight="25.0" prefWidth="212.0" text="Ajout d'un athlète">
+                     <HBox.margin>
+                        <Insets top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" style="-fx-background-color: black;" />
+            <VBox prefHeight="336.0" prefWidth="344.0">
+               <children>
+                  <TextField fx:id="PopupANom" maxWidth="306.0" prefHeight="24.0" prefWidth="306.0" promptText="Nom">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="PopupAPrenom" maxWidth="306.0" prefHeight="24.0" prefWidth="306.0" promptText="Prénom">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label text="Sexe">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <RadioButton fx:id="PopupASH" mnemonicParsing="false" text="Homme">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="sexeA" />
+                     </toggleGroup>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="20.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="PopupASF" mnemonicParsing="false" text="Femme" toggleGroup="$sexeA">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <TextField fx:id="PopupAPays" maxWidth="306.0" prefHeight="24.0" prefWidth="306.0" promptText="Pays">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="PopupASport" maxWidth="306.0" prefHeight="24.0" prefWidth="306.0" promptText="Sport">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="PopupAForce" promptText="Force">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="PopupAEndu" promptText="Endurance" />
+                        <TextField fx:id="PopupAAgi" promptText="Agilité" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TextField fx:id="PopupACompet" maxWidth="306.0" prefHeight="24.0" prefWidth="306.0" promptText="Compétition ou équipe">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label maxHeight="60.0" prefWidth="324.0" text="Si l'entrée correspond au nom d'une équipe, il l'ajoutera à une équipe sinon l'ajoutera à une compétition" wrapText="true">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox prefHeight="44.0" prefWidth="304.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handlePopupAjouterA" text="Ajouter" />
+                  <Button mnemonicParsing="false" onAction="#handlePopupRetourAjouteA" text="Retour">
+                     <HBox.margin>
+                        <Insets left="172.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>

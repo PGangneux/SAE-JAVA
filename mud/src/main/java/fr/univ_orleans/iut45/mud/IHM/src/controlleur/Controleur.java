@@ -53,8 +53,8 @@ public class Controleur {
 
     private JeuxOlympique vue;
 
-    private App model;
-    //private ImportData model;
+    // private App model;
+    private ImportData model;
 
 
     @FXML
@@ -73,12 +73,13 @@ public class Controleur {
     private ScrollPane ScrolEditEp;
 
     private boolean themeClair;
+    private Color couleur;
 
     @FXML
     private void init(){}
 
 
-    public Controleur(JeuxOlympique vue, App model2 ){
+    public Controleur(JeuxOlympique vue, ImportData model2 ){
         this.vue = vue;
         this.model = model2;
         App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
@@ -92,37 +93,37 @@ public class Controleur {
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
         String login;
         String password;
-        try {
-            login = this.identifiant.getText();
-            password = this.mdp.getText();
-            boolean state = this.model.getConnexion(login, password);
-            if (state) {
-                this.vue.getStage().setMaximized(true);
-                this.vue.modeParticipant();
+        // try {
+        //     login = this.identifiant.getText();
+        //     password = this.mdp.getText();
+        //     // boolean state = this.model.getConnexion(login, password);
+        //     // if (state) {
+        //         this.vue.getStage().setMaximized(true);
+        //         this.vue.modeParticipant();
 
 
-                // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
+        //         // this.model.dataBaseInit(); // Init Base de donnée avec Athlete,Sport,Pays
 
-            }else {
-                throw new SQLException();
-            }   
-            System.out.println(this.model.getStatusCompte());
-        }catch (SQLException e) {
+        //     // }else {
+        //     //     throw new SQLException();
+        //     // }   
+        //     // System.out.println(this.model.getStatusCompte());
+        // }catch (SQLException e) {
 
-            System.out.println(e.getMessage());
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Compte inexistant");
-            alert.setHeaderText("Identifiant ou mot de passe incorrect");
-            alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
-            alert.showAndWait();
-            this.mdp.setText("");      
-        } 
-        catch (IOException e) {
-            throw new IOException();
-        }
+        //     System.out.println(e.getMessage());
+        //     Alert alert = new Alert(AlertType.ERROR);
+        //     alert.setTitle("Compte inexistant");
+        //     alert.setHeaderText("Identifiant ou mot de passe incorrect");
+        //     alert.setContentText("Les informations de connexion saisi ne correspondent à aucun de nos comptes enregistrés");
+        //     alert.showAndWait();
+        //     this.mdp.setText("");      
+        // } 
+        // catch (IOException e) {
+        //     throw new IOException();
+        // }
 
-        // this.vue.getStage().setMaximized(true);
-        // this.vue.modeParticipant();
+        this.vue.getStage().setMaximized(true);
+        this.vue.modeParticipant();
 
 
         // System.out.println("Affichage fenetre Participants");
@@ -135,16 +136,17 @@ public class Controleur {
     private void handleDeconnexion(ActionEvent event) throws IOException, SQLException{
         if (App.alwaysConnectTrue) this.vue.modeConnexion();
 
-        try {
-            boolean state = this.model.closeDBConnection();
-            if (state) {
-               this.vue.modeConnexion();
-               System.out.println("Affichage fenete Connexion");
-           }
-            System.out.println("Déconnection echoué");
-        } catch (Exception e) {
-               System.out.println("a check");
-        } 
+        // try {
+        //     boolean state = this.model.closeDBConnection();
+        //     if (state) {
+        //        this.vue.modeConnexion();
+        //        System.out.println("Affichage fenete Connexion");
+        //    }
+        //     System.out.println("Déconnection echoué");
+        // } catch (Exception e) {
+        //        System.out.println("a check");
+        // } 
+        this.vue.modeConnexion();
     }
 
     
@@ -186,13 +188,81 @@ public class Controleur {
     }
 
     @FXML
+    public void handleAddAthlete(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
+        // CompetCoop competCoop = this.recupCompetCoop();
+        // CompetInd competInd = this.recupCompetInd();
+        // this.vue.setCompetCoop(competCoop);
+        // this.vue.setCompetInd(competInd);  
+        this.vue.PageAjoutAthlete(); 
+    }
+
+    @FXML
     public void handlePopupRetourAjouteEpreuve(ActionEvent event){
         this.vue.hidePopup(this.vue.getPopupCompet());
     }
 
     @FXML
+    public void handlePopupRetourAjouteE(ActionEvent event){
+        this.vue.hidePopup(this.vue.getPopupAddEquipe());
+    }
+
+    @FXML
+    public void handlePopupRetourAjouteA(ActionEvent event){
+        this.vue.hidePopup(this.vue.getPopupAddAthlete());
+    }
+
+    @FXML
     public void handlePopupRetourEditEp(ActionEvent event){
         this.vue.hidePopup(this.vue.getPopupEditEp());
+    }
+
+    @FXML
+    public void handlePopupAjouterA(ActionEvent event){
+        
+        String nom = this.PopupCompetNom.getText();
+        if (this.vue.getCompetCoop() == null){
+            String sexe = this.vue.getCompetInd().getSexe();
+            if(sexe.equals("F")){
+                new EpreuveIndFem(nom, this.vue.getCompetInd());
+            }
+            else{
+                new EpreuveIndMasc(nom, this.vue.getCompetInd());
+            }
+            List<Athlete> lAthletes = this.vue.getCompetInd().classement();
+            String premier ="1er";
+            String deuxième ="2nd";
+            String troisieme ="3ème";
+            try{
+                premier += lAthletes.get(0).getNom() + " " + lAthletes.get(0).getPrenom();
+                deuxième += lAthletes.get(1).getNom()+ " " + lAthletes.get(1).getPrenom();
+                troisieme += lAthletes.get(2).getNom()+ " " + lAthletes.get(2).getPrenom();
+            }
+            catch(IndexOutOfBoundsException e){}
+            this.vue.hidePopup(this.vue.getPopupCompet());
+            this.vue.majCompet(premier, deuxième, troisieme, this.vue.getCompetInd());
+            
+        }
+        else{
+            String sexe = this.vue.getCompetCoop().getSexe();
+            if(sexe.equals("F")){
+                new EpreuveCoopFem(nom, this.vue.getCompetCoop());
+            }
+            else{
+                new EpreuveCoopMasc(nom, this.vue.getCompetCoop());
+            }
+            List<Equipe> lEquipes = this.vue.getCompetCoop().classement();
+            String premier ="1er ";
+            String deuxième ="2nd ";
+            String troisieme ="3ème ";
+            try{
+                premier += lEquipes.get(0).getPays().getNom();
+                deuxième += lEquipes.get(1).getPays().getNom();
+                troisieme += lEquipes.get(2).getPays().getNom();
+            }
+            catch(IndexOutOfBoundsException e){}
+            this.vue.hidePopup(this.vue.getPopupCompet());
+            this.vue.majCompet(premier, deuxième, troisieme, this.vue.getCompetCoop());
+        }
     }
 
 
@@ -373,7 +443,7 @@ public class Controleur {
     @FXML
     private void handleCouleur(ActionEvent event) throws IOException{
         ColorPicker colorPicker = (ColorPicker)event.getSource();
-        this.vue.setCouleur(colorPicker.getValue());
+        this.couleur = colorPicker.getValue();
     }
 
     @FXML
@@ -420,10 +490,12 @@ public class Controleur {
             this.vue.themeSombre();
         }
         try {
-            String hex = Integer.toHexString(this.vue.getCouleur().hashCode());
+            String hex = Integer.toHexString(this.couleur.hashCode());
+            this.vue.setCouleur(hex);
         } catch (Exception e) {
             System.err.println("Couleur pas sélectionné");
         }
+        System.out.println("Valeur Appliqué");
         
     }
 
@@ -476,10 +548,6 @@ public class Controleur {
         }
     }
 
-    @FXML
-    private void handleAddAthlete(ActionEvent event){
-        System.out.println(event.getSource());
-    }
 
     @FXML
     private void handleAddEquipe(ActionEvent event){
