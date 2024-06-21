@@ -52,10 +52,8 @@ public class JeuxOlympique extends Application{
     private Controleur controleur;
     private Scene scene;
     private Stage stage;
-
     //private ImportData model;
     private  App model;
-
     private boolean themeClair;
     private Popup popupCompet;
     private Popup popupEditEp;
@@ -158,9 +156,7 @@ public class JeuxOlympique extends Application{
     public void init() throws IOException, ClassNotFoundException, SQLException{
         this.themeClair = true;
         ImportData data = new ImportData("src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
-
-        //this.model = data;
-
+        // this.model = data;
         this.model = new App();
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
@@ -171,7 +167,6 @@ public class JeuxOlympique extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        
         this.stage.setScene(this.scene);
         this.stage.setTitle("Jeux Olympique");
         this.modeConnexion();
