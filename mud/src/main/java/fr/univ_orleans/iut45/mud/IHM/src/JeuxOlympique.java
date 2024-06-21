@@ -78,6 +78,9 @@ public class JeuxOlympique extends Application{
     private EpreuveInd epreuveInd;
     private EpreuveCoop epreuveCoop;
     private Color couleur;
+    private Button ajoutEpreuve;
+    private Button btnAjouterA;
+    private Button btnAjouterEq;
 
 
 
@@ -310,7 +313,7 @@ public class JeuxOlympique extends Application{
                 supEp.setVisible(false);
             }
             else if(this.model.getStatusCompte().equals(App.ORGANISATEUR)){
-                editEp.setVisible(false);
+                supEp.setVisible(false);
             }
             epreuves.add(supEp,1,i);
             epreuves.add(editEp,2,i);
@@ -318,9 +321,9 @@ public class JeuxOlympique extends Application{
             this.liEpreuve.setContent(epreuves);
             i++;
         }
-        Button ajouterEp = new Button("Ajouter une épreuve");
+        this.ajoutEpreuve = (Button) this.scene.lookup("#ajoutEpreuve");
         if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
-            ajouterEp.setVisible(false);
+            this.ajoutEpreuve.setVisible(false);
         }
         
     }
@@ -343,11 +346,19 @@ public class JeuxOlympique extends Application{
             Button supEp = new Button("Suprimer l'épreuve");
             supEp.setOnAction(new ControlleurSupprimerEpreuve(this,this.model, i, premier, seccond, troisieme));
             editEp.setOnAction(new ControlleurEditEpreuve(this, model, i, premier, seccond, troisieme));
+            if(this.model.getStatusCompte().equals(App.JOURNALIST)){
+                editEp.setVisible(false);
+                supEp.setVisible(false);
+            }
+            else if(this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+                supEp.setVisible(false);
+            }
             epreuves.add(supEp,1,i);
             epreuves.add(editEp,2,i);
             this.liEpreuve.setContent(epreuves);
             i++;
         }
+
         
         
     }
@@ -723,10 +734,22 @@ public class JeuxOlympique extends Application{
 
     public void modeParticipant() throws IOException{
         this.scene.setRoot(this.pageParticipant());
+        this.btnAjouterA = (Button) this.scene.lookup("#btnAjouterA");
+        this.btnAjouterEq = (Button) this.scene.lookup("#btnAjouterEq");
+        if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+            this.btnAjouterA.setVisible(false);
+            this.btnAjouterEq.setVisible(false);
+        }
+        
     }
 
     public void modeCompetition() throws IOException{
         this.scene.setRoot(this.pageCompetition());
+        this.ajoutEpreuve = (Button) this.scene.lookup("#ajoutEpreuve");
+        if (this.model.getStatusCompte().equals(App.JOURNALIST) || this.model.getStatusCompte().equals(App.ORGANISATEUR)){
+            this.ajoutEpreuve.setVisible(false);
+        }
+        
     }
 
 

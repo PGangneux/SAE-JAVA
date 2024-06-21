@@ -79,7 +79,7 @@ public class Controleur {
     public Controleur(JeuxOlympique vue, App model2 ){
         this.vue = vue;
         this.model = model2;
-        App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
+        App.alwaysConnectTrue = false; //a modifier pour se connecter quand on veut
         this.themeClair = true;
         System.out.println(this.model);    
     }
@@ -89,6 +89,11 @@ public class Controleur {
     private void handleConnexion(ActionEvent event) throws IOException, ClassNotFoundException, SQLException{
         String login;
         String password;
+        if (App.alwaysConnectTrue) {
+            this.vue.getStage().setMaximized(true);
+            this.vue.modeParticipant();
+            return;
+        }
         try {
             login = this.identifiant.getText();
             password = this.mdp.getText();
