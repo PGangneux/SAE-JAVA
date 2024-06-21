@@ -70,7 +70,7 @@ public class Controleur {
     public Controleur(JeuxOlympique vue, App model2 ){
         this.vue = vue;
         this.model = model2;
-        App.alwaysConnectTrue = true; //a modifier pour se connecter quand on veut
+        App.alwaysConnectTrue = true ; //a modifier pour se connecter quand on veut
     }
 
 
