@@ -207,6 +207,7 @@ public class App {
             this.jeuxQueryAPI.ajouterCompetition(compet);
             for (Equipe eq: compet.getParticipant()) {
                 this.jeuxQueryAPI.ajouterEquipe(eq);
+                this.jeuxQueryAPI.ajouterParticipation(compet, eq);
                 for (Athlete ath: eq.getLiAthlete()) {
                     this.jeuxQueryAPI.ajouterLienAthleteEquipe(eq, ath);
                 }
@@ -230,9 +231,9 @@ public class App {
         this.liAthletes = new ArrayList<>();
         this.liEquipes = new ArrayList<>();
         initLoggingConnexion();
-        importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
+        // importDataFromCSV("./src/main/java/fr/univ_orleans/iut45/mud/data/donnees.csv");
         // for(Pays p: this.ensPays) System.out.println(p.getNom());
-        System.out.println(this.ensPays.size());
+        // System.out.println(this.ensPays.size());
     }
 
     public boolean getConnexion(String username, String password) throws SQLException, ClassNotFoundException {
