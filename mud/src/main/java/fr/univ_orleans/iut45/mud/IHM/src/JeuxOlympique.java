@@ -57,6 +57,8 @@ public class JeuxOlympique extends Application{
     private boolean themeClair;
     private Popup popupCompet;
     private Popup popupEditEp;
+    private Popup popupAjoutAthlete;
+    private Popup popupAjoutEquipe;
     private CompetCoop competCoop;
     private CompetInd competInd;
 
@@ -77,20 +79,17 @@ public class JeuxOlympique extends Application{
     private ScrollPane ScrolEditEp;
     private EpreuveInd epreuveInd;
     private EpreuveCoop epreuveCoop;
-    private Color couleur;
+    private String couleur;
     private Button ajoutEpreuve;
     private Button btnAjouterA;
     private Button btnAjouterEq;
 
 
 
-    public void setCouleur(Color couleur){
+    public void setCouleur(String couleur){
         this.couleur = couleur;
     }
 
-    public Color getCouleur(){
-        return this.couleur;
-    }
 
     public EpreuveInd getEpreuveInd() {
         return epreuveInd;
@@ -129,6 +128,14 @@ public class JeuxOlympique extends Application{
         return this.popupCompet;
     }
 
+    public Popup getPopupAddAthlete(){
+        return this.popupAjoutAthlete;
+    }
+
+    public Popup getPopupAddEquipe(){
+        return this.popupAjoutEquipe;
+    }
+
     public Popup getPopupEditEp(){
         return this.popupEditEp;
     }
@@ -164,7 +171,9 @@ public class JeuxOlympique extends Application{
         this.controleur = new Controleur(this,model);
         this.scene = new Scene(new Pane(), 400, 300);
         this.popupCompet = new Popup(); 
-        this.popupEditEp = new Popup(); 
+        this.popupEditEp = new Popup();
+        this.popupAjoutAthlete = new Popup(); 
+        this.popupAjoutEquipe = new Popup(); 
     }
 
     @Override
@@ -273,11 +282,11 @@ public class JeuxOlympique extends Application{
         }
 
         
-        Button gestionCompet  = new Button("Gestion Compétition");
-        if(this.model.getStatusCompte().equals(App.ORGANISATEUR) || this.model.getStatusCompte().equals(App.JOURNALIST)){
-            gestionCompet.setVisible(false);
-        }
-        this.leftVboxCompet.getChildren().add(gestionCompet);
+        // Button gestionCompet  = new Button("Gestion Compétition");
+        // if(this.model.getStatusCompte().equals(App.ORGANISATEUR) || this.model.getStatusCompte().equals(App.JOURNALIST)){
+        //     gestionCompet.setVisible(false);
+        // }
+        // this.leftVboxCompet.getChildren().add(gestionCompet);
         
 
         
@@ -416,6 +425,22 @@ public class JeuxOlympique extends Application{
         try{
             
             this.popupCompet.show(stage);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        
+    }
+
+    public void PageAjoutAthlete() throws IOException, ClassNotFoundException, SQLException{
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("PageAjoutAthlete.fxml"));
+        loader.setControllerFactory(c -> new Controleur(this,this.model));
+        loader.setController(this.controleur);
+        VBox root = loader.load();
+        this.popupAjoutAthlete.getContent().add(root);
+        try{
+            
+            this.popupAjoutAthlete.show(stage);
         }
         catch(Exception e){
             System.out.println(e);
@@ -713,17 +738,6 @@ public class JeuxOlympique extends Application{
             return true;
         }
         return false;
-    }
-
-    public void changeCouleur(String hex){
-        // switch (this.) {
-        //     case value:
-                
-        //         break;
-        
-        //     default:
-        //         break;
-        // }
     }
 
 
